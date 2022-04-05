@@ -1,0 +1,49 @@
+import BigNumber from 'bignumber.js'
+import { useBurnedBalanceRav, useBurnedBalanceRbond, useBurnedBalanceRshare, useTotalSupplyRav, useTotalSupplyRbond, useTotalSupplyRshare } from 'hooks/useTokenBalance'
+import React from 'react'
+import { usePriceRavBusd, usePriceRshareBusd, usePriceRbondBusd, usePriceRavNativeLP, usePriceRshareNativeLP, usePriceBnbBusd } from 'state/hooks'
+import styled from 'styled-components'
+import HexCard from './HexCard'
+
+const Cards = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 80%;
+`
+
+const TokenCards = () => {
+  const totalSupplyRav = useTotalSupplyRav()
+  const totalSupplyRshare = useTotalSupplyRshare()
+  const totalSupplyRbond = useTotalSupplyRbond()
+
+  const burnedBalanceRav = useBurnedBalanceRav()
+  const burnedBalanceRshare = useBurnedBalanceRshare()
+  const burnedBalanceRbond = useBurnedBalanceRbond()
+
+  const ravPriceUsd = usePriceRavBusd()
+  const rsharePriceUsd = usePriceRshareBusd()
+  const rbondPriceUsd = usePriceRbondBusd()
+
+  console.log('prices: ', ravPriceUsd.toFormat(2), rsharePriceUsd.toFormat(2), rbondPriceUsd.toFormat(2))
+
+  const adaPrice = usePriceBnbBusd()
+
+  const circSupplyRav = totalSupplyRav ? totalSupplyRav.minus(burnedBalanceRav) : new BigNumber(0)
+  const circSupplyRshare = totalSupplyRshare ? totalSupplyRshare.minus(burnedBalanceRshare) : new BigNumber(0)
+  const circSupplyRbond = totalSupplyRbond ? totalSupplyRbond.minus(burnedBalanceRbond) : new BigNumber(0)
+
+  const marketCapRav = ravPriceUsd.times(circSupplyRav)
+  const marketCapRshare = rsharePriceUsd.times(circSupplyRshare)
+  const marketCapRbond = rbondPriceUsd.times(circSupplyRbond)
+
+  return (
+    <Cards>
+      <HexCard tokenName='rav' tokenPriceUSD={ravPriceUsd} adaPrice={adaPrice} totalSupply={totalSupplyRav} circSupply={circSupplyRav} marketCap={marketCapRav} />
+      <HexCard tokenName='rshare' tokenPriceUSD={rsharePriceUsd} adaPrice={adaPrice} totalSupply={totalSupplyRshare} circSupply={circSupplyRshare} marketCap={marketCapRshare} />
+      <HexCard tokenName='rbond' tokenPriceUSD={rbondPriceUsd} adaPrice={adaPrice} totalSupply={totalSupplyRbond} circSupply={circSupplyRbond} marketCap={marketCapRbond} />
+    </Cards>
+  )
+}
+
+export default TokenCards
