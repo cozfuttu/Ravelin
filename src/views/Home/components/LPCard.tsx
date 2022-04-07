@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js'
 import React from 'react'
 import styled from 'styled-components'
 import { Button, Text } from 'uikit'
+import { getRavAddress, getRavNativeLPAddress, getRshareAddress, getRshareNativeLPAddress } from 'utils/addressHelpers'
 
 const Card = styled.div`
   display: flex;
@@ -53,13 +54,14 @@ const LPCard: React.FC<CardProps> = ({ lpName, LPPriceUSD, adaPrice, marketCap, 
         <Col2>
           <Text color='#9D9D9D' fontSize='16px'><b>Liquidity: </b>${marketCap.div(1e18).toFormat(2)}</Text>
           <Text color='#9D9D9D' fontSize='16px'><b>Total Supply: </b>{totalSupply?.div(1e18).toFormat(0)}</Text>
+          <Text color='#9D9D9D' fontSize='16px'><b>Price: </b>${new BigNumber(LPPriceUSD).toFormat(2)}</Text>
         </Col2>
       </Col>
       <Col>
         <Image src={lpImage} />
-        <Text color='#007ABE' fontSize='18px'>1.50 {tokenNames[0]} / 1.47 {tokenNames[1]}</Text>
-        <Text color='#007ABE' fontSize='18px'>${new BigNumber(LPPriceUSD).toFormat(2)}</Text>
-        <Button size='sm'>ZAP IN</Button>
+        <a href={`https://spookyswap.finance/add/ETH/${lpName === 'rav-ada' ? getRavAddress() : getRshareAddress()}`} target="_blank" style={{ textDecoration: 'none' }}>
+          <Button size='sm'>ZAP IN</Button>
+        </a>
       </Col>
     </Card>
   )

@@ -16,9 +16,9 @@ interface Props extends InjectedProps {
 
 const StyledModal = styled.div`
   position: relative;
-  background: ${({ theme }) => theme.modal.background};
+  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, #006c81 100%);
   box-shadow: 0 0 16px #00e0a0;
-  border: 1px solid ${({ theme }) => theme.colors.borderColor};
+  border: 1px solid rgba(0,212,255,1);
   border-radius: 32px;
   width: 100%;
   z-index: ${({ theme }) => theme.zIndices.modal};
@@ -56,31 +56,31 @@ const Modal: React.FC<Props> = ({
 }) => (
   <StyledModal style={{ width: isMobile && '90%', height: isMobile && '90%' }}>
     {
-      title.includes('/images') ? 
-      <>
-      <ModalImage src={title} style={{ maxWidth: isMobile ? '100%' : '700px' }} />
-      {!hideCloseButton && (
-        <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: '5px' }}>
-          <CloseIcon color="primary" />
-        </IconButton>
-      )}
-      </>
-      :
-      <ModalHeader>
-      <ModalTitle>
-        {onBack && (
-          <IconButton variant="text" onClick={onBack} area-label="go back" mr="8px">
-            <ArrowBackIcon color="primary" />
-          </IconButton>
-        )}
-        <Heading>{title}</Heading>
-      </ModalTitle>
-      {!hideCloseButton && (
-        <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog">
-          <CloseIcon color="primary" />
-        </IconButton>
-      )}
-    </ModalHeader>
+      title.includes('/images') ?
+        <>
+          <ModalImage src={title} style={{ maxWidth: isMobile ? '100%' : '700px' }} />
+          {!hideCloseButton && (
+            <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: '5px' }}>
+              <CloseIcon color="primary" />
+            </IconButton>
+          )}
+        </>
+        :
+        <ModalHeader>
+          <ModalTitle>
+            {onBack && (
+              <IconButton variant="text" onClick={onBack} area-label="go back" mr="8px">
+                <ArrowBackIcon color="primary" />
+              </IconButton>
+            )}
+            <Heading>{title}</Heading>
+          </ModalTitle>
+          {!hideCloseButton && (
+            <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog">
+              <CloseIcon color="primary" />
+            </IconButton>
+          )}
+        </ModalHeader>
     }
     <Flex flexDirection="column" p={bodyPadding}>
       {children}

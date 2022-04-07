@@ -58,7 +58,7 @@ export const useGenesisPoolsContract = () => {
   return useContract(abi, getGenesisPoolsAddress())
 }
 export const useRsharePoolsContract = () => {
-  const abi = (rshareABI as unknown) as AbiItem
+  const abi = (rsharePoolsABI as unknown) as AbiItem
   return useContract(abi, getRsharePoolsAddress())
 }
 export const useMasonryContract = () => {

@@ -25,7 +25,7 @@ const config: MenuEntry[] = [
   {
     label: 'DOCS',
     color: '#ededed',
-    href: '/docs',
+    href: '/',
   },
 ]
 

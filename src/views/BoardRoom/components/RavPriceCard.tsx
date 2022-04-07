@@ -1,13 +1,18 @@
+import BigNumber from 'bignumber.js'
 import React from 'react'
 import { usePriceBnbBusd, usePriceRavBusd } from 'state/hooks'
 import Card from './Card'
 
-const RavPriceCard = () => {
-  const ravPrice = usePriceRavBusd()
+interface CardProps {
+  RavTWAP: string
+}
+
+const RavPriceCard: React.FC<CardProps> = ({ RavTWAP }) => {
+  const ravPrice = new BigNumber(RavTWAP).div(1e18)
   const nativePrice = usePriceBnbBusd()
-  const ravPriceInNative = ravPrice.div(nativePrice)
+  const ravPriceUSD = ravPrice.times(nativePrice)
   return (
-    <Card heading='RAV PRICE' value={`${ravPriceInNative.toFormat(3)} FTM`} secondaryValue={`$${ravPrice.toFormat(3)}`} />
+    <Card heading='RAV PRICE' value={`${ravPrice.toFormat(4)} FTM`} secondaryValue={`$${ravPriceUSD.toFormat(2)}`} />
   )
 }
 

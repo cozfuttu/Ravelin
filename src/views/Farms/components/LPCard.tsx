@@ -3,8 +3,9 @@ import { QuoteToken } from 'config/constants/types'
 import React, { useMemo } from 'react'
 import { Farm } from 'state/types'
 import styled from 'styled-components'
-import { Button, Text } from 'uikit'
+import { Button, Text, useModal } from 'uikit'
 import { apyModalRoi, calculateCakeEarnedPerThousandDollars } from 'utils/compoundApyHelpers'
+import FarmModal from './FarmModal'
 
 const Card = styled.div`
   display: flex;
@@ -16,6 +17,7 @@ const Card = styled.div`
   height: 13.3em;
   padding: 1em;
   border-radius: 0.5em;
+  z-index: 1;
 `
 
 const Col = styled.div`
@@ -52,7 +54,7 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
     if (!farm.lpTotalInQuoteToken) {
       return null
     }
-    if (farm.quoteTokenSymbol === QuoteToken.WFTM) {
+    if (farm.quoteTokenSymbol === QuoteToken.WFTM || farm.quoteTokenSymbol === QuoteToken.ADA) {
       return nativePrice.times(farm.lpTotalInQuoteToken)
     }
     return farm.lpTotalInQuoteToken
@@ -75,19 +77,25 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
 
   const cakeEarnedPerThousand1D = calculateCakeEarnedPerThousandDollars({ numberOfDays: 1, farmApy, cakePrice: rsharePrice })
 
+  const dailyApr = apyModalRoi({ amountEarned: cakeEarnedPerThousand1D, amountInvested: oneThousandDollarsWorthOfCake })
+
+  const [onPresentFarmView] = useModal(
+    <FarmModal farm={farm} tvl={totalValueFormated} dailyApr={dailyApr} />,
+  )
+
   return (
     <Card>
       <Col>
         <Text color='#9D9D9D' fontSize='32px' bold mb='8px'>{farmName.toUpperCase()} {!(farm.isTokenOnly) && 'LP'}</Text>
         <Text color='#4E4E4E' fontSize='16px' mb="4px">Deposit {farmName.toUpperCase()} {!(farm.isTokenOnly) && 'LP'} Earn {earnLabel.toUpperCase()}</Text>
         <Text color='#9D9D9D' fontSize='14px'>APR: {farmApyString}%</Text>
-        <Text color='#9D9D9D' fontSize='14px'>Daily APR: {apyModalRoi({ amountEarned: cakeEarnedPerThousand1D, amountInvested: oneThousandDollarsWorthOfCake })}%</Text>
+        <Text color='#9D9D9D' fontSize='14px'>Daily APR: {dailyApr}%</Text>
         <Text color='#9D9D9D' fontSize='14px'>TVL: {totalValueFormated}</Text>
         {farm.depositFeeBP ? <Text color='#9D9D9D' fontSize='14px'>Deposit Fee: {farm.depositFeeBP / 100}%</Text> : null}
       </Col>
       <Col>
         <Image src={`images/icons/${farmName}.png`} style={{ width: farm.isTokenOnly ? '100px' : '128px' }} />
-        <Button size='sm' style={{ alignSelf: 'center' }}>VIEW</Button>
+        <Button size='sm' style={{ alignSelf: 'center' }} onClick={onPresentFarmView}>VIEW</Button>
       </Col>
     </Card>
   )

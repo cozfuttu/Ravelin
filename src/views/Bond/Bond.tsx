@@ -7,6 +7,7 @@ import { Text } from 'uikit'
 import PurchaseRBondCard from './components/PurchaseRBondCard'
 import Stats from './components/Stats'
 import RedeemRavCard from './components/RedeemRavCard'
+import { useTreasury } from 'state/hooks'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -33,6 +34,7 @@ const InfoContainer = styled.div`
 `
 
 const Bond = () => {
+  const treasury = useTreasury()
   return (
     <WidePage>
       <ImageContainer>
@@ -44,9 +46,9 @@ const Bond = () => {
         <Text color='#4E4E4E' fontSize='24px' bold mt='8px'>Earn premiums upon redemption</Text>
       </TextContainer>
       <InfoContainer>
-        <PurchaseRBondCard />
-        <Stats />
-        <RedeemRavCard />
+        <PurchaseRBondCard treasury={treasury} />
+        <Stats treasury={treasury} />
+        <RedeemRavCard treasury={treasury} />
       </InfoContainer>
     </WidePage>
   )

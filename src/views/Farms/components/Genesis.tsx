@@ -32,19 +32,17 @@ interface CardsProps {
 
 const Genesis: React.FC<CardsProps> = ({ farmsToDisplayWithApy, rsharePrice, nativePrice, account, ethereum }) => {
 
-  const FarmCards = farmsToDisplayWithApy.map((farm, index) => {
-    if (index >= 2 && index < 6) return (
-      <LPCard
-        key={farm.pid}
-        earnLabel='rav'
-        farm={farm}
-        nativePrice={nativePrice}
-        rsharePrice={rsharePrice}
-        ethereum={ethereum}
-        account={account}
-      />
-    )
-  })
+  const FarmCards = farmsToDisplayWithApy.map((farm) =>
+    <LPCard
+      key={farm.pid}
+      earnLabel='rav'
+      farm={farm}
+      nativePrice={nativePrice}
+      rsharePrice={rsharePrice}
+      ethereum={ethereum}
+      account={account}
+    />
+  )
 
   return (
     <Background>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Back = styled.div`
   position: absolute;
-  z-index: 2;
+  z-index: -2;
   left: 64px;
 `
 

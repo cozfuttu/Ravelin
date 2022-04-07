@@ -45,6 +45,7 @@ const Image = styled.img`
 `
 
 interface CardProps {
+  tokenAddress: string
   tokenName: string
   tokenPriceUSD: BigNumber
   adaPrice: BigNumber
@@ -53,19 +54,39 @@ interface CardProps {
   totalSupply: BigNumber
 }
 
-const HexCard: React.FC<CardProps> = ({ tokenName, tokenPriceUSD, adaPrice, marketCap, circSupply, totalSupply }) => {
+const HexCard: React.FC<CardProps> = ({ tokenAddress, tokenName, tokenPriceUSD, adaPrice, marketCap, circSupply, totalSupply }) => {
   const tokenImage = `images/icons/${tokenName}.png`
   const tokenPriceInAda = tokenPriceUSD.div(adaPrice)
+
+  const onMetamaskButtonClick = async () => {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20', // Initially only supports ERC20, but eventually more!
+          options: {
+            address: tokenAddress, // The address that the token is at.
+            symbol: tokenName.toUpperCase(), // A ticker symbol or shorthand, up to 5 chars.
+            decimals: 18, // The number of decimals in the token
+            image: tokenImage, // A string url of the token logo
+          },
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Card>
-      <MetamaskButton>
+      <MetamaskButton onClick={onMetamaskButtonClick}>
         <b>+&nbsp;&nbsp;</b>
         <Image src="images/icons/metamask-fox.svg" style={{ maxWidth: '40px' }} />
       </MetamaskButton>
       <Text color='#9D9D9D' fontSize='22px' bold>{tokenName.toUpperCase()}</Text>
       <Image src={tokenImage} />
       <Text color='#9D9D9D' fontSize='10px'>Current Price</Text>
-      <Text color='#007ABE'>{tokenPriceInAda.toFixed(2)} ADA</Text>
+      <Text color='#007ABE'>{tokenPriceInAda.toFixed(4)} ADA</Text>
       <Text color='#9D9D9D' fontSize='11px'>${tokenPriceUSD.toFormat(4)}</Text>
       <Text color='#9D9D9D' fontSize='11px'><b>Market Cap:</b> ${marketCap.div(1e18).toFormat(2)}</Text>
       <Text color='#9D9D9D' fontSize='11px'><b>Circulating Supply:</b> {circSupply.div(1e18).toFormat(0)}</Text>

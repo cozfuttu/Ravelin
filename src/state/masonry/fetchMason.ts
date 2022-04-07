@@ -23,9 +23,10 @@ const fetchMason = async (account) => {
     { address: masonryAddress, name: 'canWithdraw', params: [account] },
     { address: masonryAddress, name: 'canClaimReward', params: [account] },
     { address: masonryAddress, name: 'earned', params: [account] },
+    { address: masonryAddress, name: 'balanceOf', params: [account] },
   ]
 
-  const [ masonInfo, canWithdraw, canClaimReward, earned ] = await multicall(masonryABI, masonryAbiCalls)
+  const [ masonInfo, canWithdraw, canClaimReward, earned, stakedBalance ] = await multicall(masonryABI, masonryAbiCalls)
 
   return {
     allowance: new BigNumber(allowanceResponse).toJSON(),
@@ -35,7 +36,8 @@ const fetchMason = async (account) => {
     epochTimerStart: new BigNumber(masonInfo[2]._hex).toJSON(),
     canWithdraw: canWithdraw[0],
     canClaimReward: canClaimReward[0],
-    earned: new BigNumber(earned[0]._hex).toJSON()
+    earned: new BigNumber(earned[0]._hex).toJSON(),
+    stakedBalance: new BigNumber(stakedBalance[0]._hex).toJSON()
   }
 }
 

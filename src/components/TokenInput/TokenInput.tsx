@@ -59,7 +59,7 @@ const StyledMaxText = styled.div`
   color: ${(props) => props.theme.colors.primary};
   display: flex;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: bold;
   height: 44px;
   justify-content: flex-end;
 `

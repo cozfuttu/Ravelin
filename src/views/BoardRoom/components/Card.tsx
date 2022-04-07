@@ -13,18 +13,21 @@ const InfoCard = styled.div`
   border-radius: 8px;
   box-shadow: 0 8px 10px -4px #000;
   max-width: 17%;
+  text-align: center;
+  z-index: 1;
 `
 
 interface CardProps {
   heading: string
   value: string
   secondaryValue?: string
+  style?: any
 }
 
-const Card: React.FC<CardProps> = ({ heading, value, secondaryValue }) => {
+const Card: React.FC<CardProps> = ({ heading, value, secondaryValue, style }) => {
   return (
-    <InfoCard>
-      <Text color='#9D9D9D' fontSize='25px' bold>{heading.toUpperCase()}</Text>
+    <InfoCard style={style}>
+      <Text color='#9D9D9D' fontSize='25px' bold style={{ borderBottom: '2px solid #DADADA' }}>{heading.toUpperCase()}</Text>
       <Text color='#4E4E4E' fontSize='18px'>{value}</Text>
       {secondaryValue ? <Text color='#9D9D9D' fontSize='14px'>{secondaryValue}</Text> : null}
     </InfoCard>

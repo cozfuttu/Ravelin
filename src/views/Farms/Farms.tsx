@@ -15,6 +15,7 @@ import Genesis from './components/Genesis'
 import GrayBack from 'views/Home/components/GrayBack'
 import BlueBack from 'views/Home/components/BlueBack'
 import BlackBack from 'views/Home/components/BlackBack'
+import { useStakeRsharePools } from 'hooks/useStake'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -59,7 +60,7 @@ const Farms = () => {
 
     let totalValue = new BigNumber(farm.lpTotalInQuoteToken || 0)
 
-    if (farm.quoteTokenSymbol === QuoteToken.WFTM) {
+    if (farm.quoteTokenSymbol === QuoteToken.WFTM || farm.quoteTokenSymbol === QuoteToken.ADA) {
       totalValue = totalValue.times(nativePrice)
     } else if (farm.quoteTokenSymbol === QuoteToken.RAV) {
       totalValue = totalValue.times(ravPrice)
@@ -72,6 +73,9 @@ const Farms = () => {
     return { ...farm, apy }
   })
 
+  const rshareFarms = farmsToDisplayWithAPY.filter((farm) => !(farm.isGenesis))
+  const ravFarms = farmsToDisplayWithAPY.filter((farm) => farm.isGenesis)
+
   return (
     <WidePage>
       <ImageContainer>
@@ -80,9 +84,9 @@ const Farms = () => {
       </ImageContainer>
       <Text color='#003E78' fontSize='32px' bold>FARM</Text>
       <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RSHARE by staking LP</Text>
-      <LPCards farmsToDisplayWithApy={farmsToDisplayWithAPY} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} />
+      <LPCards farmsToDisplayWithApy={rshareFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} />
       <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RAV by Staking in Genesis Pools</Text>
-      <Genesis farmsToDisplayWithApy={farmsToDisplayWithAPY} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} />
+      <Genesis farmsToDisplayWithApy={ravFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} />
     </WidePage>
   )
 }

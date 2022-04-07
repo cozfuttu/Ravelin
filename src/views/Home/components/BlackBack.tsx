@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Back = styled.div`
   position: absolute;
-  z-index: 3;
+  z-index: -1;
 `
 const BlackBack = () => {
   return (

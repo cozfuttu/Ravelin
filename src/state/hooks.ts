@@ -5,11 +5,12 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import useRefresh from 'hooks/useRefresh'
 import {
-  fetchFarmsPublicDataAsync, fetchFarmUserDataAsync, fetchMasonDataAsync, fetchMasonryPublicDataAsync
+  fetchFarmsPublicDataAsync, fetchFarmUserDataAsync, fetchMasonDataAsync, fetchMasonryPublicDataAsync, fetchTreasuryPublicDataAsync
 } from './actions'
-import { State, Farm, Masonry, Mason } from './types'
+import { State, Farm, Masonry, Mason, Treasury } from './types'
 import { QuoteToken } from '../config/constants/types'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { fetchTreasuryUserDataAsync } from './treasury'
 
 const ZERO = new BigNumber(0)
 
@@ -21,9 +22,11 @@ export const useFetchPublicData = () => {
   useEffect(() => {
     dispatch(fetchFarmsPublicDataAsync())
     dispatch(fetchMasonryPublicDataAsync())
+    dispatch(fetchTreasuryPublicDataAsync())
     if (account) {
       dispatch(fetchFarmUserDataAsync(account))
       dispatch(fetchMasonDataAsync(account))
+      dispatch(fetchTreasuryUserDataAsync(account))
     }
   }, [dispatch, slowRefresh, account])
 }
@@ -62,6 +65,13 @@ export const useFarmUser = (pid) => {
 export const useMasonry = (): Masonry => {
   const masonry = useSelector((state: State) => state.masonry.data)
   return masonry
+}
+
+// Treasury
+
+export const useTreasury = (): Treasury => {
+  const treasury = useSelector((state: State) => state.treasury.data)
+  return treasury
 }
 
 // Prices
@@ -172,16 +182,17 @@ export const usePriceRshareNativeLP = (): number => {
 
 export const useTotalValue = (): BigNumber => {
   const farms = useFarms()
+  const masonry = useMasonry()
   const bnbPrice = usePriceBnbBusd()
   const cakePrice = usePriceRavBusd()
-  let value = new BigNumber(0)
+  let value = new BigNumber(masonry.lpTotalInQuoteToken).times(bnbPrice)
   for (let i = 0; i < farms.length; i++) {
     const farm = farms[i]
     if (farm.lpTotalInQuoteToken) {
       let val
-      if (farm.quoteTokenSymbol === QuoteToken.WFTM) {
+      if (farm.quoteTokenSymbol === QuoteToken.WFTM || farm.quoteTokenSymbol === QuoteToken.ADA) {
         val = bnbPrice.times(farm.lpTotalInQuoteToken)
-      } else if (farm.quoteTokenSymbol === QuoteToken.CAKE) {
+      } else if (farm.quoteTokenSymbol === QuoteToken.RAV) {
         val = cakePrice.times(farm.lpTotalInQuoteToken)
       } else {
         val = farm.lpTotalInQuoteToken

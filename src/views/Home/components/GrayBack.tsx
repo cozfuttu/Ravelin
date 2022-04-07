@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Back = styled.div`
-  z-index: -1;
+  z-index: -3;
   display: block;
 `
 

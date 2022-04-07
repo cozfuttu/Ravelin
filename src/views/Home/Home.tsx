@@ -9,6 +9,7 @@ import AttentionIcon from './components/AttentionIcon'
 import TokenCards from './components/TokenCards'
 import LPCards from './components/LPCards'
 import { useFarms, useTotalValue } from 'state/hooks'
+import { getRavAddress, getRshareAddress } from 'utils/addressHelpers'
 
 const TextContainer = styled.div`
   display: flex;
@@ -58,7 +59,7 @@ const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100vw;
-  padding-bottom: 2em;
+  padding-bottom: 4em;
 `
 
 const Buttons = styled.div`
@@ -84,13 +85,21 @@ const Home = () => {
             <Row>
               <Col>
                 <Text color="#007ABE" fontSize='18px' bold>TOTAL VALUE LOCKED:</Text>
-                <Text color="#007ABE" fontSize='32px' bold>${totalValue.toFormat(2)}</Text>
+                <Text color="#007ABE" fontSize='32px' bold style={{ transition: 'all 1s linear' }}>${totalValue.toFormat(2)}</Text>
               </Col>
               <Buttons>
-                <Button>STAKE NOW</Button>
-                <Button>FARM NOW</Button>
-                <Button>BUY RAV</Button>
-                <Button>BUY RSHARE</Button>
+                <a href="/boardroom" style={{ textDecoration: 'none' }}>
+                  <Button>STAKE NOW</Button>
+                </a>
+                <a href="/farms" style={{ textDecoration: 'none' }}>
+                  <Button>FARM NOW</Button>
+                </a>
+                <a href={`https://spookyswap.finance/swap?outputCurrency=${getRavAddress()}`} target='_blank' style={{ textDecoration: 'none' }}>
+                  <Button>BUY RAV</Button>
+                </a>
+                <a href={`https://spookyswap.finance/swap?outputCurrency=${getRshareAddress()}`} target='_blank' style={{ textDecoration: 'none' }}>
+                  <Button>BUY RSHARE</Button>
+                </a>
               </Buttons>
             </Row>
           </TVLandButtonsContainer>

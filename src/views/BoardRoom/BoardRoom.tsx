@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import WidePage from 'components/layout/WidePage'
 import styled from 'styled-components'
+import { provider } from 'web3-core'
+import { DateTime } from 'luxon'
 import { Button, Text } from 'uikit'
 import BlueBack from 'views/Home/components/BlueBack'
 import BlackBack from 'views/Home/components/BlackBack'
@@ -9,10 +11,15 @@ import CurrentEpochCard from './components/CurrentEpochCard'
 import APRCard from './components/APRCard'
 import RavPriceCard from './components/RavPriceCard'
 import TotalStakedCard from './components/TotalStakedCard'
-import { useMasonry } from 'state/hooks'
+import { useMasonry, useTreasury } from 'state/hooks'
 import AttentionIcon from 'views/Home/components/AttentionIcon'
 import RavCard from './components/RavCard'
 import RshareCard from './components/RshareCard'
+import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useExitMasonry } from 'hooks/useUnstake'
+import useCurrentTime from 'hooks/useTimer'
+import WithdrawCard from './components/WithdrawCard'
+import ClaimCard from './components/ClaimCard'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -47,6 +54,28 @@ const ButtonCont = styled.div`
 
 const BoardRoom = () => {
   const masonry = useMasonry()
+  const treasury = useTreasury()
+  const { account, ethereum }: { account: string, ethereum: provider } = useWallet()
+
+  const { nextEpochPoint, userData, withdrawLockupEpochs, rewardLockupEpochs } = masonry
+
+  const canClaimReward = userData?.canClaimReward
+  const canWithdraw = userData?.canWithdraw
+
+  const [pending, setPending] = useState(false)
+  const { onExit } = useExitMasonry()
+
+  console.log('treasury: ', treasury)
+
+  const handleExit = async () => {
+    setPending(true)
+    try {
+      await onExit()
+    }
+    finally {
+      setPending(false)
+    }
+  }
 
   return (
     <WidePage>
@@ -59,17 +88,21 @@ const BoardRoom = () => {
       <InfoCards>
         <NextEpochCard nextEpochPoint={parseInt(masonry?.nextEpochPoint)} />
         <CurrentEpochCard epoch={masonry?.epoch} />
-        <RavPriceCard />
+        <RavPriceCard RavTWAP={treasury?.twap} />
         <APRCard masonry={masonry} />
         <TotalStakedCard />
       </InfoCards>
       <Text color='#000000' fontSize='16px' mt='5%' style={{ textAlign: 'center' }}><span><AttentionIcon /></span>Staked RSHAREs can only be withdrawn after 6 epochs.</Text>
       <TokenCards>
-        <RavCard />
-        <RshareCard />
+        <RavCard masonry={masonry} />
+        <RshareCard masonry={masonry} account={account} ethereum={ethereum} />
+      </TokenCards>
+      <TokenCards style={{ justifyContent: 'space-around', alignItems: 'stretch' }}>
+        <ClaimCard masonry={masonry} period={treasury?.period} />
+        <WithdrawCard masonry={masonry} period={treasury?.period} />
       </TokenCards>
       <ButtonCont>
-        <Button size='md' disabled>CLAIM AND WITHDRAW</Button>
+        <Button size='md' onClick={handleExit} disabled={pending || !canClaimReward || !canWithdraw}>CLAIM AND WITHDRAW</Button>
       </ButtonCont>
     </WidePage>
   )

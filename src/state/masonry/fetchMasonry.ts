@@ -53,8 +53,8 @@ const fetchMasonry = async () => {
   const rshareAmountInContract = new BigNumber(balanceOfRshareInContract).div(1e18)
 
   const tokenAmount = new BigNumber(balanceOfRshareInContract).div(new BigNumber(10).pow(tokenDecimals))
-  const tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP))
-  const lpTotalInQuoteToken = tokenAmount.times(tokenPriceVsQuote)
+  const tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP)) // Native Price of token (RSHARE)
+  const lpTotalInQuoteToken = tokenAmount.times(tokenPriceVsQuote) // Native price of token amount in contract
 
   const masonryCalls = [
     {
@@ -69,9 +69,17 @@ const fetchMasonry = async () => {
       address: masonryAddress,
       name: 'getTombPrice'
     },
+    {
+      address: masonryAddress,
+      name: 'withdrawLockupEpochs'
+    },
+    {
+      address: masonryAddress,
+      name: 'rewardLockupEpochs'
+    },
   ]
 
-  const [ epoch, nextEpochPoint, tombPrice ] = await multicall(masonryABI, masonryCalls)
+  const [ epoch, nextEpochPoint, tombPrice, withdrawLockupEpochs, rewardLockupEpochs ] = await multicall(masonryABI, masonryCalls)
 
   return {
     tokenAmount: tokenAmount.toJSON(),
@@ -83,6 +91,8 @@ const fetchMasonry = async () => {
     epoch: new BigNumber(epoch[0]._hex).toJSON(),
     nextEpochPoint: new BigNumber(nextEpochPoint[0]._hex).toJSON(),
     tombPrice: new BigNumber(tombPrice[0]._hex).div(1e18).toJSON(),
+    withdrawLockupEpochs: new BigNumber(withdrawLockupEpochs[0]._hex).toJSON(),
+    rewardLockupEpochs: new BigNumber(rewardLockupEpochs[0]._hex).toJSON(),
   }
 }
 

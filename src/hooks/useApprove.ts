@@ -6,12 +6,14 @@ import { useDispatch } from 'react-redux'
 import {
   fetchFarmUserDataAsync,
   fetchMasonDataAsync,
+  fetchTreasuryUserDataAsync,
 } from 'state/actions'
 import { approve, } from 'utils/callHelpers'
 import {
   useGenesisPoolsContract,
   useRsharePoolsContract,
   useMasonryContract,
+  useTreasuryContract,
 } from './useContract'
 
 // Approve a Farm
@@ -30,7 +32,7 @@ export const useApproveGenesisPools = (lpContract: Contract) => {
     }
   }, [account, dispatch, lpContract, masterChefContract])
 
-  return { onApprove: handleApprove }
+  return { onApproveGenesisPools: handleApprove }
 }
 
 export const useApproveRsharePools = (lpContract: Contract) => {
@@ -48,7 +50,7 @@ export const useApproveRsharePools = (lpContract: Contract) => {
     }
   }, [account, dispatch, lpContract, masterChefContract])
 
-  return { onApprove: handleApprove }
+  return { onApproveRsharePools: handleApprove }
 }
 
 export const useApproveMasonry = (lpContract: Contract) => {
@@ -60,6 +62,24 @@ export const useApproveMasonry = (lpContract: Contract) => {
     try {
       const tx = await approve(lpContract, masterChefContract, account)
       dispatch(fetchMasonDataAsync(account))
+      return tx
+    } catch (e) {
+      return false
+    }
+  }, [account, dispatch, lpContract, masterChefContract])
+
+  return { onApprove: handleApprove }
+}
+
+export const useApproveTreasury = (lpContract: Contract) => {
+  const dispatch = useDispatch()
+  const { account }: { account: string } = useWallet()
+  const masterChefContract = useTreasuryContract()
+
+  const handleApprove = useCallback(async () => {
+    try {
+      const tx = await approve(lpContract, masterChefContract, account)
+      dispatch(fetchTreasuryUserDataAsync(account))
       return tx
     } catch (e) {
       return false

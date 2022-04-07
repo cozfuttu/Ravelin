@@ -18,7 +18,7 @@ const farms: FarmConfig[] = [
       137: getRavAddress(),
       250: getRavAddress(),
     },
-    quoteTokenSymbol: QuoteToken.WFTM,
+    quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
   },
   {
@@ -36,7 +36,7 @@ const farms: FarmConfig[] = [
       137: getRshareAddress(),
       250: getRshareAddress(),
     },
-    quoteTokenSymbol: QuoteToken.WFTM,
+    quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
   },
   {
@@ -76,7 +76,7 @@ const farms: FarmConfig[] = [
       137: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
       250: '0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE', // BOO
     },
-    quoteTokenSymbol: QuoteToken.WFTM,
+    quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
   },
   {
@@ -96,7 +96,7 @@ const farms: FarmConfig[] = [
       137: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f', // USDT
       250: '0x9Ba3e4F84a34DF4e08C112e1a0FF148b81655615', // SHIBA
     },
-    quoteTokenSymbol: QuoteToken.WFTM,
+    quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
   },
   {
@@ -116,7 +116,7 @@ const farms: FarmConfig[] = [
       137: '0x8A953CfE442c5E8855cc6c61b1293FA648BAE472',
       250: '0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56', // ZOO
     },
-    quoteTokenSymbol: QuoteToken.WFTM,
+    quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
   },
 ]
@@ -138,7 +138,7 @@ export const publicFarmsConfig: FarmConfig[] = [
       137: getRavAddress(),
       250: getRavAddress(),
     },
-    quoteTokenSymbol: QuoteToken.WFTM,
+    quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
     isHidden: true,
   },
@@ -157,7 +157,7 @@ export const publicFarmsConfig: FarmConfig[] = [
       137: getRshareAddress(),
       250: getRshareAddress(),
     },
-    quoteTokenSymbol: QuoteToken.WFTM,
+    quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
     isHidden: true,
   },

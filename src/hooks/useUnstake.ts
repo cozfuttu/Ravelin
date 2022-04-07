@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useDispatch } from 'react-redux'
 import { fetchFarmUserDataAsync, fetchMasonDataAsync } from 'state/actions'
-import { unstake, unstakeMasonry } from 'utils/callHelpers'
+import { exitMasonry, unstake, unstakeMasonry } from 'utils/callHelpers'
 import { useGenesisPoolsContract, useMasonryContract, useRsharePoolsContract } from './useContract'
 
 export const useUnstakeGenesisPools = (pid: number) => {
@@ -19,7 +19,7 @@ export const useUnstakeGenesisPools = (pid: number) => {
     [account, dispatch, masterChefContract, pid],
   )
 
-  return { onUnstake: handleUnstake }
+  return { onUnstakeGenesisPools: handleUnstake }
 }
 
 export const useUnstakeRsharePools = (pid: number) => {
@@ -36,7 +36,7 @@ export const useUnstakeRsharePools = (pid: number) => {
     [account, dispatch, masterChefContract, pid],
   )
 
-  return { onUnstake: handleUnstake }
+  return { onUnstakeRsharePools: handleUnstake }
 }
 
 export const useUnstakeMasonry = () => {
@@ -54,4 +54,21 @@ export const useUnstakeMasonry = () => {
   )
 
   return { onUnstake: handleUnstake }
+}
+
+export const useExitMasonry = () => {
+  const dispatch = useDispatch()
+  const { account } = useWallet()
+  const masterChefContract = useMasonryContract()
+
+  const handleExit = useCallback(
+    async () => {
+      const txHash = await exitMasonry(masterChefContract, account)
+      dispatch(fetchMasonDataAsync(account))
+      console.info(txHash)
+    },
+    [account, dispatch, masterChefContract],
+  )
+
+  return { onExit: handleExit }
 }

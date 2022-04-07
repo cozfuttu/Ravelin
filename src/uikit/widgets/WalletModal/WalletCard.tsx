@@ -21,10 +21,10 @@ const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss, mb }) => 
       variant="tertiary"
       onClick={() => {
         login(walletConfig.connectorId)
-        if(!account){
+        if (!account) {
           window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0x89' }], // chainId must be in hexadecimal numbers
+            params: [{ chainId: '0xFA' }], // chainId must be in hexadecimal numbers
           })
         }
         window.localStorage.setItem(localStorageKey, '1')

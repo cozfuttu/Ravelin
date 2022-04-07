@@ -8,6 +8,8 @@ const Container = styled.div`
   padding-right: 16px;
   margin-top: 5vh;
 
+  overflow-x: hidden;
+
   ${({ theme }) => theme.mediaQueries.sm} {
     padding-left: 24px;
     padding-right: 24px;

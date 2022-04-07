@@ -19,7 +19,7 @@ export const useStakeGenesisPools = (pid: number) => {
     [account, dispatch, masterChefContract, pid],
   )
 
-  return { onStake: handleStake }
+  return { onStakeGenesisPools: handleStake }
 }
 
 export const useStakeRsharePools = (pid: number) => {
@@ -36,7 +36,7 @@ export const useStakeRsharePools = (pid: number) => {
     [account, dispatch, masterChefContract, pid],
   )
 
-  return { onStake: handleStake }
+  return { onStakeRsharePools: handleStake }
 }
 
 export const useStakeMasonry = () => {

@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js'
 import { useBurnedBalanceRav, useBurnedBalanceRbond, useBurnedBalanceRshare, useTotalSupplyRav, useTotalSupplyRbond, useTotalSupplyRshare } from 'hooks/useTokenBalance'
 import React from 'react'
-import { usePriceRavBusd, usePriceRshareBusd, usePriceRbondBusd, usePriceRavNativeLP, usePriceRshareNativeLP, usePriceBnbBusd } from 'state/hooks'
+import { usePriceRavBusd, usePriceRshareBusd, usePriceRbondBusd, usePriceBnbBusd } from 'state/hooks'
+import { getRavAddress, getRshareAddress, getRbondAddress } from 'utils/addressHelpers'
 import styled from 'styled-components'
 import HexCard from './HexCard'
 
@@ -37,11 +38,15 @@ const TokenCards = () => {
   const marketCapRshare = rsharePriceUsd.times(circSupplyRshare)
   const marketCapRbond = rbondPriceUsd.times(circSupplyRbond)
 
+  const ravAddress = getRavAddress()
+  const rshareAddress = getRshareAddress()
+  const rbondAddress = getRbondAddress()
+
   return (
     <Cards>
-      <HexCard tokenName='rav' tokenPriceUSD={ravPriceUsd} adaPrice={adaPrice} totalSupply={totalSupplyRav} circSupply={circSupplyRav} marketCap={marketCapRav} />
-      <HexCard tokenName='rshare' tokenPriceUSD={rsharePriceUsd} adaPrice={adaPrice} totalSupply={totalSupplyRshare} circSupply={circSupplyRshare} marketCap={marketCapRshare} />
-      <HexCard tokenName='rbond' tokenPriceUSD={rbondPriceUsd} adaPrice={adaPrice} totalSupply={totalSupplyRbond} circSupply={circSupplyRbond} marketCap={marketCapRbond} />
+      <HexCard tokenAddress={ravAddress} tokenName='rav' tokenPriceUSD={ravPriceUsd} adaPrice={adaPrice} totalSupply={totalSupplyRav} circSupply={circSupplyRav} marketCap={marketCapRav} />
+      <HexCard tokenAddress={rshareAddress} tokenName='rshare' tokenPriceUSD={rsharePriceUsd} adaPrice={adaPrice} totalSupply={totalSupplyRshare} circSupply={circSupplyRshare} marketCap={marketCapRshare} />
+      <HexCard tokenAddress={rbondAddress} tokenName='rbond' tokenPriceUSD={rbondPriceUsd} adaPrice={adaPrice} totalSupply={totalSupplyRbond} circSupply={circSupplyRbond} marketCap={marketCapRbond} />
     </Cards>
   )
 }

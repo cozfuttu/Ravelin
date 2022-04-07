@@ -17,7 +17,7 @@ export const useHarvestGenesisPools = (farmPid: number) => {
     return txHash
   }, [account, dispatch, farmPid, masterChefContract])
 
-  return { onReward: handleHarvest }
+  return { onRewardGenesisPools: handleHarvest }
 }
 
 export const useHarvestRsharePools = (farmPid: number) => {
@@ -31,7 +31,7 @@ export const useHarvestRsharePools = (farmPid: number) => {
     return txHash
   }, [account, dispatch, farmPid, masterChefContract])
 
-  return { onReward: handleHarvest }
+  return { onRewardRsharePools: handleHarvest }
 }
 
 /* export const useAllHarvest = (farmPids: number[]) => {

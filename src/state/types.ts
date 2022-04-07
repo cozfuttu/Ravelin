@@ -10,6 +10,7 @@ export interface Farm extends FarmConfig {
   depositFeeBP?: number
   gammaPulsarPerBlock?: number
   decimals?: number
+  quoteTokenDecimals?: number
   totalLpStaked?: number
   poolEndTime?: number
   isStarted?: boolean
@@ -31,6 +32,7 @@ export interface Mason {
   canWithdraw: boolean
   canClaimReward: boolean
   earned: string
+  stakedBalance: string
 }
 
 export interface Masonry {
@@ -43,7 +45,36 @@ export interface Masonry {
   epoch?: string
   nextEpochPoint?: string
   tombPrice?: string
+  withdrawLockupEpochs?: string
+  rewardLockupEpochs?: string
   userData?: Mason
+}
+
+export interface Treasury {
+  twap?: string
+  epoch?: string
+  nextEpochPoint?: string
+  epochSupplyContractionLeft?: string
+  startTime?: string
+  previousEpochTombPrice?: string
+  discountPercent?: string
+  premiumPercent?: string
+  reserve?: string
+  burnableTombLeft?: string
+  redeemableBonds?: string
+  bondDiscountRate?: string
+  bondPremiumRate?: string
+  tombCirculatingSupply?: string
+  tombPrice?: string
+  period?: string
+  userData?: TreasuryUser
+}
+
+export interface TreasuryUser {
+  allowanceRav: string
+  allowanceRbond: string
+  tokenBalanceRav: string
+  tokenBalanceRbond: string
 }
 
 // Slices states
@@ -56,9 +87,14 @@ export interface MasonryState {
   data: Masonry
 }
 
+export interface TreasuryState {
+  data: Treasury
+}
+
 // Global state
 
 export interface State {
   farms: FarmsState
   masonry: MasonryState
+  treasury: TreasuryState
 }
