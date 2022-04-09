@@ -2,15 +2,12 @@ import BigNumber from 'bignumber.js'
 import erc20 from 'config/abi/erc20.json'
 import masonryABI from 'config/abi/masonry.json'
 import multicall from 'utils/multicall'
-import { getMasonryAddress, getRavAddress, getRavNativeLPAddress, getRshareAddress, getRshareNativeLPAddress, getWbnbAddress } from 'utils/addressHelpers'
+import { getMasonryAddress, getRshareAddress, getRshareNativeLPAddress, getWbnbAddress } from 'utils/addressHelpers'
 
-const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
 
 const fetchMasonry = async () => {
   const masonryAddress = getMasonryAddress()
   const RshareAddress = getRshareAddress()
-  const ravAddress = getRavAddress()
-  const ravNativeLpAddress = getRavNativeLPAddress()
   const rshareNativeLpAddress = getRshareNativeLPAddress()
   const nativeAddress = getWbnbAddress()
 

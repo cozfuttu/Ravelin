@@ -1,11 +1,5 @@
-import { useWallet } from '@binance-chain/bsc-use-wallet'
 import BigNumber from 'bignumber.js'
-import { BLOCKS_PER_YEAR } from 'config'
-import { QuoteToken } from 'config/constants/types'
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { fetchFarmUserDataAsync } from 'state/farms'
-import { useFarms, usePriceBnbBusd, usePriceRavBusd, usePriceRshareBusd } from 'state/hooks'
+import React from 'react'
 import styled from 'styled-components'
 import LPCard, { FarmWithStakedValue } from './LPCard'
 

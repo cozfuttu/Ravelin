@@ -7,7 +7,7 @@ import useRefresh from 'hooks/useRefresh'
 import {
   fetchFarmsPublicDataAsync, fetchFarmUserDataAsync, fetchMasonDataAsync, fetchMasonryPublicDataAsync, fetchTreasuryPublicDataAsync
 } from './actions'
-import { State, Farm, Masonry, Mason, Treasury } from './types'
+import { State, Farm, Masonry, Treasury } from './types'
 import { QuoteToken } from '../config/constants/types'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { fetchTreasuryUserDataAsync } from './treasury'
@@ -110,7 +110,6 @@ export const usePriceRshareBusd = (): BigNumber => {
 // RAV PRICE
 export const usePriceRbondBusd = (): BigNumber => {
   // const pid = 1 // CAKE-BNB LP
-   const bnbPriceUSD = usePriceBnbBusd() // NATIVE PRICE
    const ravPrice = usePriceRavBusd()
   // const farm = useFarmFromPid(pid)
   // return farm.tokenPriceVsQuote ? bnbPriceUSD.times(farm.tokenPriceVsQuote) : ZERO

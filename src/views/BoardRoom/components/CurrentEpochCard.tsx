@@ -1,6 +1,5 @@
 import BigNumber from 'bignumber.js'
 import React from 'react'
-import { useMasonry } from 'state/hooks'
 import Card from './Card'
 
 interface CardProps {

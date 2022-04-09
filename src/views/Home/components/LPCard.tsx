@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import React from 'react'
 import styled from 'styled-components'
 import { Button, Text } from 'uikit'
-import { getRavAddress, getRavNativeLPAddress, getRshareAddress, getRshareNativeLPAddress } from 'utils/addressHelpers'
+import { getRavAddress, getRshareAddress } from 'utils/addressHelpers'
 
 const Card = styled.div`
   display: flex;
@@ -46,7 +46,6 @@ interface CardProps {
 const LPCard: React.FC<CardProps> = ({ lpName, LPPriceUSD, adaPrice, marketCap, totalSupply }) => {
   const lpImage = `images/icons/${lpName}.png`
   // const lpPriceInAda = LPPriceUSD.div(adaPrice)
-  const tokenNames = lpName.split("-")
   return (
     <Card>
       <Col>
@@ -59,7 +58,7 @@ const LPCard: React.FC<CardProps> = ({ lpName, LPPriceUSD, adaPrice, marketCap, 
       </Col>
       <Col>
         <Image src={lpImage} />
-        <a href={`https://spookyswap.finance/add/ETH/${lpName === 'rav-ada' ? getRavAddress() : getRshareAddress()}`} target="_blank" style={{ textDecoration: 'none' }}>
+        <a href={`https://spookyswap.finance/add/ETH/${lpName === 'rav-ada' ? getRavAddress() : getRshareAddress()}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
           <Button size='sm'>ZAP IN</Button>
         </a>
       </Col>

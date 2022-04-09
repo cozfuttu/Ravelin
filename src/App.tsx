@@ -1,12 +1,10 @@
 import React, { useEffect, Suspense, lazy } from 'react'
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import styled from 'styled-components'
-import logo from './logo.svg';
 import NotFound from 'views/NotFound';
 import PageLoader from 'components/PageLoader';
 import Menu from 'components/Menu/Menu';
-import { useFetchPublicData, useMasonry } from 'state/hooks';
+import { useFetchPublicData } from 'state/hooks';
 import BigNumber from 'bignumber.js';
 
 const Home = lazy(() => import('./views/Home'))
@@ -24,7 +22,7 @@ const fmt = {
 }
 
 const App = () => {
-  const { account, connect, reset } = useWallet()
+  const { account, connect } = useWallet()
 
   BigNumber.config({ FORMAT: fmt })
 

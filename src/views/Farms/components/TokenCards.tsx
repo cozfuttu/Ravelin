@@ -6,14 +6,13 @@ import { useUnstakeGenesisPools, useUnstakeRsharePools } from 'hooks/useUnstake'
 import { useStakeGenesisPools, useStakeRsharePools } from 'hooks/useStake'
 import { FarmWithStakedValue } from './LPCard'
 import BigNumber from 'bignumber.js'
-import { usePriceRavBusd, usePriceRshareBusd } from 'state/hooks'
+import { usePriceRavBusd } from 'state/hooks'
 import { useHarvestGenesisPools, useHarvestRsharePools } from 'hooks/useHarvest'
 import UnlockButton from 'components/UnlockButton'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import DepositModal from 'views/components/DepositModal'
 import WithdrawModal from 'views/components/WithdrawModal'
 import { getContract } from 'utils/erc20'
-import { getRshareAddress } from 'utils/addressHelpers'
 import { useApproveGenesisPools, useApproveRsharePools } from 'hooks/useApprove'
 
 const Cards = styled.div`
@@ -62,7 +61,6 @@ const TokenCards: React.FC<Props> = ({ farm }) => {
   const tokenAddress = tokenAddresses[process.env.REACT_APP_CHAIN_ID]
 
   const ravPriceUsd = usePriceRavBusd()
-  const rsharePriceUsd = usePriceRshareBusd()
 
   const { account, ethereum }: { account: string, ethereum: provider } = useWallet()
 
@@ -89,8 +87,6 @@ const TokenCards: React.FC<Props> = ({ farm }) => {
   const isApproved = new BigNumber(userData?.allowance).isGreaterThan(0)
   const isStaked = new BigNumber(userData?.stakedBalance).isGreaterThan(0)
 
-  const rshareAddress = getRshareAddress()
-
   const farmName = isTokenOnly
     ? `${tokenSymbol.toLowerCase()}`
     : `${tokenSymbol.toLowerCase()}-${quoteTokenSymbol.toLowerCase()}`
@@ -100,7 +96,7 @@ const TokenCards: React.FC<Props> = ({ farm }) => {
       return getContract(ethereum as provider, tokenAddress)
     }
     return getContract(ethereum as provider, lpAddress)
-  }, [ethereum, rshareAddress])
+  }, [ethereum, isTokenOnly, lpAddress, tokenAddress])
 
   const { onApproveRsharePools } = useApproveRsharePools(lpContract)
   const { onApproveGenesisPools } = useApproveGenesisPools(lpContract)
@@ -116,7 +112,7 @@ const TokenCards: React.FC<Props> = ({ farm }) => {
     finally {
       setRequestedApproval(false)
     }
-  }, [onApproveRsharePools, onApproveGenesisPools])
+  }, [onApproveRsharePools, onApproveGenesisPools, isGenesis])
 
   const handleClaimReward = async () => {
     setPending(true)

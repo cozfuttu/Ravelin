@@ -12,10 +12,8 @@ import BigNumber from 'bignumber.js'
 import { BLOCKS_PER_YEAR } from 'config'
 import { QuoteToken } from 'config/constants/types'
 import Genesis from './components/Genesis'
-import GrayBack from 'views/Home/components/GrayBack'
 import BlueBack from 'views/Home/components/BlueBack'
 import BlackBack from 'views/Home/components/BlackBack'
-import { useStakeRsharePools } from 'hooks/useStake'
 
 const ImageContainer = styled.div`
   position: fixed;

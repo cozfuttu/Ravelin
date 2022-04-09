@@ -1,9 +1,7 @@
 import BigNumber from 'bignumber.js'
-import { BLOCKS_PER_YEAR } from 'config'
 import React from 'react'
 import { usePriceBnbBusd } from 'state/hooks'
 import { Masonry } from 'state/types'
-import { apyModalRoi, calculateCakeEarnedPerThousandDollars } from 'utils/compoundApyHelpers'
 import Card from './Card'
 
 interface CardProps {

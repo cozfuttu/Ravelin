@@ -1,4 +1,3 @@
-import { ExternalLink } from 'react-feather'
 import { MenuEntry } from 'uikit'
 
 const config: MenuEntry[] = [

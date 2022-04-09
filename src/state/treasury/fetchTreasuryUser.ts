@@ -1,9 +1,7 @@
 import BigNumber from 'bignumber.js'
 import erc20ABI from 'config/abi/erc20.json'
 import multicall from 'utils/multicall'
-import { getRavAddress, getRbondAddress, getRshareAddress, getTreasuryAddress } from 'utils/addressHelpers'
-
-const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
+import { getRavAddress, getRbondAddress, getTreasuryAddress } from 'utils/addressHelpers'
 
 const fetchTreasuryUser = async (account) => {
   const treasuryAddress = getTreasuryAddress()

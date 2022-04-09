@@ -56,7 +56,7 @@ const Menu = () => {
         <MenuLabels>
           {config.map((menuItem) => {
             return (
-              <Link to={menuItem.href} key={menuItem.href} style={{ textDecoration: 'none' }}>
+              <Link to={menuItem.href} key={menuItem.label} style={{ textDecoration: 'none' }}>
                 <Text fontSize='18px' bold>{menuItem.label}</Text>
               </Link>
             )

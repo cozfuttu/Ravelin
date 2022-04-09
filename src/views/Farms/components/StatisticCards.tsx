@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import React from 'react'
 import styled from 'styled-components'
-import { Heading, Text } from 'uikit'
+import { Text } from 'uikit'
 import { FarmWithStakedValue } from './LPCard'
 
 const Cards = styled.div`

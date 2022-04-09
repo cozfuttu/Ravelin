@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { useBurnedBalanceRavNativeLP, useBurnedBalanceRshareNativeLP, useTotalSupplyRav, useTotalSupplyRavNativeLP, useTotalSupplyRshareNativeLP } from 'hooks/useTokenBalance'
+import { useBurnedBalanceRavNativeLP, useBurnedBalanceRshareNativeLP, useTotalSupplyRavNativeLP, useTotalSupplyRshareNativeLP } from 'hooks/useTokenBalance'
 import React from 'react'
 import { usePriceBnbBusd, usePriceRavNativeLP, usePriceRshareNativeLP } from 'state/hooks'
 import styled from 'styled-components'

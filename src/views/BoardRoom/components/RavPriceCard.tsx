@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React from 'react'
-import { usePriceBnbBusd, usePriceRavBusd } from 'state/hooks'
+import { usePriceBnbBusd } from 'state/hooks'
 import Card from './Card'
 
 interface CardProps {

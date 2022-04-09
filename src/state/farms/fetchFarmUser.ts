@@ -1,6 +1,5 @@
 import BigNumber from 'bignumber.js'
 import erc20ABI from 'config/abi/erc20.json'
-import masterchefABI from 'config/abi/masterchef.json'
 import genesisABI from 'config/abi/genesisPools.json'
 import rsharePoolsABI from 'config/abi/rsharePools.json'
 import multicall from 'utils/multicall'

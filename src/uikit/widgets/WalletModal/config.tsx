@@ -3,7 +3,6 @@ import MathWallet from './icons/MathWallet'
 import TokenPocket from './icons/TokenPocket'
 import TrustWallet from './icons/TrustWallet'
 import WalletConnect from './icons/WalletConnect'
-import BinanceChain from './icons/BinanceChain'
 import { Config } from './types'
 
 const connectors: Config[] = [

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import WidePage from 'components/layout/WidePage'
 import styled from 'styled-components'
 import { provider } from 'web3-core'
-import { DateTime } from 'luxon'
 import { Button, Text } from 'uikit'
 import BlueBack from 'views/Home/components/BlueBack'
 import BlackBack from 'views/Home/components/BlackBack'
@@ -17,7 +16,6 @@ import RavCard from './components/RavCard'
 import RshareCard from './components/RshareCard'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useExitMasonry } from 'hooks/useUnstake'
-import useCurrentTime from 'hooks/useTimer'
 import WithdrawCard from './components/WithdrawCard'
 import ClaimCard from './components/ClaimCard'
 
@@ -57,7 +55,7 @@ const BoardRoom = () => {
   const treasury = useTreasury()
   const { account, ethereum }: { account: string, ethereum: provider } = useWallet()
 
-  const { nextEpochPoint, userData, withdrawLockupEpochs, rewardLockupEpochs } = masonry
+  const { userData } = masonry
 
   const canClaimReward = userData?.canClaimReward
   const canWithdraw = userData?.canWithdraw

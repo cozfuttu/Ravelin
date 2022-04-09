@@ -6,9 +6,8 @@ import Flex from '../../../uikit/components/Flex/Flex'
 import { ArrowBackIcon, CloseIcon } from '../../../uikit/components/Svg'
 import { Button, IconButton } from '../../../uikit/components/Button'
 import { InjectedProps } from '../../../uikit/widgets/Modal/types'
-import { getRavAddress, getRavNativeLPAddress, getRshareAddress, getRshareNativeLPAddress } from 'utils/addressHelpers'
+import { getRavAddress, getRshareAddress } from 'utils/addressHelpers'
 import { useUnstakeGenesisPools, useUnstakeRsharePools } from 'hooks/useUnstake'
-import { useStakeGenesisPools, useStakeRsharePools } from 'hooks/useStake'
 import StatisticCards from './StatisticCards'
 import TokenCards from './TokenCards'
 import BigNumber from 'bignumber.js'
@@ -65,7 +64,7 @@ const FarmModal: React.FC<Props> = ({
   const [pending, setPending] = useState(false)
   console.log('farm: ', farm)
 
-  const stakedBalance = new BigNumber(farm?.userData?.stakedBalance)
+  const stakedBalance = useMemo(() => new BigNumber(farm?.userData?.stakedBalance), [farm?.userData?.stakedBalance])
 
   const { onUnstakeGenesisPools } = useUnstakeGenesisPools(farm.pid)
   const { onUnstakeRsharePools } = useUnstakeRsharePools(farm.pid)
@@ -101,7 +100,7 @@ const FarmModal: React.FC<Props> = ({
       <StatisticCards farm={farm} tvl={tvl} dailyApr={dailyApr} />
       <TokenCards farm={farm} />
       {(farm.lpSymbol === 'RAV-ADA LP' || farm.lpSymbol === 'RSHARE-ADA LP') &&
-        <a href={`https://spookyswap.finance/add/ETH/${farm.lpSymbol === 'RAV-ADA LP' ? getRavAddress() : getRshareAddress()}`} target="_blank" style={{ textDecoration: 'none', marginTop: '16px' }}>
+        <a href={`https://spookyswap.finance/add/ETH/${farm.lpSymbol === 'RAV-ADA LP' ? getRavAddress() : getRshareAddress()}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: '16px' }}>
           <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px' }}>Provide liquidity for {farm.lpSymbol} pair now on SpookySwap</Button>
         </a>}
       <Button size='md' onClick={handleExit} disabled={pending} mt="16px" style={{ background: 'linear-gradient(180deg, rgba(0, 62, 120, 1) 0%, rgba(21, 139, 206, 0.6) 100%)', boxShadow: '0 4px 6px -4px #000' }}>CLAIM {'&'} WITHDRAW</Button>

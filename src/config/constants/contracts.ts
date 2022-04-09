@@ -1,4 +1,4 @@
-const TEST_CONTRACTS = {
+/* const TEST_CONTRACTS = {
   cake: {
     137: '0x1d9d6B3B02eA3411d34d1bd625F47CacbC632437',
     97: '',
@@ -63,7 +63,7 @@ const TEST_CONTRACTS = {
     137: '0xf90F32Ed5cAF6BcFb23BAe607b60c00332C259c3',
     97: '',
   }
-}
+} */
 
 const PRODUCTION_CONTRACTS = {
   wbnb: {

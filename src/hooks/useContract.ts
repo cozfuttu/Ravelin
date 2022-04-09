@@ -12,7 +12,6 @@ import {
   getTreasuryAddress,
 } from 'utils/addressHelpers'
 import erc20 from 'config/abi/erc20.json'
-import masterChef from 'config/abi/masterchef.json'
 import ravABI from 'config/abi/rav.json'
 import rshareABI from 'config/abi/rshare.json'
 import rbondABI from 'config/abi/rbond.json'

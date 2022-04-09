@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { AnimatedButton } from 'uikit'
-import Button from '../../components/Button/Button'
 import { useWalletModal } from '../WalletModal'
 import { Login } from '../WalletModal/types'
 

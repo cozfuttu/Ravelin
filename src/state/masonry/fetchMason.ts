@@ -2,10 +2,7 @@ import BigNumber from 'bignumber.js'
 import erc20ABI from 'config/abi/erc20.json'
 import masonryABI from 'config/abi/masonry.json'
 import multicall from 'utils/multicall'
-import farmsConfig from 'config/constants/farms'
 import { getMasonryAddress, getRshareAddress } from 'utils/addressHelpers'
-
-const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
 
 const fetchMason = async (account) => {
   const masonryAddress = getMasonryAddress()

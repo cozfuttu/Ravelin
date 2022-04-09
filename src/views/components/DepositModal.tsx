@@ -4,7 +4,6 @@ import { Button, Modal } from 'uikit'
 import ModalActions from 'components/ModalActions'
 import TokenInput from 'components/TokenInput'
 import { getFullDisplayBalance } from 'utils/formatBalance'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
 
 interface DepositModalProps {
   max: BigNumber

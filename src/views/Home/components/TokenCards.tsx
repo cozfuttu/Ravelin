@@ -26,8 +26,6 @@ const TokenCards = () => {
   const rsharePriceUsd = usePriceRshareBusd()
   const rbondPriceUsd = usePriceRbondBusd()
 
-  console.log('prices: ', ravPriceUsd.toFormat(2), rsharePriceUsd.toFormat(2), rbondPriceUsd.toFormat(2))
-
   const adaPrice = usePriceBnbBusd()
 
   const circSupplyRav = totalSupplyRav ? totalSupplyRav.minus(burnedBalanceRav) : new BigNumber(0)

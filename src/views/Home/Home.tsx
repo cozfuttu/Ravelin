@@ -1,14 +1,14 @@
 import WidePage from 'components/layout/WidePage'
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Heading, Text } from 'uikit'
+import { Button, Text } from 'uikit'
 import BlackBack from './components/BlackBack'
 import BlueBack from './components/BlueBack'
 import GrayBack from './components/GrayBack'
 import AttentionIcon from './components/AttentionIcon'
 import TokenCards from './components/TokenCards'
 import LPCards from './components/LPCards'
-import { useFarms, useTotalValue } from 'state/hooks'
+import { useTotalValue } from 'state/hooks'
 import { getRavAddress, getRshareAddress } from 'utils/addressHelpers'
 
 const TextContainer = styled.div`
@@ -94,10 +94,10 @@ const Home = () => {
                 <a href="/farms" style={{ textDecoration: 'none' }}>
                   <Button>FARM NOW</Button>
                 </a>
-                <a href={`https://spookyswap.finance/swap?outputCurrency=${getRavAddress()}`} target='_blank' style={{ textDecoration: 'none' }}>
+                <a href={`https://spookyswap.finance/swap?outputCurrency=${getRavAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
                   <Button>BUY RAV</Button>
                 </a>
-                <a href={`https://spookyswap.finance/swap?outputCurrency=${getRshareAddress()}`} target='_blank' style={{ textDecoration: 'none' }}>
+                <a href={`https://spookyswap.finance/swap?outputCurrency=${getRshareAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
                   <Button>BUY RSHARE</Button>
                 </a>
               </Buttons>
