@@ -23,6 +23,10 @@ const TextContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1080px) {
+    margin-top: 8vh;
+  }
 `
 
 const InfoContainer = styled.div`
@@ -31,6 +35,10 @@ const InfoContainer = styled.div`
   justify-content: center;
   gap: 32px;
   margin-top: 4%;
+
+  @media (max-width: 1080px) {
+    flex-direction: column;
+  }
 `
 
 const Bond = () => {

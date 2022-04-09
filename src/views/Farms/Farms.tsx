@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import WidePage from 'components/layout/WidePage'
 import styled from 'styled-components'
-import { Text } from 'uikit'
+import { Text, useMatchBreakpoints } from 'uikit'
 import LPCards from './components/LPCards'
 import { useFarms, usePriceBnbBusd, usePriceRavBusd, usePriceRshareBusd } from 'state/hooks'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
@@ -26,6 +26,9 @@ const ImageContainer = styled.div`
 
 const Farms = () => {
   const farmsLP = useFarms()
+  const { isXl } = useMatchBreakpoints()
+
+  const isMobile = isXl === false
 
   const rsharePrice = usePriceRshareBusd()
   const ravPrice = usePriceRavBusd()
@@ -43,9 +46,6 @@ const Farms = () => {
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
 
   const farmsToDisplayWithAPY: FarmWithStakedValue[] = activeFarms.map((farm) => {
-    // if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
-    //   return farm
-    // }
 
     const cakeRewardPerBlock = new BigNumber(farm.gammaPulsarPerBlock || 1)
       .times(new BigNumber(farm.poolWeight))
@@ -80,7 +80,7 @@ const Farms = () => {
         <BlueBack />
         <BlackBack />
       </ImageContainer>
-      <Text color='#003E78' fontSize='32px' bold>FARM</Text>
+      <Text color='#003E78' fontSize='32px' bold style={{ marginTop: isMobile && '8vh' }}>FARM</Text>
       <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RSHARE by staking LP</Text>
       <LPCards farmsToDisplayWithApy={rshareFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} />
       <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RAV by Staking in Genesis Pools</Text>

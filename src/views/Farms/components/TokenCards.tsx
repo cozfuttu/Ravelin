@@ -21,6 +21,10 @@ const Cards = styled.div`
   justify-content: space-between;
   width: 70%;
   margin-top: 2em;
+
+  @media (max-width: 1080px) {
+    width: 100%;
+  }
 `
 
 const TokenCard = styled.div`
@@ -34,6 +38,11 @@ const TokenCard = styled.div`
   border-radius: 8px;
   box-shadow: 0 8px 10px -4px #000;
   max-width: 40%;
+  
+  @media (max-width: 1080px) {
+    border-radius: 24px;
+    padding: 32px 16px;
+  }
 `
 
 const Image = styled.img`

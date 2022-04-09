@@ -58,6 +58,8 @@ const HexCard: React.FC<CardProps> = ({ tokenAddress, tokenName, tokenPriceUSD, 
   const tokenImage = `images/icons/${tokenName}.png`
   const tokenPriceInAda = tokenPriceUSD.div(adaPrice)
 
+  const tokenImageMetamask = `https://beta.vanguardian.xyz/images/icons/${tokenName}.png`
+
   const onMetamaskButtonClick = async () => {
     try {
       await window.ethereum.request({
@@ -68,7 +70,7 @@ const HexCard: React.FC<CardProps> = ({ tokenAddress, tokenName, tokenPriceUSD, 
             address: tokenAddress, // The address that the token is at.
             symbol: tokenName.toUpperCase(), // A ticker symbol or shorthand, up to 5 chars.
             decimals: 18, // The number of decimals in the token
-            image: tokenImage, // A string url of the token logo
+            image: tokenImageMetamask, // A string url of the token logo
           },
         },
       });

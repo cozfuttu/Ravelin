@@ -41,8 +41,8 @@ const RshareCard: React.FC<CardProps> = ({ masonry, ethereum, account }) => {
 
   const userBalance = new BigNumber(userData?.tokenBalance)
 
-  const rshareStaked = new BigNumber(userData?.stakedBalance).div(1e18)
-  const rshareStakedUsd = new BigNumber(userData?.stakedBalance).div(1e18).times(rsharePriceUsd)
+  const rshareStaked = userData ? new BigNumber(userData?.stakedBalance).div(1e18) : new BigNumber(0)
+  const rshareStakedUsd = userData ? new BigNumber(userData?.stakedBalance).div(1e18).times(rsharePriceUsd) : new BigNumber(0)
 
   const rshareStakedFormatted = rshareStaked.toFormat(4)
   const rshareStakedUsdFormatted = rshareStakedUsd.toFormat(4)

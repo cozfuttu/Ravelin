@@ -4,6 +4,12 @@ import styled from 'styled-components'
 const Back = styled.div`
   position: absolute;
   z-index: -1;
+
+  @media (max-width: 1080px) {
+    position: absolute;
+    left: -180px;
+    top: calc(30% + 8vh);
+  }
 `
 const BlackBack = () => {
   return (

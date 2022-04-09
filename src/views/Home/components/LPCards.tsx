@@ -11,6 +11,11 @@ const Cards = styled.div`
   justify-content: space-between;
   width: 70%;
   margin-top: 2em;
+
+  @media (max-width: 1080px) {
+    flex-direction: column;
+    gap: 24px;
+  }
 `
 
 const LPCards = () => {

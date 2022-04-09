@@ -11,6 +11,10 @@ const Cards = styled.div`
   align-items: center;
   gap: 8px;
   width: 80%;
+
+  @media (max-width: 1080px) {
+    flex-direction: column;
+  }
 `
 
 const TokenCards = () => {

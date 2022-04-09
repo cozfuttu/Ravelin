@@ -15,6 +15,7 @@ const InfoCard = styled.div`
   max-width: 17%;
   text-align: center;
   z-index: 1;
+  min-width: 120px;
 `
 
 interface CardProps {

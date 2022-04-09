@@ -35,7 +35,7 @@ const PurchaseRBondCard: React.FC<Props> = ({ treasury }) => {
 
   const { onBuy } = useBuyBonds(tombPrice)
 
-  const rbondAvailable = new BigNumber(burnableTombLeft)
+  const rbondAvailable = new BigNumber(burnableTombLeft).div(1e18)
   const isRbondAvailable = rbondAvailable.isGreaterThan(0)
 
   const ravInWallet = new BigNumber(userData?.tokenBalanceRav)

@@ -13,11 +13,15 @@ const Card = styled.div`
   align-items: center;
   background-color: #F2F2F2;
   box-shadow: 0 8px 10px -4px #000;
-  width: 30em;
-  height: 13.3em;
+  width: 550px;
+  height: 245px;
   padding: 1em;
   border-radius: 0.5em;
   z-index: 1;
+
+  @media (max-width: 1080px) {
+    width: 100%;
+  }
 `
 
 const Col = styled.div`

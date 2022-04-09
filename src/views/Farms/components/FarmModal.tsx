@@ -12,10 +12,10 @@ import StatisticCards from './StatisticCards'
 import TokenCards from './TokenCards'
 import BigNumber from 'bignumber.js'
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import { useMatchBreakpoints } from 'uikit'
 
 interface Props extends InjectedProps {
   onBack?: () => void
-  isMobile?: boolean
   farm: FarmWithStakedValue
   tvl: string
   dailyApr: string
@@ -36,6 +36,13 @@ const StyledModal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 1080px) {
+    width: 100vw;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+  }
 `
 
 const ModalHeader = styled.div`
@@ -55,11 +62,12 @@ const ModalTitle = styled(Flex)`
 const FarmModal: React.FC<Props> = ({
   onDismiss,
   onBack,
-  isMobile = false,
   farm,
   tvl,
   dailyApr,
 }) => {
+  const { isXl } = useMatchBreakpoints()
+  const isMobile = isXl === false
 
   const [pending, setPending] = useState(false)
   console.log('farm: ', farm)
@@ -85,7 +93,7 @@ const FarmModal: React.FC<Props> = ({
   }
 
   return (
-    <StyledModal style={{ width: isMobile && '90%', height: isMobile && '90%' }}>
+    <StyledModal>
       <ModalHeader>
         <ModalTitle>
           {onBack && (
@@ -97,13 +105,13 @@ const FarmModal: React.FC<Props> = ({
           <Heading style={{ fontSize: '16px', marginTop: '0' }}>Deposit {farm.lpSymbol} and earn {farm.isGenesis ? "RAV" : "RSHARE"}</Heading>
         </ModalTitle>
       </ModalHeader>
-      <StatisticCards farm={farm} tvl={tvl} dailyApr={dailyApr} />
+      <StatisticCards farm={farm} tvl={tvl} dailyApr={dailyApr} isMobile={isMobile} />
       <TokenCards farm={farm} />
       {(farm.lpSymbol === 'RAV-ADA LP' || farm.lpSymbol === 'RSHARE-ADA LP') &&
         <a href={`https://spookyswap.finance/add/ETH/${farm.lpSymbol === 'RAV-ADA LP' ? getRavAddress() : getRshareAddress()}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: '16px' }}>
-          <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px' }}>Provide liquidity for {farm.lpSymbol} pair now on SpookySwap</Button>
+          <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: '100%' }}>Provide liquidity for {farm.lpSymbol} pair now on SpookySwap</Button>
         </a>}
-      <Button size='md' onClick={handleExit} disabled={pending} mt="16px" style={{ background: 'linear-gradient(180deg, rgba(0, 62, 120, 1) 0%, rgba(21, 139, 206, 0.6) 100%)', boxShadow: '0 4px 6px -4px #000' }}>CLAIM {'&'} WITHDRAW</Button>
+      {!isMobile && <Button size='md' onClick={handleExit} disabled={pending} mt="16px" style={{ background: 'linear-gradient(180deg, rgba(0, 62, 120, 1) 0%, rgba(21, 139, 206, 0.6) 100%)', boxShadow: '0 4px 6px -4px #000' }}>CLAIM {'&'} WITHDRAW</Button>}
       <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: '20px', border: '2px solid #007ABE' }}>
         <CloseIcon color="primary" />
       </IconButton>

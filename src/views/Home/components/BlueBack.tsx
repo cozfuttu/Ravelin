@@ -5,6 +5,11 @@ const Back = styled.div`
   position: absolute;
   z-index: -2;
   left: 64px;
+
+  @media (max-width: 1080px) {
+    left: -164px;
+    top: calc(40% + 8vh);
+  }
 `
 
 const BlueBack = () => {

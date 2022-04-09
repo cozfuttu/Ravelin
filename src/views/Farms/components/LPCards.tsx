@@ -9,6 +9,10 @@ const Cards = styled.div`
   justify-content: center;
   gap: 16px;
   margin-top: 2em;
+
+  @media (max-width: 1080px) {
+    flex-direction: column;
+  }
 `
 
 interface CardsProps {

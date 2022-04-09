@@ -25,8 +25,8 @@ const RavCard: React.FC<CardProps> = ({ masonry }) => {
   const [pending, setPending] = useState(false)
 
   console.log('masonry: ', masonry)
-  const rewardEarned = new BigNumber(userData?.earned).div(1e18)
-  const rewardEarnedUsd = rewardEarned.times(ravPriceUsd)
+  const rewardEarned = userData ? new BigNumber(userData?.earned).div(1e18) : new BigNumber(0)
+  const rewardEarnedUsd = userData ? rewardEarned.times(ravPriceUsd) : new BigNumber(0)
 
   const handleClaimReward = async () => {
     setPending(true)
