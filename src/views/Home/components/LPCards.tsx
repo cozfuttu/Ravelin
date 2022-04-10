@@ -8,9 +8,10 @@ import LPCard from './LPCard'
 const Cards = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 70%;
   margin-top: 2em;
+  gap: 32px;
 
   @media (max-width: 1080px) {
     flex-direction: column;

@@ -93,7 +93,6 @@ const Menu = () => {
             </MenuButton>
             <UserBlockContainer>
               <UserBlock account={account} login={connect} logout={reset} />
-
             </UserBlockContainer>
           </>
         }

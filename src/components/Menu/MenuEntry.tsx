@@ -17,8 +17,9 @@ const rainbowAnimation = keyframes`
 `
 
 const LinkLabel = styled.div<{ color?: string }>`
-  color: ${({ theme, color }) => !color ? theme.colors.textSubtle : color};
+  color: ${({ theme, color }) => !color ? 'white' : color};
   transition: color 0.4s;
+  font-size: 24px;
   flex-grow: 1;
 `
 

@@ -21,16 +21,26 @@ const OuterContainer = styled.div`
   top: 50%;
   transform: translateY(-50%);
   width: 100%;
-  height: 100%;
-  background-color: #158BCE;
+  height: 100vh;
+  background-image: url("images/other/menubg.png");
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: inherit;
+  transform: rotate(0deg);
+  background-color: #00000040;
 `
 
 const ItemsContainer = styled.div`
   display: flex;
-  padding-top: 50px;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  height: 50%;
   flex-direction: column;
-  width: 70%;
-  align-items: flex-start;
+  justify-content: space-evenly;
+  width: 100%;
+  align-items: flex-end;
+  align-self: center;
+  z-index: 999;
 `
 
 const SocialContainer = styled.div`
@@ -54,9 +64,8 @@ const CloseIconContainer = styled.div`
 `
 
 const AccordionDivider = styled.div`
-  background-color: #00fab39f;
-  width: 70%;
-  margin: 8px auto;
+  background-color: #0000009f;
+  width: 40%;
   height: 1px;
   margin-top: 16px;
 `
@@ -84,11 +93,14 @@ const MenuMobile: React.FC<Props> = ({ isMobile, onClose }) => {
         {config.map((entry) => {
           const calloutClass = entry.calloutClass ? entry.calloutClass : undefined
           return (
-            <MenuEntry key={entry.label} className={calloutClass}>
-              <MenuLink onClick={onClose} href={entry.href}>
-                <LinkLabel>{entry.label.toUpperCase()}</LinkLabel>
-              </MenuLink>
-            </MenuEntry>
+            <>
+              <MenuEntry key={entry.label} className={calloutClass}>
+                <MenuLink onClick={onClose} href={entry.href} style={{ textDecoration: 'none' }}>
+                  <LinkLabel>{entry.label.toUpperCase()}</LinkLabel>
+                </MenuLink>
+              </MenuEntry>
+              <AccordionDivider />
+            </>
           )
         })}
         {/*         <SocialContainer>
