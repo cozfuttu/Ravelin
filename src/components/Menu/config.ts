@@ -37,7 +37,7 @@ export const socials = [
   {
     label: 'Twitter',
     icon: 'TwitterIcon',
-    href: 'https://twitter.com/FarmPulsar',
+    href: 'https://twitter.com/RavelinFinance',
   },
 ]
 
