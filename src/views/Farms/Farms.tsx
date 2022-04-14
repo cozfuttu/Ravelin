@@ -22,6 +22,7 @@ const ImageContainer = styled.div`
   transform: translateY(-50%);
   display: flex;
   align-items: center;
+  z-index: -99;
 `
 
 const Farms = () => {
@@ -71,8 +72,8 @@ const Farms = () => {
     return { ...farm, apy }
   })
 
-  const rshareFarms = farmsToDisplayWithAPY.filter((farm) => !(farm.isGenesis))
-  const ravFarms = farmsToDisplayWithAPY.filter((farm) => farm.isGenesis)
+  const rshareFarms = farmsToDisplayWithAPY.filter((farm) => !(farm.isGenesis) && !(farm.isRavPool))
+  const ravFarms = farmsToDisplayWithAPY.filter((farm) => farm.isGenesis || farm.isRavPool)
 
   return (
     <WidePage>

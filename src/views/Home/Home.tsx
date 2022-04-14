@@ -88,7 +88,8 @@ const Buttons = styled.div`
   @media (max-width: 1080px) {
     flex-direction: column;
     gap: 16px;
-    align-items: center;
+    align-items: stretch;
+    margin-right: 5%;
   }
 `
 
@@ -116,20 +117,20 @@ const Home = () => {
               </Col>
               <Buttons>
                 <a href="/boardroom" style={{ textDecoration: 'none' }}>
-                  <Button>STAKE NOW</Button>
+                  <Button style={{ width: isMobile && '100%', fontSize: '14px' }}>STAKE NOW</Button>
                 </a>
                 <a href="/farms" style={{ textDecoration: 'none' }}>
-                  <Button>FARM NOW</Button>
+                  <Button style={{ width: isMobile && '100%', fontSize: '14px' }}>FARM NOW</Button>
                 </a>
                 <a href={`https://www.milkyswap.exchange/swap?outputCurrency=${getRavAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
-                  <Button>BUY RAV</Button>
+                  <Button style={{ width: isMobile && '100%', fontSize: '14px' }}>BUY RAV</Button>
                 </a>
                 <a href={`https://www.milkyswap.exchange/swap?outputCurrency=${getRshareAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
-                  <Button>BUY RSHARE</Button>
+                  <Button style={{ width: isMobile && '100%', fontSize: '14px' }}>BUY RSHARE</Button>
                 </a>
               </Buttons>
             </Row>
-            {isMobile && <Text color="#000000" mt="8vh"><span><AttentionIcon /></span>Please visit our <a href="https://www.google.com/">documentation</a> before purchasing STEEL or FOUNDATION!</Text>}
+            {isMobile && <Text color="#000000" mt="8vh" style={{ textAlign: 'center' }}><span><AttentionIcon /></span>Please visit our <a href="https://www.google.com/">documentation</a> before purchasing RAV or RSHARE!</Text>}
           </TVLandButtonsContainer>
           <TokenCards />
           <LPCards />

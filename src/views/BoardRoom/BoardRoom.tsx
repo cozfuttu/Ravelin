@@ -27,6 +27,7 @@ const ImageContainer = styled.div`
   transform: translateY(-50%);
   display: flex;
   align-items: center;
+  z-index: -99;
 `
 
 const InfoCards = styled.div`

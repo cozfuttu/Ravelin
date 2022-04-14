@@ -7,12 +7,14 @@ import { FarmWithStakedValue } from './LPCard'
 const Cards = styled.div`
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: center;
   width: 70%;
   margin-top: 2em;
 
   @media (max-width: 1080px) {
-    width: 100%;
+    flex-wrap: wrap;
+    width: 80%;
+    gap: 8px;
   }
 `
 
@@ -30,7 +32,10 @@ const InfoCard = styled.div`
 
   @media (max-width: 1080px) {
     border-radius: 24px;
-    max-width: 20%;
+    max-width: 100%;
+    min-width: 40%;
+    padding: 0.5rem 0.25rem;
+    border-radius: 4px;
   }
 `
 
@@ -45,21 +50,21 @@ const StatisticCards: React.FC<Props> = ({ farm, tvl, dailyApr, isMobile }) => {
   const isFarmFinished = farm.poolEndTime * 1000 <= Date.now()
   const farmApy = !isFarmFinished ? farm.apy?.times(new BigNumber(100)).toNumber() : 0
 
-  const farmApyString = new BigNumber(farmApy).toFormat(2)
+  const farmApyString = new BigNumber(farmApy).toFormat(0)
 
   return (
     <Cards>
       <InfoCard>
         <Text color='#9D9D9D' fontSize='24px' bold style={{ borderBottom: '2px solid #DADADA' }}>APR</Text>
-        <Text color='#4E4E4E' fontSize='18px'>%{farmApyString}</Text>
+        <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>%{farmApyString}</Text>
       </InfoCard>
       <InfoCard>
         <Text color='#9D9D9D' fontSize='24px' bold style={{ borderBottom: '2px solid #DADADA' }}>DAILY APR</Text>
-        <Text color='#4E4E4E' fontSize='18px'>%{dailyApr}</Text>
+        <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>%{dailyApr}</Text>
       </InfoCard>
       <InfoCard style={{ width: isMobile && '100%' }}>
         <Text color='#9D9D9D' fontSize='24px' bold style={{ borderBottom: '2px solid #DADADA' }}>TVL</Text>
-        <Text color='#4E4E4E' fontSize='18px'>{tvl}</Text>
+        <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>{tvl}</Text>
       </InfoCard>
     </Cards>
   )

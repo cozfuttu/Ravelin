@@ -154,6 +154,8 @@ const fetchFarms = async () => {
           ]);
           [info, totalAllocPoint, poolEndTimee, gammaPulsarPerBlock] = await multicall(farmConfig.isGenesis ? genesisABI : farmConfig.isRavPool ? ravPoolsABI : rsharePoolsABI, abiCalls)
 
+          console.log('depfee: ', info?.depositFeePercent)
+
           allocPoint = new BigNumber(info.allocPoint._hex)
           poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
           poolEndTime = new BigNumber(poolEndTimee[0]._hex)
@@ -170,7 +172,7 @@ const fetchFarms = async () => {
         tokenPriceVsQuote: tokenPriceVsQuote.toJSON(),
         poolWeight: poolWeight?.toNumber(),
         multiplier: allocPoint ? `${allocPoint.div(100).toString()}X` : '-',
-        depositFeeBP: info?.depositFeePercent,
+        depositFeeBP: new BigNumber(info?.depositFeePercent?._hex).toNumber(),
         gammaPulsarPerBlock: new BigNumber(gammaPulsarPerBlock).toNumber(),
         decimals: tokenDecimals[0],
         quoteTokenDecimals: quoteTokenDecimals[0],

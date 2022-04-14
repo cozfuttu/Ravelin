@@ -12,6 +12,10 @@ const Background = styled.div`
   padding: 2em;
   background-color: #E6E6E6;
   border-radius: 8px;
+
+  @media (max-width: 1080px) {
+    padding: 1rem;
+  }
 `
 
 const Cards = styled.div`

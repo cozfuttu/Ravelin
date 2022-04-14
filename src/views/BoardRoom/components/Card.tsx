@@ -20,7 +20,7 @@ const InfoCard = styled.div`
 
 interface CardProps {
   heading: string
-  value: string
+  value: any
   secondaryValue?: string
   style?: any
 }

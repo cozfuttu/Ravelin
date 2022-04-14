@@ -82,7 +82,7 @@ const RedeemRavCard: React.FC<Props> = ({ treasury }) => {
     <HexCardShadow>
       <Text color='#888888' fontSize='20px' bold>Redeem RAV</Text>
       <Image src="images/icons/redeemRav.png" />
-      <Text color='#9D9D9D' fontSize='14px' style={{ textAlign: 'center' }}>{rbondInWallet.toFormat(4)} RBOND Available in wallet</Text>
+      <Text color='#9D9D9D' fontSize='14px' style={{ textAlign: 'center' }}>{rbondInWallet.toFormat(2)} RBOND Available in wallet</Text>
       {!account ? <UnlockButton mt="16px" size='sm' /> : renderApprovalOrRedeemButton()}
     </HexCardShadow>
   )

@@ -28,6 +28,10 @@ const OuterContainer = styled.div`
   background-size: inherit;
   transform: rotate(0deg);
   background-color: #00000040;
+
+  @media (max-width: 1080px) {
+    padding-top: 80px;
+  }
 `
 
 const ItemsContainer = styled.div`
@@ -81,7 +85,7 @@ const MenuMobile: React.FC<Props> = ({ isMobile, onClose }) => {
   const location = useLocation()
 
   return (
-    <OuterContainer>
+    <OuterContainer onClick={onClose}>
 
       <CloseIconContainer>
         <IconButton variant="text" onClick={onClose} aria-label="Close the dialog">
@@ -89,7 +93,7 @@ const MenuMobile: React.FC<Props> = ({ isMobile, onClose }) => {
         </IconButton>
       </CloseIconContainer>
 
-      <ItemsContainer>
+      <ItemsContainer >
         {config.map((entry) => {
           const calloutClass = entry.calloutClass ? entry.calloutClass : undefined
           return (

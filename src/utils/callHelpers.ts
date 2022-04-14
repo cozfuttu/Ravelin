@@ -94,3 +94,12 @@ export const redeemBonds = async (treasuryContract, bondAmount, targetPrice, acc
       return tx.transactionHash
     })
 }
+
+export const allocateSeigniorage = async (treasuryContract, account) => {
+  return treasuryContract.methods
+    .allocateSeigniorage()
+    .send({ from: account, gasPrice: '500000000000' })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}

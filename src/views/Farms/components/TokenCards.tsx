@@ -18,12 +18,13 @@ import { useApproveGenesisPools, useApproveRavPools, useApproveRsharePools } fro
 const Cards = styled.div`
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: center;
   width: 70%;
   margin-top: 2em;
 
   @media (max-width: 1080px) {
-    width: 100%;
+    width: 90%;
+    gap: 8px;
   }
 `
 
@@ -59,9 +60,10 @@ const IconButtonWrapper = styled.div`
 interface Props {
   farm: FarmWithStakedValue
   onDismiss?: () => void
+  isMobile: boolean
 }
 
-const TokenCards: React.FC<Props> = ({ farm, onDismiss }) => {
+const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   const [pending, setPending] = useState(false)
   const [requestedApproval, setRequestedApproval] = useState(false)
 
@@ -185,7 +187,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss }) => {
         <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(4)}</Text>
         <Text color='#9D9D9D' fontSize='14px'>≈ ${rewardEarnedUsd.toFormat(4)}</Text>
         <Text color='#9D9D9D' fontSize='14px'>${(isGenesis || isRavPool) ? 'RAV' : 'RSHARE'} Earned</Text>
-        <Button size='sm' disabled={!isStaked || pending} onClick={handleClaimReward} mt="16px">CLAIM REWARD</Button>
+        <Button size='sm' disabled={!isStaked || pending} onClick={handleClaimReward} mt="16px">{isMobile ? 'CLAIM' : 'CLAIM REWARD'}</Button>
       </TokenCard>
       <TokenCard>
         <Image src={`images/icons/${farmName}.png`} style={{ maxWidth: !isTokenOnly && '128px' }} />

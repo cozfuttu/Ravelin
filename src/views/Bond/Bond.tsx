@@ -16,6 +16,7 @@ const ImageContainer = styled.div`
   transform: translateY(-50%);
   display: flex;
   align-items: center;
+  z-index: -99;
 `
 
 const TextContainer = styled.div`
@@ -25,7 +26,7 @@ const TextContainer = styled.div`
   justify-content: center;
 
   @media (max-width: 1080px) {
-    margin-top: 8vh;
+    margin-top: 13vh;
   }
 `
 

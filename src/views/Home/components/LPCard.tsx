@@ -16,7 +16,7 @@ const Card = styled.div`
   border-radius: 0.5em;
 
   @media (max-width: 1080px) {
-    width: 100%;
+    width: 90%;
   }
 `
 

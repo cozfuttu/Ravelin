@@ -30,6 +30,11 @@ const Card = styled.div`
   :after {
     transform: rotate(-60deg);
   }
+
+  @media (max-width: 1080px) {
+    width: 11em; height: 19.05em;
+    border-radius: 1.1em/.55em;
+  } 
 `
 
 const MetamaskButton = styled.button`
