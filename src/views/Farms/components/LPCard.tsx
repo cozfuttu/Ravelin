@@ -33,7 +33,9 @@ const Col = styled.div`
   justify-content: space-between;
 `
 
-const Image = styled.img``
+const Image = styled.img`
+  
+`
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
@@ -55,10 +57,10 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
     : `${farm.tokenSymbol.toLowerCase()}-${farm.quoteTokenSymbol.toLowerCase()}`
 
   const totalValue: BigNumber = useMemo(() => {
-    if (!farm.lpTotalInQuoteToken) {
+    if (!farm.lpTotalInQuoteToken || new BigNumber(farm.lpTotalInQuoteToken).isLessThan(1)) {
       return null
     }
-    if (farm.quoteTokenSymbol === QuoteToken.WFTM || farm.quoteTokenSymbol === QuoteToken.ADA) {
+    if (farm.quoteTokenSymbol === QuoteToken.ADA) {
       return nativePrice.times(farm.lpTotalInQuoteToken)
     }
     return farm.lpTotalInQuoteToken

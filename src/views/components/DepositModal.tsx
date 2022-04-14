@@ -61,7 +61,7 @@ const DepositModal: React.FC<DepositModalProps> = ({
           onClick={async () => {
             setPendingTx(true)
             console.log('tombAmount: ', val)
-            await onConfirm(val)
+            await onConfirm(new BigNumber(val).times(new BigNumber(10).pow(decimals)).toString())
             setPendingTx(false)
             onDismiss()
           }}

@@ -8,6 +8,7 @@ import {
   getRavAddress,
   getRbondAddress,
   getRshareAddress,
+  getRavPoolsAddress,
   getRsharePoolsAddress,
   getTreasuryAddress,
 } from 'utils/addressHelpers'
@@ -17,6 +18,7 @@ import rshareABI from 'config/abi/rshare.json'
 import rbondABI from 'config/abi/rbond.json'
 import genesisPoolsABI from 'config/abi/genesisPools.json'
 import rsharePoolsABI from 'config/abi/rsharePools.json'
+import ravPoolsABI from 'config/abi/ravPools.json'
 import masonryABI from 'config/abi/masonry.json'
 import treasuryABI from 'config/abi/treasury.json'
 
@@ -59,6 +61,10 @@ export const useGenesisPoolsContract = () => {
 export const useRsharePoolsContract = () => {
   const abi = (rsharePoolsABI as unknown) as AbiItem
   return useContract(abi, getRsharePoolsAddress())
+}
+export const useRavPoolsContract = () => {
+  const abi = (ravPoolsABI as unknown) as AbiItem
+  return useContract(abi, getRavPoolsAddress())
 }
 export const useMasonryContract = () => {
   const abi = (masonryABI as unknown) as AbiItem

@@ -11,6 +11,9 @@ export const getWbnbAddress = () => {
 export const getBusdAddress = () => {
   return addresses.busd[chainId]
 }
+export const getUsdtAddress = () => {
+  return addresses.usdt[chainId]
+}
 export const getRavAddress = () => {
   return addresses.rav[chainId]
 }
@@ -26,14 +29,14 @@ export const getRavNativeLPAddress = () => {
 export const getRshareNativeLPAddress = () => {
   return addresses.rshareNativeLP[chainId]
 }
-export const getRbondRavLPAddress = () => {
-  return addresses.rbondRavLP[chainId]
-}
 export const getGenesisPoolsAddress = () => {
   return addresses.genesisPools[chainId]
 }
 export const getRsharePoolsAddress = () => {
   return addresses.rsharePools[chainId]
+}
+export const getRavPoolsAddress = () => {
+  return addresses.ravPools[chainId]
 }
 export const getMasonryAddress = () => {
   return addresses.masonry[chainId]

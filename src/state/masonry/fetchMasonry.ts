@@ -64,7 +64,7 @@ const fetchMasonry = async () => {
     },
     {
       address: masonryAddress,
-      name: 'getTombPrice'
+      name: 'getRavPrice'
     },
     {
       address: masonryAddress,

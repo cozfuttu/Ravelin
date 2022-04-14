@@ -16,7 +16,7 @@ const fetchMason = async (account) => {
   const [allowanceResponse, tokenBalanceResponse] = await multicall(erc20ABI, erc20AbiCalls)
 
   const masonryAbiCalls = [
-    { address: masonryAddress, name: 'masons', params: [account] },
+    { address: masonryAddress, name: 'members', params: [account] },
     { address: masonryAddress, name: 'canWithdraw', params: [account] },
     { address: masonryAddress, name: 'canClaimReward', params: [account] },
     { address: masonryAddress, name: 'earned', params: [account] },

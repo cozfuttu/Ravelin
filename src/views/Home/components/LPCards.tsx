@@ -16,6 +16,7 @@ const Cards = styled.div`
   @media (max-width: 1080px) {
     flex-direction: column;
     gap: 24px;
+    width: 90%;
   }
 `
 

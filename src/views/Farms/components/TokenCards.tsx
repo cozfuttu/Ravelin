@@ -2,18 +2,18 @@ import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { provider } from 'web3-core'
 import { AddIcon, Button, IconButton, MinusIcon, Text, useModal } from 'uikit'
-import { useUnstakeGenesisPools, useUnstakeRsharePools } from 'hooks/useUnstake'
-import { useStakeGenesisPools, useStakeRsharePools } from 'hooks/useStake'
+import { useUnstakeGenesisPools, useUnstakeRavPools, useUnstakeRsharePools } from 'hooks/useUnstake'
+import { useStakeGenesisPools, useStakeRavPools, useStakeRsharePools } from 'hooks/useStake'
 import { FarmWithStakedValue } from './LPCard'
 import BigNumber from 'bignumber.js'
 import { usePriceRavBusd } from 'state/hooks'
-import { useHarvestGenesisPools, useHarvestRsharePools } from 'hooks/useHarvest'
+import { useHarvestGenesisPools, useHarvestRavPools, useHarvestRsharePools } from 'hooks/useHarvest'
 import UnlockButton from 'components/UnlockButton'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import DepositModal from 'views/components/DepositModal'
 import WithdrawModal from 'views/components/WithdrawModal'
 import { getContract } from 'utils/erc20'
-import { useApproveGenesisPools, useApproveRsharePools } from 'hooks/useApprove'
+import { useApproveGenesisPools, useApproveRavPools, useApproveRsharePools } from 'hooks/useApprove'
 
 const Cards = styled.div`
   display: flex;
@@ -58,13 +58,14 @@ const IconButtonWrapper = styled.div`
 
 interface Props {
   farm: FarmWithStakedValue
+  onDismiss?: () => void
 }
 
-const TokenCards: React.FC<Props> = ({ farm }) => {
+const TokenCards: React.FC<Props> = ({ farm, onDismiss }) => {
   const [pending, setPending] = useState(false)
   const [requestedApproval, setRequestedApproval] = useState(false)
 
-  const { pid, lpAddresses, tokenAddresses, isTokenOnly, depositFeeBP, decimals, userData, tokenSymbol, quoteTokenSymbol, isGenesis, lpSymbol, tokenPriceVsQuote, quoteTokenDecimals } = farm
+  const { pid, lpAddresses, tokenAddresses, isTokenOnly, depositFeeBP, decimals, userData, tokenSymbol, quoteTokenSymbol, isGenesis, isRavPool, lpSymbol, tokenPriceVsQuote, quoteTokenDecimals } = farm
 
   const lpAddress = lpAddresses[process.env.REACT_APP_CHAIN_ID]
   const tokenAddress = tokenAddresses[process.env.REACT_APP_CHAIN_ID]
@@ -75,20 +76,23 @@ const TokenCards: React.FC<Props> = ({ farm }) => {
 
   const { onStakeRsharePools } = useStakeRsharePools(pid)
   const { onStakeGenesisPools } = useStakeGenesisPools(pid)
+  const { onStakeRavPools } = useStakeRavPools(pid)
 
   const { onUnstakeRsharePools } = useUnstakeRsharePools(pid)
   const { onUnstakeGenesisPools } = useUnstakeGenesisPools(pid)
+  const { onUnstakeRavPools } = useUnstakeRavPools(pid)
 
   const { onRewardRsharePools } = useHarvestRsharePools(pid)
   const { onRewardGenesisPools } = useHarvestGenesisPools(pid)
+  const { onRewardRavPools } = useHarvestRavPools(pid)
 
   const rewardEarned = new BigNumber(userData?.earnings).div(1e18)
   const rewardEarnedUsd = rewardEarned.times(ravPriceUsd)
 
   const userBalance = new BigNumber(userData?.tokenBalance)
 
-  const rshareStaked = new BigNumber(userData?.stakedBalance).div(1e18)
-  const rshareStakedUsd = new BigNumber(userData?.stakedBalance).div(1e18).times(new BigNumber(tokenPriceVsQuote).times(new BigNumber(10).pow(18 - quoteTokenDecimals)))
+  const rshareStaked = new BigNumber(userData?.stakedBalance).div(new BigNumber(10).pow(decimals))
+  const rshareStakedUsd = rshareStaked.times(new BigNumber(tokenPriceVsQuote))
 
   const rshareStakedFormatted = rshareStaked.toFormat(4)
   const rshareStakedUsdFormatted = rshareStakedUsd.toFormat(4)
@@ -109,24 +113,28 @@ const TokenCards: React.FC<Props> = ({ farm }) => {
 
   const { onApproveRsharePools } = useApproveRsharePools(lpContract)
   const { onApproveGenesisPools } = useApproveGenesisPools(lpContract)
+  const { onApproveRavPools } = useApproveRavPools(lpContract)
 
   const handleApprove = useCallback(async () => {
     try {
       setRequestedApproval(true)
       if (isGenesis) await onApproveGenesisPools()
+      else if (isRavPool) await onApproveRavPools()
       else await onApproveRsharePools()
     } catch (e) {
       console.error(e)
     }
     finally {
       setRequestedApproval(false)
+      onDismiss()
     }
-  }, [onApproveRsharePools, onApproveGenesisPools, isGenesis])
+  }, [onApproveRsharePools, onApproveGenesisPools, onApproveRavPools, onDismiss, isGenesis, isRavPool])
 
   const handleClaimReward = async () => {
     setPending(true)
     try {
       if (isGenesis) await onRewardGenesisPools()
+      else if (isRavPool) await onRewardRavPools()
       else await onRewardRsharePools()
     }
     finally {
@@ -138,13 +146,13 @@ const TokenCards: React.FC<Props> = ({ farm }) => {
     <DepositModal
       max={userBalance}
       decimals={decimals}
-      onConfirm={isGenesis ? onStakeGenesisPools : onStakeRsharePools}
+      onConfirm={isGenesis ? onStakeGenesisPools : isRavPool ? onStakeRavPools : onStakeRsharePools}
       tokenName={lpSymbol.toUpperCase()}
       depositFeeBP={depositFeeBP}
     />,
   )
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={rshareStaked.times(1e18)} decimals={decimals} onConfirm={isGenesis ? onUnstakeGenesisPools : onUnstakeRsharePools} tokenName={lpSymbol.toUpperCase()} />,
+    <WithdrawModal max={rshareStaked.times(1e18)} decimals={decimals} onConfirm={isGenesis ? onUnstakeGenesisPools : isRavPool ? onUnstakeRavPools : onUnstakeRsharePools} tokenName={lpSymbol.toUpperCase()} />,
   )
 
   const renderStakingButtons = () => {
@@ -173,10 +181,10 @@ const TokenCards: React.FC<Props> = ({ farm }) => {
   return (
     <Cards>
       <TokenCard>
-        <Image src={`images/icons/${isGenesis ? 'rav' : 'rshare'}.png`} />
+        <Image src={`images/icons/${(isGenesis || isRavPool) ? 'rav' : 'rshare'}.png`} />
         <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(4)}</Text>
         <Text color='#9D9D9D' fontSize='14px'>≈ ${rewardEarnedUsd.toFormat(4)}</Text>
-        <Text color='#9D9D9D' fontSize='14px'>RAV Earned</Text>
+        <Text color='#9D9D9D' fontSize='14px'>${(isGenesis || isRavPool) ? 'RAV' : 'RSHARE'} Earned</Text>
         <Button size='sm' disabled={!isStaked || pending} onClick={handleClaimReward} mt="16px">CLAIM REWARD</Button>
       </TokenCard>
       <TokenCard>

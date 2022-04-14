@@ -12,20 +12,23 @@ interface Props {
   mb: string
 }
 
+const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
+
 const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss, mb }) => {
   const { account } = useWallet()
   const { title, icon: Icon } = walletConfig
+  const chainIdHex = `0x${parseInt(CHAIN_ID).toString(16).toUpperCase()}`
   return (
     <Button
       fullWidth
       variant="tertiary"
-      onClick={() => {
+      onClick={async () => {
         login(walletConfig.connectorId)
         if (!account) {
-          window.ethereum.request({
+          await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0xFA' }], // chainId must be in hexadecimal numbers
-          })
+            params: [{ chainId: chainIdHex }], // chainId must be in hexadecimal numbers
+          }).then(() => login(walletConfig.connectorId))
         }
         window.localStorage.setItem(localStorageKey, '1')
         onDismiss()

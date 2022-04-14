@@ -1,9 +1,9 @@
-import { getRavAddress, getRavNativeLPAddress, getRbondAddress, getRbondRavLPAddress, getRshareAddress, getRshareNativeLPAddress, getWbnbAddress } from 'utils/addressHelpers'
+import { getRavAddress, getRavNativeLPAddress, getRbondAddress, getRshareAddress, getRshareNativeLPAddress, getUsdtAddress, getWbnbAddress } from 'utils/addressHelpers'
 import contracts from './contracts'
 import { FarmConfig, QuoteToken } from './types'
 
 const farms: FarmConfig[] = [
-  {
+/*   {
     pid: 0,
     risk: 5,
     lpSymbol: 'RAV-ADA LP',
@@ -11,30 +11,35 @@ const farms: FarmConfig[] = [
       97: '',
       137: getRavNativeLPAddress(),
       250: getRavNativeLPAddress(),
+      2001: getRavNativeLPAddress(),
     },
     tokenSymbol: 'RAV',
     tokenAddresses: {
       97: '',
       137: getRavAddress(),
       250: getRavAddress(),
+      2001: getRavAddress(),
     },
     quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
-  },
+  }, */
   {
     pid: 1,
     risk: 5,
-    lpSymbol: 'RSHARE-ADA LP',
+    isRavPool: true,
+    lpSymbol: 'RAV-wADA LP',
     lpAddresses: {
       97: '',
-      137: getRshareNativeLPAddress(),
-      250: getRshareNativeLPAddress()
+      137: getRavNativeLPAddress(),
+      250: getRavNativeLPAddress(),
+      2001: getRavNativeLPAddress(),
     },
-    tokenSymbol: 'RSHARE',
+    tokenSymbol: 'RAV',
     tokenAddresses: {
       97: '',
-      137: getRshareAddress(),
-      250: getRshareAddress(),
+      137: getRavAddress(),
+      250: getRavAddress(),
+      2001: getRavAddress(),
     },
     quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
@@ -42,24 +47,67 @@ const farms: FarmConfig[] = [
   {
     pid: 0,
     risk: 5,
-    lpSymbol: 'WFTM',
+    lpSymbol: 'RSHARE-wADA LP',
+    lpAddresses: {
+      97: '',
+      137: getRshareNativeLPAddress(),
+      250: getRshareNativeLPAddress(),
+      2001: getRshareNativeLPAddress(),
+    },
+    tokenSymbol: 'RSHARE',
+    tokenAddresses: {
+      97: '',
+      137: getRshareAddress(),
+      250: getRshareAddress(),
+      2001: getRshareAddress(),
+    },
+    quoteTokenSymbol: QuoteToken.ADA,
+    quoteTokenAdresses: contracts.wbnb,
+  },
+/*   {
+    pid: 1,
+    risk: 5,
+    lpSymbol: 'RSHARE-ADA LP',
+    lpAddresses: {
+      97: '',
+      137: getRshareNativeLPAddress(),
+      250: getRshareNativeLPAddress(),
+      2001: getRshareNativeLPAddress(),
+    },
+    tokenSymbol: 'RSHARE',
+    tokenAddresses: {
+      97: '',
+      137: getRshareAddress(),
+      250: getRshareAddress(),
+      2001: getRshareAddress(),
+    },
+    quoteTokenSymbol: QuoteToken.ADA,
+    quoteTokenAdresses: contracts.wbnb,
+  }, */
+  {
+    pid: 0,
+    risk: 5,
+    lpSymbol: 'multiUSDT',
     isTokenOnly: true,
     isGenesis: true,
     lpAddresses: {
       97: '',
       137: "", // WMATIC-USDC LP
       250: "0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c", // WFTM-USDC LP
-    },
-    tokenSymbol: 'WFTM',
+      // 2001: "0x04d99574ea862d0897c0Ca602e8Fe977F1118E2D", // wAda-USDT LP
+      2001: "0x44634f8E1e1588d5ae1F387269d0b260d5AA7ff1", // multiUSDT-USDC
+    }, 
+    tokenSymbol: 'multiUSDT',
     tokenAddresses: {
       97: getWbnbAddress(),
       137: getWbnbAddress(),
       250: getWbnbAddress(),
+      2001: getUsdtAddress(),
     },
     quoteTokenSymbol: QuoteToken.USDC,
-    quoteTokenAdresses: contracts.busd,
+    quoteTokenAdresses: contracts.usdt,
   },
-  {
+/*   {
     pid: 1,
     risk: 3,
     isTokenOnly: true,
@@ -118,7 +166,7 @@ const farms: FarmConfig[] = [
     },
     quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
-  },
+  }, */
 ]
 
 export const publicFarmsConfig: FarmConfig[] = [
@@ -131,12 +179,14 @@ export const publicFarmsConfig: FarmConfig[] = [
       97: '',
       137: getRavNativeLPAddress(),
       250: getRavNativeLPAddress(),
+      2001: getRavNativeLPAddress(),
     },
     tokenSymbol: 'RAV',
     tokenAddresses: {
       97: '',
       137: getRavAddress(),
       250: getRavAddress(),
+      2001: getRavAddress(),
     },
     quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
@@ -150,18 +200,20 @@ export const publicFarmsConfig: FarmConfig[] = [
       97: '',
       137: getRshareNativeLPAddress(),
       250: getRshareNativeLPAddress(),
+      2001: getRshareNativeLPAddress(),
     },
     tokenSymbol: 'RSHARE',
     tokenAddresses: {
       97: '',
       137: getRshareAddress(),
       250: getRshareAddress(),
+      2001: getRshareAddress(),
     },
     quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
     isHidden: true,
   },
-  {
+/*   {
     pid: 101,
     risk: 5,
     lpSymbol: 'RBOND-RAV LP',
@@ -179,7 +231,7 @@ export const publicFarmsConfig: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.RAV,
     quoteTokenAdresses: contracts.rav,
     isHidden: true,
-  },
+  }, */
   {
     pid: 102,
     risk: 5,
@@ -188,12 +240,14 @@ export const publicFarmsConfig: FarmConfig[] = [
       97: '',
       137: '0x6e7a5fafcec6bb1e78bae2a1f0b612012bf14827', // MATIC - USDC
       250: '0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c', // WFTM - USDC
+      2001: "0x2357BA64d075A628D79Bb37bAa4e0404e4f9b10E", // wADA - USDC
     },
     tokenSymbol: 'WFTM',
     tokenAddresses: {
       97: '',
       137: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
       250: getWbnbAddress(),
+      2001: getWbnbAddress(),
     },
     quoteTokenSymbol: QuoteToken.USDC,
     quoteTokenAdresses: contracts.busd,

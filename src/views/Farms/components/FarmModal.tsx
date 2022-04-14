@@ -7,7 +7,7 @@ import { ArrowBackIcon, CloseIcon } from '../../../uikit/components/Svg'
 import { Button, IconButton } from '../../../uikit/components/Button'
 import { InjectedProps } from '../../../uikit/widgets/Modal/types'
 import { getRavAddress, getRshareAddress } from 'utils/addressHelpers'
-import { useUnstakeGenesisPools, useUnstakeRsharePools } from 'hooks/useUnstake'
+import { useUnstakeGenesisPools, useUnstakeRavPools, useUnstakeRsharePools } from 'hooks/useUnstake'
 import StatisticCards from './StatisticCards'
 import TokenCards from './TokenCards'
 import BigNumber from 'bignumber.js'
@@ -39,8 +39,7 @@ const StyledModal = styled.div`
 
   @media (max-width: 1080px) {
     width: 100vw;
-    background-size: cover;
-    background-position: center;
+    background-image: none;
     height: 100vh;
   }
 `
@@ -76,6 +75,7 @@ const FarmModal: React.FC<Props> = ({
 
   const { onUnstakeGenesisPools } = useUnstakeGenesisPools(farm.pid)
   const { onUnstakeRsharePools } = useUnstakeRsharePools(farm.pid)
+  const { onUnstakeRavPools } = useUnstakeRavPools(farm.pid)
 
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(stakedBalance, farm.decimals)
@@ -85,6 +85,7 @@ const FarmModal: React.FC<Props> = ({
     setPending(true)
     try {
       if (farm.isGenesis) await onUnstakeGenesisPools(fullBalance)
+      else if (farm.isRavPool) await onUnstakeRavPools(fullBalance)
       else await onUnstakeRsharePools(fullBalance)
     }
     finally {
@@ -106,10 +107,10 @@ const FarmModal: React.FC<Props> = ({
         </ModalTitle>
       </ModalHeader>
       <StatisticCards farm={farm} tvl={tvl} dailyApr={dailyApr} isMobile={isMobile} />
-      <TokenCards farm={farm} />
-      {(farm.lpSymbol === 'RAV-ADA LP' || farm.lpSymbol === 'RSHARE-ADA LP') &&
-        <a href={`https://spookyswap.finance/add/ETH/${farm.lpSymbol === 'RAV-ADA LP' ? getRavAddress() : getRshareAddress()}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: '16px' }}>
-          <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: '100%' }}>Provide liquidity for {farm.lpSymbol} pair now on SpookySwap</Button>
+      <TokenCards farm={farm} onDismiss={onDismiss} />
+      {(farm.lpSymbol === 'RAV-wADA LP' || farm.lpSymbol === 'RSHARE-wADA LP') &&
+        <a href={`https://www.milkyswap.exchange/add/0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9/${farm.lpSymbol === 'RAV-wADA LP' ? getRavAddress() : getRshareAddress()}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: '16px' }}>
+          <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: '100%' }}>Provide liquidity for {farm.lpSymbol} pair now on MilkySwap</Button>
         </a>}
       {!isMobile && <Button size='md' onClick={handleExit} disabled={pending} mt="16px" style={{ background: 'linear-gradient(180deg, rgba(0, 62, 120, 1) 0%, rgba(21, 139, 206, 0.6) 100%)', boxShadow: '0 4px 6px -4px #000' }}>CLAIM {'&'} WITHDRAW</Button>}
       <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: '20px', border: '2px solid #007ABE' }}>

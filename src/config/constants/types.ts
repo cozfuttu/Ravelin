@@ -47,6 +47,7 @@ export interface Address {
   97?: string
   137: string
   250?: string
+  2001?: string
 }
 
 export interface FarmConfig {
@@ -61,6 +62,7 @@ export interface FarmConfig {
   multiplier?: string
   isTokenOnly?: boolean
   isGenesis?: boolean
+  isRavPool?: boolean
   isCommunity?: boolean
   risk: number
   harvestInterval?: number

@@ -2,8 +2,9 @@ import BigNumber from 'bignumber.js'
 import erc20 from 'config/abi/erc20.json'
 import genesisABI from 'config/abi/genesisPools.json'
 import rsharePoolsABI from 'config/abi/rsharePools.json'
+import ravPoolsABI from 'config/abi/ravPools.json'
 import multicall from 'utils/multicall'
-import { getGenesisPoolsAddress, getRsharePoolsAddress } from 'utils/addressHelpers'
+import { getGenesisPoolsAddress, getRavPoolsAddress, getRsharePoolsAddress } from 'utils/addressHelpers'
 import { publicFarmsConfig } from 'config/constants/farms'
 import { QuoteToken } from '../../config/constants/types'
 
@@ -31,7 +32,7 @@ const fetchFarms = async () => {
         {
           address: farmConfig.isTokenOnly ? farmConfig.tokenAddresses[CHAIN_ID] : lpAdress,
           name: 'balanceOf',
-          params: [farmConfig.isGenesis ? getGenesisPoolsAddress() : getRsharePoolsAddress()],
+          params: [farmConfig.isGenesis ? getGenesisPoolsAddress() : farmConfig.isRavPool ? getRavPoolsAddress() : getRsharePoolsAddress()],
         },
         // Total supply of LP tokens
         {
@@ -110,7 +111,7 @@ const fetchFarms = async () => {
       let poolEndTime
 
         try {
-          [info, totalAllocPoint, poolEndTimee, gammaPulsarPerBlock] = await multicall(farmConfig.isGenesis ? genesisABI : rsharePoolsABI, [
+          const abiCalls = (!farmConfig.isRavPool ? [
             {
               address: farmConfig.isGenesis ? getGenesisPoolsAddress() : getRsharePoolsAddress(),
               name: 'poolInfo',
@@ -126,16 +127,39 @@ const fetchFarms = async () => {
             },
             {
               address: farmConfig.isGenesis ? getGenesisPoolsAddress() : getRsharePoolsAddress(),
-              name: farmConfig.isGenesis ? 'tombPerSecond' : 'tSharePerSecond',
+              name: farmConfig.isGenesis ? 'ravPerSecond' : 'rSharePerSecond',
             },
-          ])
+          ]
+          :
+          [
+            {
+              address: getRavPoolsAddress(),
+              name: 'poolInfo',
+              params: [farmConfig.pid],
+            },
+            {
+              address: getRavPoolsAddress(),
+              name: 'totalAllocPoint',
+            },
+            {
+              address: getRavPoolsAddress(),
+              name: 'epochEndTimes',
+              params: [1]
+            },
+            {
+              address: getRavPoolsAddress(),
+              name: "epochRavPerSecond",
+              params: [1]
+            },
+          ]);
+          [info, totalAllocPoint, poolEndTimee, gammaPulsarPerBlock] = await multicall(farmConfig.isGenesis ? genesisABI : farmConfig.isRavPool ? ravPoolsABI : rsharePoolsABI, abiCalls)
 
           allocPoint = new BigNumber(info.allocPoint._hex)
           poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
           poolEndTime = new BigNumber(poolEndTimee[0]._hex)
           isStarted = info.isStarted
         } catch (error) {
-          console.log('ABI poolInfo call error')
+          console.log('ABI poolInfo call error', error)
         }
 
       return {
@@ -146,7 +170,7 @@ const fetchFarms = async () => {
         tokenPriceVsQuote: tokenPriceVsQuote.toJSON(),
         poolWeight: poolWeight?.toNumber(),
         multiplier: allocPoint ? `${allocPoint.div(100).toString()}X` : '-',
-        depositFeeBP: info?.depositFeeBP,
+        depositFeeBP: info?.depositFeePercent,
         gammaPulsarPerBlock: new BigNumber(gammaPulsarPerBlock).toNumber(),
         decimals: tokenDecimals[0],
         quoteTokenDecimals: quoteTokenDecimals[0],

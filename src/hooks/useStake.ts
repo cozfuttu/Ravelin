@@ -3,7 +3,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useDispatch } from 'react-redux'
 import { fetchFarmUserDataAsync, fetchMasonDataAsync } from 'state/actions'
 import { stake, stakeMasonry } from 'utils/callHelpers'
-import { useGenesisPoolsContract, useMasonryContract, useRsharePoolsContract } from './useContract'
+import { useGenesisPoolsContract, useMasonryContract, useRavPoolsContract, useRsharePoolsContract } from './useContract'
 
 export const useStakeGenesisPools = (pid: number) => {
   const dispatch = useDispatch()
@@ -37,6 +37,23 @@ export const useStakeRsharePools = (pid: number) => {
   )
 
   return { onStakeRsharePools: handleStake }
+}
+
+export const useStakeRavPools = (pid: number) => {
+  const dispatch = useDispatch()
+  const { account } = useWallet()
+  const masterChefContract = useRavPoolsContract()
+
+  const handleStake = useCallback(
+    async (amount: string) => {
+      const txHash = await stake(masterChefContract, pid, amount, account)
+      dispatch(fetchFarmUserDataAsync(account))
+      return txHash
+    },
+    [account, dispatch, masterChefContract, pid],
+  )
+
+  return { onStakeRavPools: handleStake }
 }
 
 export const useStakeMasonry = () => {

@@ -104,11 +104,11 @@ const Home = () => {
         <TextContainer>
           <WelcomeContainer>
             <Text color="#003E78" fontSize='36px' bold>WELCOME TO RAVELIN FINANCE</Text>
-            <Text color="#000" style={{ marginBottom: isMobile && '8vh' }}>The first algorithmic stablecoin on Cardano, pegged to the price of 1 ADA via seigniorage.</Text>
-            {!isMobile && <Text color="#000" mt='16px' bold>Stake your STEEL-ADA LP in the Cemetery to earn FOUNDATION (FDT) rewards. Then stake your earned FDT in the Masonry to earn more TOMB!</Text>}
+            <Text color="#000" style={{ marginBottom: isMobile && '8vh' }}>The first algorithmic stablecoin on Milkomeda, pegged to the price of 1 ADA via seigniorage.</Text>
+            {!isMobile && <Text color="#000" mt='16px' bold>Stake your RAV-ADA LP in the FARM to earn RSHARE rewards. Then stake your earned RSHARE in the BOARDROOM to earn more RAV!</Text>}
           </WelcomeContainer>
           <TVLandButtonsContainer>
-            {!isMobile && <Text color="#000000"><span><AttentionIcon /></span>Please visit our <a href="https://www.google.com/">documentation</a> before purchasing STEEL or FOUNDATION!</Text>}
+            {!isMobile && <Text color="#000000"><span><AttentionIcon /></span>Please visit our <a href="https://www.google.com/">documentation</a> before purchasing RAV or RSHARE!</Text>}
             <Row>
               <Col>
                 <Text color="#007ABE" fontSize='18px' bold style={{ fontSize: isMobile && '14px' }}>TOTAL VALUE LOCKED:</Text>
@@ -121,10 +121,10 @@ const Home = () => {
                 <a href="/farms" style={{ textDecoration: 'none' }}>
                   <Button>FARM NOW</Button>
                 </a>
-                <a href={`https://spookyswap.finance/swap?outputCurrency=${getRavAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
+                <a href={`https://www.milkyswap.exchange/swap?outputCurrency=${getRavAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
                   <Button>BUY RAV</Button>
                 </a>
-                <a href={`https://spookyswap.finance/swap?outputCurrency=${getRshareAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
+                <a href={`https://www.milkyswap.exchange/swap?outputCurrency=${getRshareAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
                   <Button>BUY RSHARE</Button>
                 </a>
               </Buttons>

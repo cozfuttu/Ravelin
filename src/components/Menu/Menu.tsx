@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import config from './config'
+import config, { socials } from './config'
 import UserBlock from 'uikit/widgets/Menu/UserBlock'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { Text, useMatchBreakpoints } from 'uikit'
+import { SvgProps, Text, useMatchBreakpoints, Link } from 'uikit'
+import * as IconModule from 'uikit/widgets/Menu/icons'
 import MenuButton from 'uikit/widgets/Menu/MenuButton'
 import { HamburgerIcon } from 'uikit/widgets/Menu/icons'
 import MenuMobile from './MenuMobile'
+
+const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> }
 
 const Menubar = styled.nav`
   position: absolute;
@@ -78,8 +80,17 @@ const Menu = () => {
         {!isMobile ? <MenuLabels>
           {config.map((menuItem) => {
             return (
-              <Link to={menuItem.href} key={menuItem.label} style={{ textDecoration: 'none' }}>
+              <Link href={menuItem.href} key={menuItem.label} style={{ textDecoration: 'none' }}>
                 <Text fontSize='18px' bold>{menuItem.label}</Text>
+              </Link>
+            )
+          })}
+          {socials.map((social) => {
+            const Icon = Icons[social.icon]
+            const iconProps = { width: '32px', color: '#ffffff', style: { cursor: 'pointer' }, marginLeft: '-16px', marginTop: '4px' }
+            return (
+              <Link external href={social.href} key={social.label} style={{ textDecoration: 'none' }}>
+                <Icon {...iconProps} />
               </Link>
             )
           })}

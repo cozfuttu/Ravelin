@@ -56,9 +56,9 @@ const Farms = () => {
     if (farm.isGenesis) apy = ravPrice.times(cakeRewardPerYear)
     else apy = rsharePrice.times(cakeRewardPerYear)
 
-    let totalValue = new BigNumber(farm.lpTotalInQuoteToken || 0)
+    let totalValue = farm.lpTotalInQuoteToken ? new BigNumber(farm.lpTotalInQuoteToken || 0) : new BigNumber(0)
 
-    if (farm.quoteTokenSymbol === QuoteToken.WFTM || farm.quoteTokenSymbol === QuoteToken.ADA) {
+    if (farm.quoteTokenSymbol === QuoteToken.ADA) {
       totalValue = totalValue.times(nativePrice)
     } else if (farm.quoteTokenSymbol === QuoteToken.RAV) {
       totalValue = totalValue.times(ravPrice)

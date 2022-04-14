@@ -28,7 +28,7 @@ const LPCards: React.FC<CardsProps> = ({ farmsToDisplayWithApy, rsharePrice, nat
   const FarmCards = farmsToDisplayWithApy.map((farm) =>
     <LPCard
       key={farm.pid}
-      earnLabel='rshare'
+      earnLabel={(farm.isRavPool || farm.isGenesis) ? 'rav' : 'rshare'}
       farm={farm}
       nativePrice={nativePrice}
       rsharePrice={rsharePrice}

@@ -23,10 +23,15 @@ const Card = styled.div`
 const Col = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   height: 90%;
   padding: 8px;
   justify-content: space-between;
+
+  
+  @media (max-width: 1080px) {
+    align-items: flex-start;
+  }
 `
 
 const Col2 = styled.div`
@@ -37,6 +42,10 @@ const Col2 = styled.div`
 
 const Image = styled.img`
   max-width: 128px;
+
+  @media (max-width: 1080px) {
+    max-width: 96px;
+  }
 `
 
 interface CardProps {
@@ -60,9 +69,9 @@ const LPCard: React.FC<CardProps> = ({ lpName, LPPriceUSD, adaPrice, marketCap, 
           <Text color='#9D9D9D' fontSize='16px'><b>Price: </b>${new BigNumber(LPPriceUSD).toFormat(2)}</Text>
         </Col2>
       </Col>
-      <Col>
+      <Col style={{ alignItems: 'center' }}>
         <Image src={lpImage} />
-        <a href={`https://spookyswap.finance/add/ETH/${lpName === 'rav-ada' ? getRavAddress() : getRshareAddress()}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+        <a href={`https://www.milkyswap.exchange/add/ETH/${lpName === 'rav-ada' ? getRavAddress() : getRshareAddress()}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
           <Button size='sm'>ZAP IN</Button>
         </a>
       </Col>

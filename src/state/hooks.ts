@@ -111,12 +111,10 @@ export const usePriceRshareBusd = (): BigNumber => {
 export const usePriceRbondBusd = (): BigNumber => {
   // const pid = 1 // CAKE-BNB LP
    const ravPrice = usePriceRavBusd()
-  // const farm = useFarmFromPid(pid)
-  // return farm.tokenPriceVsQuote ? bnbPriceUSD.times(farm.tokenPriceVsQuote) : ZERO
-  const pid = 101 // EGG-BUSD LP
-  const farm = useFarmFromPid(pid)
+   const { bondPremiumRate } = useTreasury()
+   const modifier = new BigNumber(bondPremiumRate).isGreaterThan(1e14) ? new BigNumber(bondPremiumRate).div(1e14) : new BigNumber(1);
 
-  return farm?.tokenPriceVsQuote ? (new BigNumber(farm.tokenPriceVsQuote)).times(ravPrice) : ZERO
+  return ravPrice ? ravPrice.times(modifier) : ZERO
 }
 
 export const usePriceRavNativeLP = (): number => {

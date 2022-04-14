@@ -28,4 +28,17 @@ const config: MenuEntry[] = [
   },
 ]
 
+export const socials = [
+  {
+    label: 'Telegram',
+    icon: 'TelegramIcon',
+    href: 'https://t.me/ravelinfinance',
+  },
+  {
+    label: 'Twitter',
+    icon: 'TwitterIcon',
+    href: 'https://twitter.com/FarmPulsar',
+  },
+]
+
 export default config

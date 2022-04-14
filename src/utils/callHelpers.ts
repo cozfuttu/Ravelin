@@ -8,15 +8,9 @@ export const approve = async (lpContract, masterChefContract, account) => {
 }
 
 export const stake = async (masterChefContract, pid, amount, account) => {
-  let amountForBrokenPids = amount
-  if (pid === 9 || pid === 10) {
-    amountForBrokenPids = new BigNumber(amount).div(1e12)
-  } else if (pid === 7) {
-    amountForBrokenPids = new BigNumber(amount).div(1e10)
-  }
-//  console.log('depositing:', amountForBrokenPids)
+  console.log('depositing:', amount)
   return masterChefContract.methods
-    .deposit(pid, new BigNumber(amountForBrokenPids).times(new BigNumber(10).pow(18)).toString())
+    .deposit(pid, new BigNumber(amount).toString())
     .send({ from: account, gasPrice: '500000000000' })
     .on('transactionHash', (tx) => {
       return tx.transactionHash

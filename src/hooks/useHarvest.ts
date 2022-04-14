@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 
 import { fetchFarmUserDataAsync, fetchMasonDataAsync } from 'state/actions'
 import { claimReward, harvest } from 'utils/callHelpers'
-import { useGenesisPoolsContract, useRsharePoolsContract, useMasonryContract } from './useContract'
+import { useGenesisPoolsContract, useRsharePoolsContract, useMasonryContract, useRavPoolsContract } from './useContract'
 
 export const useHarvestGenesisPools = (farmPid: number) => {
   const dispatch = useDispatch()
@@ -32,6 +32,20 @@ export const useHarvestRsharePools = (farmPid: number) => {
   }, [account, dispatch, farmPid, masterChefContract])
 
   return { onRewardRsharePools: handleHarvest }
+}
+
+export const useHarvestRavPools = (farmPid: number) => {
+  const dispatch = useDispatch()
+  const { account } = useWallet()
+  const masterChefContract = useRavPoolsContract()
+
+  const handleHarvest = useCallback(async () => {
+    const txHash = await harvest(masterChefContract, farmPid, account)
+    dispatch(fetchFarmUserDataAsync(account))
+    return txHash
+  }, [account, dispatch, farmPid, masterChefContract])
+
+  return { onRewardRavPools: handleHarvest }
 }
 
 /* export const useAllHarvest = (farmPids: number[]) => {

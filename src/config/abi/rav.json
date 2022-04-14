@@ -150,7 +150,7 @@
   },
   {
     "inputs": [],
-    "name": "INITIAL_TOMB_POOL_DISTRIBUTION",
+    "name": "INITIAL_RAV_POOL_DISTRIBUTION",
     "outputs": [
       {
         "internalType": "uint256",
@@ -338,7 +338,7 @@
       },
       {
         "internalType": "address",
-        "name": "_tombPool",
+        "name": "_ravPool",
         "type": "address"
       },
       {
@@ -586,6 +586,19 @@
   },
   {
     "inputs": [],
+    "name": "ravOracle",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -620,6 +633,19 @@
         "type": "bool"
       }
     ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_ravOracle",
+        "type": "address"
+      }
+    ],
+    "name": "setRavOracle",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -711,19 +737,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_tombOracle",
-        "type": "address"
-      }
-    ],
-    "name": "setTombOracle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "symbol",
     "outputs": [
@@ -808,19 +821,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "tombOracle",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",

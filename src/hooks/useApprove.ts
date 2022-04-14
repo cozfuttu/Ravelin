@@ -13,6 +13,7 @@ import {
   useRsharePoolsContract,
   useMasonryContract,
   useTreasuryContract,
+  useRavPoolsContract,
 } from './useContract'
 
 // Approve a Farm
@@ -50,6 +51,24 @@ export const useApproveRsharePools = (lpContract: Contract) => {
   }, [account, dispatch, lpContract, masterChefContract])
 
   return { onApproveRsharePools: handleApprove }
+}
+
+export const useApproveRavPools = (lpContract: Contract) => {
+  const dispatch = useDispatch()
+  const { account }: { account: string } = useWallet()
+  const masterChefContract = useRavPoolsContract()
+
+  const handleApprove = useCallback(async () => {
+    try {
+      const tx = await approve(lpContract, masterChefContract, account)
+      dispatch(fetchFarmUserDataAsync(account))
+      return tx
+    } catch (e) {
+      return false
+    }
+  }, [account, dispatch, lpContract, masterChefContract])
+
+  return { onApproveRavPools: handleApprove }
 }
 
 export const useApproveMasonry = (lpContract: Contract) => {

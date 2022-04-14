@@ -4,9 +4,9 @@ import { Handler } from './types'
 
 const useModal = (modal: React.ReactNode, closeOnOverlayClick = true): [Handler, Handler] => {
   const { onPresent, onDismiss, setCloseOnOverlayClick } = useContext(Context)
-  const onPresentCallback = useCallback(() => {
+  const onPresentCallback = () => {
     onPresent(modal)
-  }, [modal, onPresent])
+  }
 
   useEffect(() => {
     setCloseOnOverlayClick(closeOnOverlayClick)
