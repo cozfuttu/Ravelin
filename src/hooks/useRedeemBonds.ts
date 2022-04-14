@@ -12,6 +12,7 @@ export const useRedeemBonds = (targetPrice: string) => {
 
   const handleRedeem = useCallback(
     async (bondAmount: string) => {
+      console.log('bonu: ', bondAmount)
       const txHash = await redeemBonds(masterChefContract, bondAmount, targetPrice, account)
       dispatch(fetchTreasuryUserDataAsync(account))
       return txHash

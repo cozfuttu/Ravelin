@@ -79,7 +79,7 @@ export const claimReward = async (masonryContract, account) => {
 
 export const buyBonds = async (treasuryContract, tombAmount, targetPrice, account) => {
   return treasuryContract.methods
-    .buyBonds(new BigNumber(tombAmount).times(new BigNumber(10).pow(18)).toString(), new BigNumber(targetPrice).toString())
+    .buyBonds(new BigNumber(tombAmount).toString(), new BigNumber(targetPrice).toString())
     .send({ from: account, gasPrice: '500000000000' })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
@@ -88,7 +88,7 @@ export const buyBonds = async (treasuryContract, tombAmount, targetPrice, accoun
 
 export const redeemBonds = async (treasuryContract, bondAmount, targetPrice, account) => {
   return treasuryContract.methods
-    .redeemBonds(new BigNumber(bondAmount).times(new BigNumber(10).pow(18)).toString(), new BigNumber(targetPrice).toString())
+    .redeemBonds(new BigNumber(bondAmount).toString(), new BigNumber(targetPrice).toString())
     .send({ from: account, gasPrice: '500000000000' })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
