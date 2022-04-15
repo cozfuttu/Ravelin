@@ -90,8 +90,6 @@ const fetchMasonry = async () => {
     getTombPrice,
     PERIOD] = await multicall(treasuryABI, treasuryCalls)
 
-    console.log('jkask: ', TWAP)
-
   return {
     twap: new BigNumber(TWAP[0]._hex).toJSON(),
     epoch: new BigNumber(epoch[0]._hex).toJSON(),
