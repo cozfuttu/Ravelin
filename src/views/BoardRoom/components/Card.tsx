@@ -29,7 +29,7 @@ const Card: React.FC<CardProps> = ({ heading, value, secondaryValue, style }) =>
   return (
     <InfoCard style={style}>
       <Text color='#9D9D9D' fontSize='25px' bold style={{ borderBottom: '2px solid #DADADA' }}>{heading.toUpperCase()}</Text>
-      <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>{value}</Text>
+      <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word', maxWidth: '100%' }}>{value}</Text>
       {secondaryValue ? <Text color='#9D9D9D' fontSize='14px'>{secondaryValue}</Text> : null}
     </InfoCard>
   )

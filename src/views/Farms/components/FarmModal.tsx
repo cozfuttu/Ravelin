@@ -75,7 +75,7 @@ const FarmModal: React.FC<Props> = ({
   const isMobile = isXl === false
 
   const [pending, setPending] = useState(false)
-  console.log('farm: ', farm?.apy?.times(100).toNumber())
+  console.log('farm: ', farm)
 
   const stakedBalance = useMemo(() => new BigNumber(farm?.userData?.stakedBalance), [farm?.userData?.stakedBalance])
 
@@ -103,12 +103,6 @@ const FarmModal: React.FC<Props> = ({
     <StyledModal>
       <ModalHeader>
         <ModalTitle>
-          {onBack && (
-            <IconButton variant="text" onClick={onBack} area-label="go back" mr="8px">
-              <ArrowBackIcon color="primary" />
-            </IconButton>
-          )}
-          <Heading style={{ fontSize: isMobile && "16px" }}>EARN {farm.isGenesis || farm.isRavPool ? "RAV" : "RSHARE"} by staking {farm.lpSymbol}</Heading>
           <Heading style={{ fontSize: isMobile ? "14px" : '16px', marginTop: '0' }}>Deposit {farm.lpSymbol} and earn {farm.isGenesis || farm.isRavPool ? "RAV" : "RSHARE"}</Heading>
         </ModalTitle>
       </ModalHeader>
@@ -119,8 +113,8 @@ const FarmModal: React.FC<Props> = ({
           <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: isMobile ? '80%' : '100%' }}>Provide liquidity for {farm.lpSymbol} pair now on MilkySwap</Button>
         </a>}
       {!isMobile && <Button size='md' onClick={handleExit} disabled={pending} mt="16px" style={{ background: 'linear-gradient(180deg, rgba(0, 62, 120, 1) 0%, rgba(21, 139, 206, 0.6) 100%)', boxShadow: '0 4px 6px -4px #000' }}>CLAIM {'&'} WITHDRAW</Button>}
-      <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: '20px', border: '2px solid #007ABE' }}>
-        <CloseIcon color="primary" />
+      <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: '10px' }}>
+        <CloseIcon color="primary" style={{ fill: '#fff' }} />
       </IconButton>
     </StyledModal>
   )

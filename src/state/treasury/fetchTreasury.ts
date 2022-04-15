@@ -43,10 +43,10 @@ const fetchMasonry = async () => {
       address: treasuryAddress,
       name: 'getReserve',
     },
-/*     {
+    {
       address: treasuryAddress,
       name: 'getBurnableRavLeft',
-    }, */
+    },
     {
       address: treasuryAddress,
       name: 'getRedeemableBonds',
@@ -59,10 +59,10 @@ const fetchMasonry = async () => {
       address: treasuryAddress,
       name: 'getBondPremiumRate',
     },
-/*     {
+     {
       address: treasuryAddress,
       name: 'getRavCirculatingSupply',
-    }, */
+    },
     {
       address: treasuryAddress,
       name: 'getRavPrice',
@@ -82,11 +82,11 @@ const fetchMasonry = async () => {
     discountPercent,
     premiumPercent,
     getReserve,
-    /* getBurnableTombLeft, */
+    getBurnableTombLeft,
     getRedeemableBonds,
     getBondDiscountRate,
     getBondPremiumRate,
-    /* getTombCirculatingSupply, */
+    getTombCirculatingSupply,
     getTombPrice,
     PERIOD] = await multicall(treasuryABI, treasuryCalls)
 
@@ -100,11 +100,11 @@ const fetchMasonry = async () => {
     discountPercent: new BigNumber(discountPercent[0]._hex).toJSON(),
     premiumPercent: new BigNumber(premiumPercent[0]._hex).toJSON(),
     reserve: new BigNumber(getReserve[0]._hex).toJSON(),
-  //  burnableTombLeft: new BigNumber(getBurnableTombLeft[0]._hex).toJSON(),
+    burnableTombLeft: new BigNumber(getBurnableTombLeft[0]._hex).toJSON(),
     redeemableBonds: new BigNumber(getRedeemableBonds[0]._hex).toJSON(),
     bondDiscountRate: new BigNumber(getBondDiscountRate[0]._hex).toJSON(),
     bondPremiumRate: new BigNumber(getBondPremiumRate[0]._hex).toJSON(),
-  //  tombCirculatingSupply: new BigNumber(getTombCirculatingSupply[0]._hex).toJSON(),
+    tombCirculatingSupply: new BigNumber(getTombCirculatingSupply[0]._hex).toJSON(),
     tombPrice: new BigNumber(getTombPrice[0]._hex).toJSON(),
     period: new BigNumber(PERIOD[0]._hex).toJSON(),
   }

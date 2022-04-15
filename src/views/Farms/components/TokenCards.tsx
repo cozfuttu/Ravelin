@@ -21,10 +21,10 @@ const Cards = styled.div`
   justify-content: center;
   width: 70%;
   margin-top: 2em;
+  gap: 8px;
 
   @media (max-width: 1080px) {
     width: 90%;
-    gap: 8px;
   }
 `
 
@@ -33,6 +33,7 @@ const TokenCard = styled.div`
   flex: 1;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   justify-content: center;
   padding: 16px;
   background-color: #F2F2F2;
@@ -88,16 +89,16 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   const { onRewardGenesisPools } = useHarvestGenesisPools(pid)
   const { onRewardRavPools } = useHarvestRavPools(pid)
 
-  const rewardEarned = new BigNumber(userData?.earnings).div(1e18)
-  const rewardEarnedUsd = rewardEarned.times(ravPriceUsd)
+  const rewardEarned = userData?.earnings ? new BigNumber(userData?.earnings).div(1e18) : new BigNumber(0)
+  const rewardEarnedUsd = userData?.earnings ? rewardEarned.times(ravPriceUsd) : new BigNumber(0)
 
   const userBalance = new BigNumber(userData?.tokenBalance)
 
-  const rshareStaked = new BigNumber(userData?.stakedBalance).div(new BigNumber(10).pow(decimals))
-  const rshareStakedUsd = rshareStaked.times(new BigNumber(tokenPriceVsQuote))
+  const rshareStaked = userData?.stakedBalance ? new BigNumber(userData?.stakedBalance).div(new BigNumber(10).pow(decimals)) : new BigNumber(0)
+  const rshareStakedUsd = userData?.stakedBalance ? rshareStaked.times(new BigNumber(tokenPriceVsQuote)) : new BigNumber(0)
 
-  const rshareStakedFormatted = rshareStaked.toFormat(4)
-  const rshareStakedUsdFormatted = rshareStakedUsd.toFormat(4)
+  const rshareStakedFormatted = rshareStaked.toFormat(2)
+  const rshareStakedUsdFormatted = rshareStakedUsd.toFormat(2)
 
   const isApproved = new BigNumber(userData?.allowance).isGreaterThan(0)
   const isStaked = new BigNumber(userData?.stakedBalance).isGreaterThan(0)
@@ -184,8 +185,8 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
     <Cards>
       <TokenCard>
         <Image src={`images/icons/${(isGenesis || isRavPool) ? 'rav' : 'rshare'}.png`} />
-        <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(4)}</Text>
-        <Text color='#9D9D9D' fontSize='14px'>≈ ${rewardEarnedUsd.toFormat(4)}</Text>
+        <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(2)}</Text>
+        <Text color='#9D9D9D' fontSize='14px'>≈ ${rewardEarnedUsd.toFormat(2)}</Text>
         <Text color='#9D9D9D' fontSize='14px'>${(isGenesis || isRavPool) ? 'RAV' : 'RSHARE'} Earned</Text>
         <Button size='sm' disabled={!isStaked || pending} onClick={handleClaimReward} mt="16px">{isMobile ? 'CLAIM' : 'CLAIM REWARD'}</Button>
       </TokenCard>

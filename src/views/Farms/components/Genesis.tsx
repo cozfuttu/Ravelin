@@ -24,6 +24,7 @@ const Cards = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 32px;
+  width: 100%;
 `
 
 interface CardsProps {
@@ -32,19 +33,21 @@ interface CardsProps {
   nativePrice: BigNumber
   account: string
   ethereum: any
+  isMobile: boolean
 }
 
-const Genesis: React.FC<CardsProps> = ({ farmsToDisplayWithApy, rsharePrice, nativePrice, account, ethereum }) => {
+const Genesis: React.FC<CardsProps> = ({ farmsToDisplayWithApy, rsharePrice, nativePrice, account, ethereum, isMobile }) => {
 
   const FarmCards = farmsToDisplayWithApy.map((farm) =>
     <LPCard
-      key={farm.pid}
+      key={farm.risk}
       earnLabel='rav'
       farm={farm}
       nativePrice={nativePrice}
       rsharePrice={rsharePrice}
       ethereum={ethereum}
       account={account}
+      isMobile={isMobile}
     />
   )
 

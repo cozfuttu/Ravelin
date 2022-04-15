@@ -12,7 +12,7 @@ const RavPriceCard: React.FC<CardProps> = ({ RavTWAP }) => {
   const nativePrice = usePriceBnbBusd()
   const ravPriceUSD = ravPrice.times(nativePrice)
   return (
-    <Card heading='RAV PRICE' value={`${ravPrice.toFormat(4)} FTM`} secondaryValue={`$${ravPriceUSD.toFormat(2)}`} />
+    <Card heading='RAV TWAP' value={`${ravPrice.toFormat(4)} ADA`} secondaryValue={`$${ravPriceUSD.toFormat(2)}`} />
   )
 }
 

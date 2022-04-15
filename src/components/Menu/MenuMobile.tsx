@@ -13,13 +13,12 @@ import { LinkLabel, MenuEntry } from './MenuEntry'
 
 const OuterContainer = styled.div`
   display: flex;
-  padding-top: 80px;
+//  padding-top: 80px;
   flex-direction: column;
   align-items: center;
   position: absolute;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
   width: 100%;
   height: 100vh;
   background-image: url("images/other/menubg.png");
@@ -28,6 +27,7 @@ const OuterContainer = styled.div`
   background-size: inherit;
   transform: rotate(0deg);
   background-color: #00000040;
+  z-index: 10;
 
   @media (max-width: 1080px) {
     padding-top: 80px;

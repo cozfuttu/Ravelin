@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React from 'react'
+import { usePriceBnbBusd, usePriceRbondBusd } from 'state/hooks'
 import { Treasury } from 'state/types'
 import styled from 'styled-components'
 import { Text } from 'uikit'
@@ -24,8 +25,11 @@ interface Props {
 const Stats: React.FC<Props> = ({ treasury }) => {
   const { tombPrice, twap } = treasury
 
+  const rbondPrice = usePriceRbondBusd()
+  const adaPrice = usePriceBnbBusd()
+  const rbondPriceFormatted = rbondPrice.div(adaPrice).toFormat(4)
+
   const twapFormatted = new BigNumber(twap).div(1e18).toFormat(4)
-  const tombPriceFormatted = new BigNumber(tombPrice).div(1e18).toFormat(4)
   return (
     <StatsContainer>
       <Col>
@@ -33,7 +37,7 @@ const Stats: React.FC<Props> = ({ treasury }) => {
         <Text color='#9D9D9D' fontSize='14px'>Last Hour TWAP Price</Text>
       </Col>
       <Col>
-        <Text color='#4E4E4E' fontSize='20px' bold>RBOND = {tombPriceFormatted} ADA</Text>
+        <Text color='#4E4E4E' fontSize='20px' bold>RBOND = {rbondPriceFormatted} ADA</Text>
         <Text color='#9D9D9D' fontSize='14px'>Current Price: (RAV)^2</Text>
       </Col>
     </StatsContainer>

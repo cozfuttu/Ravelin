@@ -21,19 +21,21 @@ interface CardsProps {
   nativePrice: BigNumber
   account: string
   ethereum: any
+  isMobile?: boolean
 }
 
-const LPCards: React.FC<CardsProps> = ({ farmsToDisplayWithApy, rsharePrice, nativePrice, account, ethereum }) => {
+const LPCards: React.FC<CardsProps> = ({ farmsToDisplayWithApy, rsharePrice, nativePrice, account, ethereum, isMobile }) => {
 
   const FarmCards = farmsToDisplayWithApy.map((farm) =>
     <LPCard
-      key={farm.pid}
+      key={farm.risk}
       earnLabel={(farm.isRavPool || farm.isGenesis) ? 'rav' : 'rshare'}
       farm={farm}
       nativePrice={nativePrice}
       rsharePrice={rsharePrice}
       ethereum={ethereum}
       account={account}
+      isMobile={isMobile}
     />
   )
 

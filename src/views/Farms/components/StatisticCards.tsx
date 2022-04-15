@@ -10,11 +10,11 @@ const Cards = styled.div`
   justify-content: center;
   width: 70%;
   margin-top: 2em;
+  gap: 8px;
 
   @media (max-width: 1080px) {
     flex-wrap: wrap;
     width: 80%;
-    gap: 8px;
   }
 `
 

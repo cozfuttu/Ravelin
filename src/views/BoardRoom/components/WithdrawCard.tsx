@@ -21,7 +21,7 @@ const WithdrawCard: React.FC<Props> = ({ masonry, period }) => {
   const timeDiffWith = claimTimeLeft.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
 
   return (
-    <Card heading='Withdraw possible in' value={timeDiffWith.toFormat("dd:hh:mm:ss")} style={{ maxWidth: '30%', padding: '48px 32px' }} />
+    <Card heading='Withdraw possible in' value={timeDiffWith.toMillis() < 0 ? 'Can Withdraw!' : timeDiffWith.toFormat("dd:hh:mm:ss")} style={{ maxWidth: '30%', padding: '48px 32px' }} />
   )
 }
 

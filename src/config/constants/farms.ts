@@ -24,8 +24,8 @@ const farms: FarmConfig[] = [
     quoteTokenAdresses: contracts.wbnb,
   }, */
   {
-    pid: 1,
-    risk: 5,
+    pid: 0,
+    risk: 0,
     isRavPool: true,
     lpSymbol: 'RAV-wADA LP',
     lpAddresses: {
@@ -46,7 +46,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 0,
-    risk: 5,
+    risk: 1,
     lpSymbol: 'RSHARE-wADA LP',
     lpAddresses: {
       97: '',
@@ -60,6 +60,26 @@ const farms: FarmConfig[] = [
       137: getRshareAddress(),
       250: getRshareAddress(),
       2001: getRshareAddress(),
+    },
+    quoteTokenSymbol: QuoteToken.ADA,
+    quoteTokenAdresses: contracts.wbnb,
+  },
+  {
+    pid: 1,
+    risk: 2,
+    lpSymbol: 'RAV-wADA LP',
+    lpAddresses: {
+      97: '',
+      137: getRavNativeLPAddress(),
+      250: getRavNativeLPAddress(),
+      2001: getRavNativeLPAddress(),
+    },
+    tokenSymbol: 'RAV',
+    tokenAddresses: {
+      97: '',
+      137: getRavAddress(),
+      250: getRavAddress(),
+      2001: getRavAddress(),
     },
     quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
@@ -86,7 +106,7 @@ const farms: FarmConfig[] = [
   }, */
   {
     pid: 0,
-    risk: 5,
+    risk: 3,
     lpSymbol: 'multiUSDT',
     isTokenOnly: true,
     isGenesis: true,
@@ -235,14 +255,14 @@ export const publicFarmsConfig: FarmConfig[] = [
   {
     pid: 102,
     risk: 5,
-    lpSymbol: 'WFTM-USDC LP',
+    lpSymbol: 'wADA-USDC LP',
     lpAddresses: {
       97: '',
       137: '0x6e7a5fafcec6bb1e78bae2a1f0b612012bf14827', // MATIC - USDC
       250: '0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c', // WFTM - USDC
       2001: "0x2357BA64d075A628D79Bb37bAa4e0404e4f9b10E", // wADA - USDC
     },
-    tokenSymbol: 'WFTM',
+    tokenSymbol: 'wADA',
     tokenAddresses: {
       97: '',
       137: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
