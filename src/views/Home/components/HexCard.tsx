@@ -13,7 +13,7 @@ const Card = styled.div`
   background-color: #F2F2F2;
   text-align: center;
   position: relative;
-  margin: 1em auto;
+  margin: 2em 6em;
   width: 12em; height: 20.784em;
   border-radius: 1.2em/.6em;
 
@@ -35,6 +35,7 @@ const Card = styled.div`
   @media (max-width: 1080px) {
     width: 11em; height: 19.05em;
     border-radius: 1.1em/.55em;
+    margin: 2em auto;
   } 
 `
 
@@ -71,7 +72,7 @@ interface CardProps {
 
 const HexCard: React.FC<CardProps> = ({ tokenAddress, tokenName, tokenPriceUSD, adaPrice, marketCap, circSupply, totalSupply }) => {
   const tokenImage = `images/icons/${tokenName}.png`
-  const tokenPriceInAda = tokenPriceUSD.div(adaPrice)
+  const tokenPriceInAda = tokenPriceUSD.div(adaPrice).isNaN() ? new BigNumber(0) : tokenPriceUSD.div(adaPrice)
 
   const tokenImageMetamask = `https://beta.vanguardian.xyz/images/icons/${tokenName}.png`
 
@@ -103,7 +104,7 @@ const HexCard: React.FC<CardProps> = ({ tokenAddress, tokenName, tokenPriceUSD, 
       <TextAntonio>{tokenName.toUpperCase()}</TextAntonio>
       <Image src={tokenImage} />
       <Text color='#9D9D9D' fontSize='10px'>Current Price</Text>
-      <Text color='#007ABE'>{tokenPriceInAda.toFixed(4)} ADA</Text>
+      <Text color='#007ABE'>{tokenPriceInAda.toFormat(4)} ADA</Text>
       <Text color='#9D9D9D' fontSize='11px'>${tokenPriceUSD.toFormat(4)}</Text>
       <Text color='#9D9D9D' fontSize='12px'><b>Market Cap:</b> ${marketCap.div(1e18).toFormat(2)}</Text>
       <Text color='#9D9D9D' fontSize='12px'><b>Circulating Supply:</b> {circSupply.div(1e18).toFormat(0)}</Text>

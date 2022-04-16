@@ -11,6 +11,7 @@ import LPCards from './components/LPCards'
 import { useTotalValue } from 'state/hooks'
 import { getRavAddress, getRshareAddress } from 'utils/addressHelpers'
 import { Footer } from 'components/Footer'
+import BigNumber from 'bignumber.js'
 
 const TextContainer = styled.div`
   display: flex;
@@ -133,7 +134,7 @@ const Home = () => {
               <Row>
                 <Col>
                   <Text color="#007ABE" fontSize='18px' bold style={{ fontSize: isMobile && '14px' }}>TOTAL VALUE LOCKED:</Text>
-                  <Text color="#007ABE" fontSize='32px' bold style={{ transition: 'all 1s linear', fontSize: isMobile && '22px' }}>${totalValue.toFormat(0)}</Text>
+                  <Text color="#007ABE" fontSize='32px' bold style={{ transition: 'all 1s linear', fontSize: isMobile && '22px' }}>${totalValue.isNaN() ? new BigNumber(0).toFormat(0) : totalValue.toFormat(0)}</Text>
                 </Col>
                 <Buttons>
                   <a href="/boardroom" style={{ textDecoration: 'none' }}>

@@ -38,7 +38,7 @@ const PurchaseRBondCard: React.FC<Props> = ({ treasury }) => {
   const rbondAvailable = new BigNumber(burnableTombLeft).div(1e18)
   const isRbondAvailable = rbondAvailable.isGreaterThan(0)
 
-  const ravInWallet = new BigNumber(userData?.tokenBalanceRav)
+  const ravInWallet = userData?.tokenBalanceRav ? new BigNumber(userData?.tokenBalanceRav) : new BigNumber(0)
 
   const lpContract = useMemo(() => {
     return getContract(ethereum as provider, ravAddress)

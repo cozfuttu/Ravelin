@@ -41,7 +41,7 @@ const RedeemRavCard: React.FC<Props> = ({ treasury }) => {
   const isApproved = new BigNumber(userData?.allowanceRbond).isGreaterThan(0)
   const isEnabled = twapPrice.isGreaterThan(BOND_REDEEM_PRICE) && new BigNumber(reserve).isGreaterThan(0)
 
-  const rbondInWallet = new BigNumber(userData?.tokenBalanceRbond)
+  const rbondInWallet = userData?.tokenBalanceRbond ? new BigNumber(userData?.tokenBalanceRbond) : new BigNumber(0)
 
   const lpContract = useMemo(() => {
     return getContract(ethereum as provider, rbondAddress)

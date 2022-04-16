@@ -155,7 +155,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
     />,
   )
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={rshareStaked.times(1e18)} decimals={decimals} onConfirm={isGenesis ? onUnstakeGenesisPools : isRavPool ? onUnstakeRavPools : onUnstakeRsharePools} tokenName={lpSymbol.toUpperCase()} />,
+    <WithdrawModal max={rshareStaked.times(new BigNumber(10).pow(decimals))} decimals={decimals} onConfirm={isGenesis ? onUnstakeGenesisPools : isRavPool ? onUnstakeRavPools : onUnstakeRsharePools} tokenName={lpSymbol.toUpperCase()} />,
   )
 
   const renderStakingButtons = () => {

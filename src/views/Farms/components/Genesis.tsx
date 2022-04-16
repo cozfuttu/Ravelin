@@ -53,7 +53,7 @@ const Genesis: React.FC<CardsProps> = ({ farmsToDisplayWithApy, rsharePrice, nat
 
   return (
     <Background>
-      <Text color='#000' fontSize='16px' mb="8px"><span><AttentionIcon /></span>The pools below will end on (date)</Text>
+      <Text color='#000' fontSize='16px' mb="8px"><span><AttentionIcon /></span>The pools below will end on the dates written on the card.</Text>
       <Cards>
         {FarmCards}
       </Cards>

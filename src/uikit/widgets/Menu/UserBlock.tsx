@@ -15,7 +15,7 @@ const StyledButton = styled.button<{ isMobile?: boolean }>`
   cursor: pointer;
   border: none;
   background: ${({ isMobile }) => isMobile ? '#007ABE' : 'linear-gradient(180deg, rgba(242, 242, 242, 1) 0%, rgba(203, 203, 203, 1) 100%)'};
-  color: #4E4E4E;
+  color: ${({ isMobile }) => isMobile ? '#F2F2F2' : '#4E4E4E'};
   font-weight: 700;
   border-radius: 8px;
 

@@ -8,9 +8,9 @@ export const approve = async (lpContract, masterChefContract, account) => {
 }
 
 export const stake = async (masterChefContract, pid, amount, account) => {
-  console.log('depositing:', amount)
+  console.log('depositing:', new BigNumber(amount).toNumber().toLocaleString('fullwide', { useGrouping: false }))
   return masterChefContract.methods
-    .deposit(pid, new BigNumber(amount).toString())
+    .deposit(pid, new BigNumber(amount).toNumber().toLocaleString('fullwide', { useGrouping: false }))
     .send({ from: account, gasPrice: '100000000000' })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
@@ -19,7 +19,7 @@ export const stake = async (masterChefContract, pid, amount, account) => {
 
 export const stakeMasonry = async (masonryContract, amount, account) => {
   return masonryContract.methods
-    .stake(new BigNumber(amount).toString())
+    .stake(new BigNumber(amount).toNumber().toLocaleString('fullwide', { useGrouping: false }))
     .send({ from: account, gasPrice: '100000000000' })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
@@ -33,8 +33,9 @@ export const approvsse = async (lpContract, masterChefContract, account) => {
 }
 
 export const unstake = async (masterChefContract, pid, amount, account) => {
+  console.log('withdrawing: ', amount)
   return masterChefContract.methods
-    .withdraw(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .withdraw(pid, new BigNumber(amount).toNumber().toLocaleString('fullwide', { useGrouping: false }))
     .send({ from: account, gasPrice: '100000000000' })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
@@ -78,7 +79,6 @@ export const claimReward = async (masonryContract, account) => {
 }
 
 export const buyBonds = async (treasuryContract, tombAmount, targetPrice, account) => {
-  console.log('jkas: ', new BigNumber(tombAmount).toNumber().toLocaleString('fullwide', { useGrouping: false }))
   return treasuryContract.methods
     .buyBonds(new BigNumber(tombAmount).toNumber().toLocaleString('fullwide', { useGrouping: false }), new BigNumber(targetPrice).toString())
     .send({ from: account, gasPrice: '100000000000' })

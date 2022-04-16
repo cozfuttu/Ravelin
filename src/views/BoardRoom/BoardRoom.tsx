@@ -81,8 +81,6 @@ const BoardRoom = () => {
   const [pending, setPending] = useState(false)
   const { onExit } = useExitMasonry()
 
-  console.log('treasury: ', treasury)
-
   const handleExit = async () => {
     setPending(true)
     try {

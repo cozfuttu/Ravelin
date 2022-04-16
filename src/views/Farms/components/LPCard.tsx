@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { QuoteToken } from 'config/constants/types'
+import useCurrentTime from 'hooks/useTimer'
+import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
 import { Farm } from 'state/types'
 import styled from 'styled-components'
@@ -99,6 +101,13 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
     <FarmModal farm={farm} tvl={totalValueFormated} dailyApr={dailyApr} />,
   )
 
+  const currentTimeMillis = useCurrentTime()
+
+  const lNow = DateTime.fromMillis(currentTimeMillis).setZone('utc')
+  const lTarget = DateTime.fromMillis(farm?.poolEndTime * 1000).setZone('utc')
+  const timeDiff = lTarget.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
+  const isFinished = timeDiff.toMillis() < 0
+
   return (
     <Card>
       <Col>
@@ -108,6 +117,7 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
         <Text color='#9D9D9D' fontSize='14px'>Daily APR: {dailyApr}%</Text>
         <Text color='#9D9D9D' fontSize='14px'>TVL: {totalValueFormated}</Text>
         {farm.depositFeeBP ? <Text color='#9D9D9D' fontSize='14px'>Deposit Fee: {farm.depositFeeBP / 100}%</Text> : null}
+        {timeDiff.days < 10 && <Text color={isFinished ? '#af101d' : '#9D9D9D'} fontSize='14px'>{!isFinished && 'Ends in:'} {isFinished ? 'Finished!' : timeDiff.toFormat("dd:hh:mm:ss")}</Text>}
       </Col>
       <Col>
         <Image src={`images/icons/${farmName}.png`} style={{ width: farm.isTokenOnly ? '100px' : '128px' }} />
