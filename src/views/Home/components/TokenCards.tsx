@@ -8,6 +8,7 @@ import HexCard from './HexCard'
 
 const Cards = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   width: 80%;

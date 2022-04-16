@@ -40,7 +40,9 @@ const Card = styled.div`
 
 const MetamaskButton = styled.button`
   padding: 4px;
-  border: 1px solid grey;
+  border: 2px solid #DADADA;
+  border-radius: 6px;
+  padding: 0px 8px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -48,6 +50,13 @@ const MetamaskButton = styled.button`
 
 const Image = styled.img`
   max-width: 64px;
+`
+
+const TextAntonio = styled.div`
+  font-family: 'Antonio', sans-serif;
+  color: #9D9D9D;
+  font-weight: 700;
+  font-size: 32px;
 `
 
 interface CardProps {
@@ -88,10 +97,10 @@ const HexCard: React.FC<CardProps> = ({ tokenAddress, tokenName, tokenPriceUSD, 
   return (
     <Card>
       <MetamaskButton onClick={onMetamaskButtonClick}>
-        <b>+&nbsp;&nbsp;</b>
-        <Image src="images/icons/metamask-fox.svg" style={{ maxWidth: '40px' }} />
+        <Text color='#9D9D9D' fontSize='32px' bold>+&nbsp;</Text>
+        <Image src="images/icons/metamask-fox.svg" style={{ maxWidth: '32px' }} />
       </MetamaskButton>
-      <Text color='#9D9D9D' fontSize='22px' bold>{tokenName.toUpperCase()}</Text>
+      <TextAntonio>{tokenName.toUpperCase()}</TextAntonio>
       <Image src={tokenImage} />
       <Text color='#9D9D9D' fontSize='10px'>Current Price</Text>
       <Text color='#007ABE'>{tokenPriceInAda.toFixed(4)} ADA</Text>

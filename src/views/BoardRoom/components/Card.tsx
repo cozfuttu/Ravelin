@@ -18,6 +18,14 @@ const InfoCard = styled.div`
   min-width: 120px;
 `
 
+const TextAntonio = styled.div`
+  font-family: 'Antonio', sans-serif;
+  color: #9D9D9D;
+  font-weight: 700;
+  font-size: 24px;
+  border-bottom: 2px solid #DADADA;
+`
+
 interface CardProps {
   heading: string
   value: any
@@ -28,7 +36,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ heading, value, secondaryValue, style }) => {
   return (
     <InfoCard style={style}>
-      <Text color='#9D9D9D' fontSize='25px' bold style={{ borderBottom: '2px solid #DADADA' }}>{heading.toUpperCase()}</Text>
+      <TextAntonio>{heading.toUpperCase()}</TextAntonio>
       <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word', maxWidth: '100%' }}>{value}</Text>
       {secondaryValue ? <Text color='#9D9D9D' fontSize='14px'>{secondaryValue}</Text> : null}
     </InfoCard>

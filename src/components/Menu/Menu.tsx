@@ -33,30 +33,35 @@ const MenuItems = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
+  width: 95%;
 `
 
 const Image = styled.img`
-  width: 64px;
+  width: 48px;
 `
 
 const MenuLabels = styled.div`
   display: flex;
   align-items: center;
-  gap: 48px;
+  gap: 24px;
 `
 
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-left: 32px;
 `
 
 const UserBlockContainer = styled.div`
   position: absolute;
   right: 6vw;
   top: 12vh;
+`
+
+const Socials = styled.div`
+  margin-left: 32px;
+  display: flex;
+  gap: 24px;
 `
 
 const Menu = () => {
@@ -75,25 +80,27 @@ const Menu = () => {
       <MenuItems>
         <LogoContainer>
           <Image src="images/logos/RavelinLogo.svg" />
-          <Text color='#E6E6E6' fontSize='24px' style={{ letterSpacing: '4px', fontSize: isMobile && '18px' }}>RAVELIN FINANCE</Text>
+          <Text color='#E6E6E6' fontSize='20px' style={{ letterSpacing: '4px', fontSize: isMobile && '18px' }}>RAVELIN FINANCE</Text>
         </LogoContainer>
         {!isMobile ? <MenuLabels>
           {config.map((menuItem) => {
             return (
               <Link href={menuItem.href} key={menuItem.label} style={{ textDecoration: 'none' }}>
-                <Text fontSize='18px' bold>{menuItem.label}</Text>
+                <Text fontSize='14px' bold>{menuItem.label}</Text>
               </Link>
             )
           })}
-          {socials.map((social) => {
-            const Icon = Icons[social.icon]
-            const iconProps = { width: '32px', color: '#ffffff', style: { cursor: 'pointer' }, marginLeft: '-16px', marginTop: '4px' }
-            return (
-              <Link external href={social.href} key={social.label} style={{ textDecoration: 'none' }}>
-                <Icon {...iconProps} />
-              </Link>
-            )
-          })}
+          <Socials>
+            {socials.map((social) => {
+              const Icon = Icons[social.icon]
+              const iconProps = { width: social.icon === 'TelegramIcon' ? '28px' : '36px', color: '#ffffff', style: { cursor: 'pointer' }, marginLeft: '-16px', marginTop: '4px' }
+              return (
+                <Link external href={social.href} key={social.label} style={{ textDecoration: 'none' }}>
+                  <Icon {...iconProps} />
+                </Link>
+              )
+            })}
+          </Socials>
           <UserBlock account={account} login={connect} logout={reset} />
         </MenuLabels>
 
@@ -103,7 +110,7 @@ const Menu = () => {
               <HamburgerIcon width="64px" />
             </MenuButton>
             <UserBlockContainer>
-              <UserBlock account={account} login={connect} logout={reset} />
+              <UserBlock account={account} login={connect} logout={reset} isMobile={isMobile} />
             </UserBlockContainer>
           </>
         }

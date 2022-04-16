@@ -11,7 +11,7 @@ const Card = styled.div`
   background-color: #F2F2F2;
   box-shadow: 0 8px 10px -4px #000;
   width: 550px;
-  height: 245px;
+  height: 205px;
   padding: 1em;
   border-radius: 0.5em;
 
@@ -41,11 +41,18 @@ const Col2 = styled.div`
 `
 
 const Image = styled.img`
-  max-width: 128px;
+  max-width: 138px;
 
   @media (max-width: 1080px) {
     max-width: 96px;
   }
+`
+
+const TextAntonio = styled.div`
+  font-family: 'Antonio', sans-serif;
+  color: #9D9D9D;
+  font-weight: 700;
+  font-size: 36px;
 `
 
 interface CardProps {
@@ -62,7 +69,7 @@ const LPCard: React.FC<CardProps> = ({ lpName, LPPriceUSD, adaPrice, marketCap, 
   return (
     <Card>
       <Col>
-        <Text color='#9D9D9D' fontSize='32px' bold>{lpName.toUpperCase()} LP</Text>
+        <TextAntonio>{lpName.toUpperCase()} LP</TextAntonio>
         <Col2>
           <Text color='#9D9D9D' fontSize='16px'><b>Liquidity: </b>${marketCap.div(1e18).toFormat(2)}</Text>
           <Text color='#9D9D9D' fontSize='16px'><b>Total Supply: </b>{totalSupply?.div(1e18).toFormat(0)}</Text>

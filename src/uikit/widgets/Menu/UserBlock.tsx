@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useWalletModal } from '../WalletModal'
 import { Login } from '../WalletModal/types'
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ isMobile?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -13,24 +13,26 @@ const StyledButton = styled.button`
   height: 50px;
   overflow: hidden;
   cursor: pointer;
-  background: linear-gradient(180deg, rgba(242, 242, 242, 1) 0%, rgba(203, 203, 203, 1) 100%);
-  border: 4px solid #27514c;
+  border: none;
+  background: ${({ isMobile }) => isMobile ? '#007ABE' : 'linear-gradient(180deg, rgba(242, 242, 242, 1) 0%, rgba(203, 203, 203, 1) 100%)'};
   color: #4E4E4E;
+  font-weight: 700;
   border-radius: 8px;
 
   &:hover{
-    transition: 0.3s;
-    font-size: 19px;
+    transition: all 300ms linear;
+    transform: scale(1.1);
   }
 `
 
 interface Props {
   account?: string
+  isMobile?: boolean
   login: Login
   logout: () => void
 }
 
-const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
+const UserBlock: React.FC<Props> = ({ account, isMobile, login, logout }) => {
   const { onPresentConnectModal, onPresentAccountModal } = useWalletModal(login, logout, account)
   const accountEllipsis = account ? `${account.substring(0, 4)}...${account.substring(account.length - 4)}` : null
   return (
@@ -40,6 +42,7 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
           onClick={() => {
             onPresentAccountModal()
           }}
+          isMobile={isMobile}
         >
           {accountEllipsis}
         </StyledButton>
@@ -48,6 +51,7 @@ const UserBlock: React.FC<Props> = ({ account, login, logout }) => {
           onClick={() => {
             onPresentConnectModal()
           }}
+          isMobile={isMobile}
         >
           CONNECT
         </StyledButton>

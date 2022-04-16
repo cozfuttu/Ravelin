@@ -38,6 +38,14 @@ const Image = styled.img`
   
 `
 
+const TextAntonio = styled.div`
+  font-family: 'Antonio', sans-serif;
+  color: #9D9D9D;
+  font-weight: 700;
+  font-size: 36px;
+  margin-bottom: 8px;
+`
+
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
 }
@@ -94,7 +102,7 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
   return (
     <Card>
       <Col>
-        <Text color='#9D9D9D' fontSize={isMobile ? '26px' : '32px'} bold mb='8px'>{farmName.toUpperCase()} {!(farm.isTokenOnly) && 'LP'}</Text>
+        <TextAntonio style={{ fontSize: isMobile && '26px' }}>{farmName.toUpperCase()} {!(farm.isTokenOnly) && 'LP'}</TextAntonio>
         <Text color='#4E4E4E' fontSize='16px' mb="4px">Deposit {farmName.toUpperCase()} {!(farm.isTokenOnly) && 'LP'} Earn {earnLabel.toUpperCase()}</Text>
         <Text color='#9D9D9D' fontSize='14px'>APR: {farmApyString}%</Text>
         <Text color='#9D9D9D' fontSize='14px'>Daily APR: {dailyApr}%</Text>

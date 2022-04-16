@@ -21,6 +21,8 @@ interface Props {
   treasury: Treasury
 }
 
+const BOND_REDEEM_PRICE = 1.01
+
 const RedeemRavCard: React.FC<Props> = ({ treasury }) => {
   const { account, ethereum }: { account: string, ethereum: provider } = useWallet()
   /*   const nativePrice = usePriceBnbBusd()
@@ -30,14 +32,14 @@ const RedeemRavCard: React.FC<Props> = ({ treasury }) => {
 
   const rbondAddress = getRbondAddress()
 
-  const { userData, twap, tombPrice } = treasury
+  const { userData, twap, tombPrice, reserve } = treasury
 
   const { onRedeem } = useRedeemBonds(tombPrice)
 
   const twapPrice = new BigNumber(twap).div(1e18)
 
   const isApproved = new BigNumber(userData?.allowanceRbond).isGreaterThan(0)
-  const isEnabled = twapPrice.isGreaterThan(1.01)
+  const isEnabled = twapPrice.isGreaterThan(BOND_REDEEM_PRICE) && new BigNumber(reserve).isGreaterThan(0)
 
   const rbondInWallet = new BigNumber(userData?.tokenBalanceRbond)
 

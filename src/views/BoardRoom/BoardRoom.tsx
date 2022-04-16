@@ -19,6 +19,7 @@ import { useExitMasonry } from 'hooks/useUnstake'
 import WithdrawCard from './components/WithdrawCard'
 import ClaimCard from './components/ClaimCard'
 import BigNumber from 'bignumber.js'
+import { Footer } from 'components/Footer'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -93,33 +94,36 @@ const BoardRoom = () => {
   }
 
   return (
-    <WidePage>
-      <ImageContainer>
-        <BlueBack />
-        <BlackBack />
-      </ImageContainer>
-      <Text color='#003E78' fontSize='32px' bold mt={isMobile && '8vh'}>BOARDROOM</Text>
-      <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RAV by staking RSHARE</Text>
-      <InfoCards>
-        <NextEpochCard nextEpochPoint={parseInt(masonry?.nextEpochPoint)} />
-        <CurrentEpochCard epoch={masonry?.epoch} />
-        <RavPriceCard RavTWAP={treasury?.twap} />
-        <APRCard masonry={masonry} />
-        <TotalStakedCard masonry={masonry} />
-      </InfoCards>
-      <Text color='#000000' fontSize='16px' mt='5%' style={{ textAlign: 'center' }}><span><AttentionIcon /></span>Staked RSHAREs can only be withdrawn after 6 epochs.</Text>
-      <TokenCards>
-        <RavCard masonry={masonry} />
-        <RshareCard masonry={masonry} account={account} ethereum={ethereum} />
-      </TokenCards>
-      <TokenCards style={{ justifyContent: 'space-around', alignItems: !isMobile && 'stretch' }}>
-        {!canClaimReward && isStaked && <ClaimCard masonry={masonry} period={treasury?.period} />}
-        {!canWithdraw && isStaked && <WithdrawCard masonry={masonry} period={treasury?.period} />}
-      </TokenCards>
-      <ButtonCont>
-        <Button size='md' onClick={handleExit} disabled={pending || !canClaimReward || !canWithdraw}>CLAIM AND WITHDRAW</Button>
-      </ButtonCont>
-    </WidePage>
+    <>
+      <WidePage>
+        <ImageContainer>
+          <BlueBack />
+          <BlackBack />
+        </ImageContainer>
+        <Text color='#003E78' fontSize='32px' bold mt={isMobile && '8vh'}>BOARDROOM</Text>
+        <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RAV by staking RSHARE</Text>
+        <InfoCards>
+          <NextEpochCard nextEpochPoint={parseInt(masonry?.nextEpochPoint)} />
+          <CurrentEpochCard epoch={masonry?.epoch} />
+          <RavPriceCard RavTWAP={treasury?.twap} />
+          <APRCard masonry={masonry} />
+          <TotalStakedCard masonry={masonry} />
+        </InfoCards>
+        <Text color='#000000' fontSize='16px' mt='5%' style={{ textAlign: 'center' }}><span><AttentionIcon /></span>Staked RSHAREs can only be withdrawn after 6 epochs.</Text>
+        <TokenCards>
+          <RavCard masonry={masonry} />
+          <RshareCard masonry={masonry} account={account} ethereum={ethereum} />
+        </TokenCards>
+        <TokenCards style={{ justifyContent: 'space-around', alignItems: !isMobile && 'stretch' }}>
+          {!canClaimReward && isStaked && <ClaimCard masonry={masonry} period={treasury?.period} />}
+          {!canWithdraw && isStaked && <WithdrawCard masonry={masonry} period={treasury?.period} />}
+        </TokenCards>
+        <ButtonCont>
+          <Button size='md' onClick={handleExit} disabled={pending || !canClaimReward || !canWithdraw}>CLAIM AND WITHDRAW</Button>
+        </ButtonCont>
+      </WidePage>
+      <Footer />
+    </>
   )
 }
 

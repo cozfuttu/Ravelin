@@ -8,6 +8,7 @@ import PurchaseRBondCard from './components/PurchaseRBondCard'
 import Stats from './components/Stats'
 import RedeemRavCard from './components/RedeemRavCard'
 import { useTreasury } from 'state/hooks'
+import { Footer } from 'components/Footer'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -45,21 +46,24 @@ const InfoContainer = styled.div`
 const Bond = () => {
   const treasury = useTreasury()
   return (
-    <WidePage>
-      <ImageContainer>
-        <BlueBack />
-        <BlackBack />
-      </ImageContainer>
-      <TextContainer>
-        <Text color='#003E78' fontSize='40px' bold>BUY {'&'} REDEEM BONDS</Text>
-        <Text color='#4E4E4E' fontSize='24px' bold mt='8px'>Earn premiums upon redemption</Text>
-      </TextContainer>
-      <InfoContainer>
-        <PurchaseRBondCard treasury={treasury} />
-        <Stats treasury={treasury} />
-        <RedeemRavCard treasury={treasury} />
-      </InfoContainer>
-    </WidePage>
+    <>
+      <WidePage style={{ paddingBottom: '1vh', minHeight: '0' }}>
+        <ImageContainer>
+          <BlueBack />
+          <BlackBack />
+        </ImageContainer>
+        <TextContainer>
+          <Text color='#003E78' fontSize='40px' bold>BUY {'&'} REDEEM BONDS</Text>
+          <Text color='#4E4E4E' fontSize='24px' bold mt='8px'>Earn premiums upon redemption</Text>
+        </TextContainer>
+        <InfoContainer>
+          <PurchaseRBondCard treasury={treasury} />
+          <Stats treasury={treasury} />
+          <RedeemRavCard treasury={treasury} />
+        </InfoContainer>
+      </WidePage>
+      <Footer style={{ height: '32vh' }} />
+    </>
   )
 }
 

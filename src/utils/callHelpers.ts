@@ -90,7 +90,7 @@ export const buyBonds = async (treasuryContract, tombAmount, targetPrice, accoun
 export const redeemBonds = async (treasuryContract, bondAmount, targetPrice, account) => {
   return treasuryContract.methods
     .redeemBonds(new BigNumber(bondAmount).toNumber().toLocaleString('fullwide', { useGrouping: false }), new BigNumber(targetPrice).toString())
-    .send({ from: account, gasPrice: '500000000000' })
+    .send({ from: account, gasPrice: '100000000000' })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -99,7 +99,7 @@ export const redeemBonds = async (treasuryContract, bondAmount, targetPrice, acc
 export const allocateSeigniorage = async (treasuryContract, account) => {
   return treasuryContract.methods
     .allocateSeigniorage()
-    .send({ from: account, gasPrice: '500000000000' })
+    .send({ from: account, gasPrice: '100000000000' })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })

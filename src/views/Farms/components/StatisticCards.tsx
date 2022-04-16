@@ -39,6 +39,14 @@ const InfoCard = styled.div`
   }
 `
 
+const TextAntonio = styled.div`
+  font-family: 'Antonio', sans-serif;
+  color: #9D9D9D;
+  font-weight: 700;
+  font-size: 24px;
+  border-bottom: 2px solid #DADADA;
+`
+
 interface Props {
   farm: FarmWithStakedValue
   tvl: string
@@ -55,15 +63,15 @@ const StatisticCards: React.FC<Props> = ({ farm, tvl, dailyApr, isMobile }) => {
   return (
     <Cards>
       <InfoCard>
-        <Text color='#9D9D9D' fontSize='24px' bold style={{ borderBottom: '2px solid #DADADA' }}>APR</Text>
+        <TextAntonio>APR</TextAntonio>
         <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>%{farmApyString}</Text>
       </InfoCard>
       <InfoCard>
-        <Text color='#9D9D9D' fontSize='24px' bold style={{ borderBottom: '2px solid #DADADA' }}>DAILY APR</Text>
+        <TextAntonio>DAILY APR</TextAntonio>
         <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>%{dailyApr}</Text>
       </InfoCard>
       <InfoCard style={{ width: isMobile && '100%' }}>
-        <Text color='#9D9D9D' fontSize='24px' bold style={{ borderBottom: '2px solid #DADADA' }}>TVL</Text>
+        <TextAntonio>TVL</TextAntonio>
         <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>{tvl}</Text>
       </InfoCard>
     </Cards>
