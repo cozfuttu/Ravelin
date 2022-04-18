@@ -20,6 +20,7 @@ import WithdrawCard from './components/WithdrawCard'
 import ClaimCard from './components/ClaimCard'
 import BigNumber from 'bignumber.js'
 import { Footer } from 'components/Footer'
+import FarmsBRGraphic from 'views/components/FarmsBRGraphic'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -46,7 +47,7 @@ const InfoCards = styled.div`
 const TokenCards = styled.div`
   display: flex;
   align-items: center;
-  margin: 2em auto;
+  margin: 1em auto;
   justify-content: center;
   width: 80%;
 
@@ -93,13 +94,12 @@ const BoardRoom = () => {
 
   return (
     <>
-      <WidePage>
-        <ImageContainer>
+      <WidePage style={{ minHeight: '70vh' }}>
+        {!isMobile && <ImageContainer>
           <BlueBack />
           <BlackBack />
-        </ImageContainer>
-        <Text color='#003E78' fontSize='32px' bold mt={isMobile && '8vh'}>BOARDROOM</Text>
-        <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RAV by staking RSHARE</Text>
+        </ImageContainer>}
+        <Text color='#003E78' fontSize='32px' bold mt={isMobile && '8vh'} mb="1vh">BOARDROOM</Text>
         <InfoCards>
           <NextEpochCard nextEpochPoint={parseInt(masonry?.nextEpochPoint)} />
           <CurrentEpochCard epoch={masonry?.epoch} />
@@ -117,10 +117,11 @@ const BoardRoom = () => {
           {!canWithdraw && isStaked && <WithdrawCard masonry={masonry} period={treasury?.period} />}
         </TokenCards>
         <ButtonCont>
-          <Button size='md' onClick={handleExit} disabled={pending || !canClaimReward || !canWithdraw}>CLAIM AND WITHDRAW</Button>
+          <Button size='sm' onClick={handleExit} disabled={pending || !canClaimReward || !canWithdraw} style={{ padding: '1.2rem 2rem' }}>CLAIM AND WITHDRAW</Button>
         </ButtonCont>
       </WidePage>
-      <Footer />
+      {!isMobile && <FarmsBRGraphic />}
+      {!isMobile && <Footer style={{ marginTop: '0' }} />}
     </>
   )
 }

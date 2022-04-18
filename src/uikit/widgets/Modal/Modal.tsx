@@ -17,7 +17,7 @@ interface Props extends InjectedProps {
 const StyledModal = styled.div`
   position: relative;
   background: linear-gradient(180deg, rgba(2,0,36,1) 0%, #006c81 100%);
-  box-shadow: 0 0 16px #00e0a0;
+  box-shadow: 0 0 16px rgba(0,212,255,1);
   border: 1px solid rgba(0,212,255,1);
   border-radius: 32px;
   width: 100%;

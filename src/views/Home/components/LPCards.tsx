@@ -17,6 +17,7 @@ const Cards = styled.div`
     flex-direction: column;
     gap: 24px;
     width: 90%;
+    padding-bottom: 100px;
   }
 `
 

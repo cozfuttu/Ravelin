@@ -12,15 +12,16 @@ import { useTotalValue } from 'state/hooks'
 import { getRavAddress, getRshareAddress } from 'utils/addressHelpers'
 import { Footer } from 'components/Footer'
 import BigNumber from 'bignumber.js'
+import HomeGraphic from './components/HomeGraphic'
 
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
-  margin-left: 300px;
+  margin-left: 200px;
   height: 100%;
-  width: 80%;
+  width: 90%;
 
   @media (max-width: 1080px) {
     margin-left: 0;
@@ -33,11 +34,13 @@ const WelcomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
-  width: 60%;
+  width: 50%;
   margin-top: 3vh;
+  margin-left: -9vw;
 
   @media (max-width: 1080px) {
     width: 90%;
+    margin-left: 0;
   }
 `
 
@@ -47,12 +50,15 @@ const TVLandButtonsContainer = styled.div`
   align-items: flex-start;
   align-self: flex-end;
   justify-content: center;
-  gap: 16px;
+  gap: 48px;
   width: 80%;
-  margin: 6% 0;
+  margin: 4.5% 0;
 
   @media (max-width: 1080px) {
     width: 95%;
+    gap: 16px;
+    margin-top: 32px;
+    margin-left: 8px;
   }
 `
 
@@ -60,11 +66,12 @@ const Row = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 32px;
+  gap: 96px;
   width: 100%;
 
   @media (max-width: 1080px) {
     justify-content: space-between;
+    gap: 32px;
   }
 `
 
@@ -88,7 +95,7 @@ const ImageContainer = styled.div`
   padding-bottom: 4em;
 
   @media (max-width: 1080px) {
-    height: 50vh;
+    height: 55vh;
   }
 `
 
@@ -133,7 +140,7 @@ const Home = () => {
               {!isMobile && <Text color="#000000"><span><AttentionIcon /></span>Please visit our <a href="https://www.google.com/" style={{ textDecoration: 'none', color: '#007ABE', fontWeight: '700' }}>documentation</a> before purchasing RAV or RSHARE!</Text>}
               <Row>
                 <Col>
-                  <Text color="#007ABE" fontSize='18px' bold style={{ fontSize: isMobile && '14px' }}>TOTAL VALUE LOCKED:</Text>
+                  <Text color="#007ABE" fontSize='18px' bold style={{ fontSize: isMobile && '12px' }}>TOTAL VALUE LOCKED:</Text>
                   <Text color="#007ABE" fontSize='32px' bold style={{ transition: 'all 1s linear', fontSize: isMobile && '22px' }}>${totalValue.isNaN() ? new BigNumber(0).toFormat(0) : totalValue.toFormat(0)}</Text>
                 </Col>
                 <Buttons>
@@ -160,8 +167,9 @@ const Home = () => {
           <BlueBack />
           <BlackBack />
         </ImageContainer>
+        {!isMobile && <HomeGraphic />}
       </WidePage>
-      <Footer />
+      {!isMobile && <Footer />}
     </>
   )
 }

@@ -9,12 +9,15 @@ const Background = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2em;
+  padding: 2em 0;
   background-color: #E6E6E6;
   border-radius: 8px;
 
   @media (max-width: 1080px) {
     padding: 1rem;
+    margin: 0;
+    width: 85vw;
+    margin-left: -1.5vw;
   }
 `
 
@@ -24,7 +27,6 @@ const Cards = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 32px;
-  width: 100%;
 `
 
 interface CardsProps {
@@ -53,7 +55,7 @@ const Genesis: React.FC<CardsProps> = ({ farmsToDisplayWithApy, rsharePrice, nat
 
   return (
     <Background>
-      <Text color='#000' fontSize='16px' mb="8px"><span><AttentionIcon /></span>The pools below will end on the dates written on the card.</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"}><span><AttentionIcon /></span>The pools below will end on the dates written on the card.</Text>
       <Cards>
         {FarmCards}
       </Cards>

@@ -8,14 +8,17 @@ const InfoCard = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 8px;
   background-color: #F2F2F2;
   border-radius: 8px;
-  box-shadow: 0 8px 10px -4px #000;
+  box-shadow: 0 6px 10px -4px #646464;
   max-width: 17%;
   text-align: center;
   z-index: 1;
   min-width: 120px;
+  
+  @media (max-width: 1080px) {
+    padding: 8px;
+  }
 `
 
 const TextAntonio = styled.div`

@@ -14,10 +14,10 @@ const Card = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: #F2F2F2;
-  box-shadow: 0 8px 10px -4px #000;
-  width: 550px;
-  height: 245px;
-  padding: 1em;
+  box-shadow: 0 6px 10px -4px #646464;
+  width: 400px;
+  height: 200px;
+  padding: 0.5em 1em;
   border-radius: 0.5em;
   z-index: 1;
 
@@ -120,7 +120,7 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
         {timeDiff.days < 10 && <Text color={isFinished ? '#af101d' : '#9D9D9D'} fontSize='14px'>{!isFinished && 'Ends in:'} {isFinished ? 'Finished!' : timeDiff.toFormat("dd:hh:mm:ss")}</Text>}
       </Col>
       <Col>
-        <Image src={`images/icons/${farmName}.png`} style={{ width: farm.isTokenOnly ? '100px' : '128px' }} />
+        <Image src={`images/icons/${farmName}.png`} style={{ width: farm.isTokenOnly ? '80px' : '128px' }} />
         <Button size='sm' style={{ alignSelf: 'center' }} onClick={onPresentFarmView}>VIEW</Button>
       </Col>
     </Card>

@@ -8,9 +8,9 @@ const StyledButton = styled.button<{ isMobile?: boolean }>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 120px;
+  width: 100px;
   font-size: 16px;
-  height: 50px;
+  height: 32px;
   overflow: hidden;
   cursor: pointer;
   border: none;
@@ -18,6 +18,7 @@ const StyledButton = styled.button<{ isMobile?: boolean }>`
   color: ${({ isMobile }) => isMobile ? '#F2F2F2' : '#4E4E4E'};
   font-weight: 700;
   border-radius: 8px;
+  margin-right: 4px;
 
   &:hover{
     transition: all 300ms linear;

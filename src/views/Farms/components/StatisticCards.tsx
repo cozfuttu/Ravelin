@@ -7,8 +7,8 @@ import { FarmWithStakedValue } from './LPCard'
 const Cards = styled.div`
   display: flex;
   align-items: stretch;
-  justify-content: center;
-  width: 70%;
+  justify-content: space-between;
+  width: 66%;
   margin-top: 2em;
   gap: 8px;
 
@@ -27,7 +27,7 @@ const InfoCard = styled.div`
   padding: 8px 16px;
   background-color: #F2F2F2;
   border-radius: 8px;
-  box-shadow: 0 6px 6px -4px #000;
+  box-shadow: 0 6px 10px -4px #646464;
   max-width: 25%;
 
   @media (max-width: 1080px) {

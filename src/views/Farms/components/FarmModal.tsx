@@ -23,7 +23,7 @@ interface Props extends InjectedProps {
 
 const StyledModal = styled.div`
   position: relative;
-  background-image: url('images/other/FarmCard.png');
+  background-image: url('images/other/FarmCard.svg');
   background-size: contain;
   background-repeat: no-repeat;
   // box-shadow: 0 0 16px #00e0a0;
@@ -55,7 +55,7 @@ const ModalHeader = styled.div`
   align-items: center;
   padding: 12px 24px;
   text-align: center;
-  margin-top: 32px;
+  margin-top: 48px;
 `
 
 const ModalTitle = styled(Flex)`
@@ -113,8 +113,8 @@ const FarmModal: React.FC<Props> = ({
           <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: isMobile ? '80%' : '100%' }}>Provide liquidity for {farm.lpSymbol} pair now on MilkySwap</Button>
         </a>}
       {!isMobile && <Button size='md' onClick={handleExit} disabled={pending} mt="16px" style={{ background: 'linear-gradient(180deg, rgba(0, 62, 120, 1) 0%, rgba(21, 139, 206, 0.6) 100%)', boxShadow: '0 4px 6px -4px #000' }}>CLAIM {'&'} WITHDRAW</Button>}
-      <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: '10px' }}>
-        <CloseIcon color="primary" style={{ fill: '#fff' }} />
+      <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: '20px', border: '2px solid #007ABE' }}>
+        <CloseIcon color="primary" style={{ fill: isMobile ? '#fff' : '#007ABE' }} />
       </IconButton>
     </StyledModal>
   )

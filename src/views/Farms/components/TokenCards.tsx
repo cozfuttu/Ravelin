@@ -18,9 +18,9 @@ import { useApproveGenesisPools, useApproveRavPools, useApproveRsharePools } fro
 const Cards = styled.div`
   display: flex;
   align-items: stretch;
-  justify-content: center;
-  width: 70%;
-  margin-top: 2em;
+  justify-content: space-between;
+  width: 66%;
+  margin-top: 1em;
   gap: 8px;
 
   @media (max-width: 1080px) {
@@ -38,7 +38,7 @@ const TokenCard = styled.div`
   padding: 16px;
   background-color: #F2F2F2;
   border-radius: 8px;
-  box-shadow: 0 8px 10px -4px #000;
+  box-shadow: 0 6px 10px -4px #646464;
   max-width: 40%;
   
   @media (max-width: 1080px) {

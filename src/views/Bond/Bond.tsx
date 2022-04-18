@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import WidePage from 'components/layout/WidePage'
 import BlueBack from 'views/Home/components/BlueBack'
 import BlackBack from 'views/Home/components/BlackBack'
-import { Text } from 'uikit'
+import { Text, useMatchBreakpoints } from 'uikit'
 import PurchaseRBondCard from './components/PurchaseRBondCard'
 import Stats from './components/Stats'
 import RedeemRavCard from './components/RedeemRavCard'
 import { useTreasury } from 'state/hooks'
 import { Footer } from 'components/Footer'
+import BondGraphic from './components/BondGraphic'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -45,13 +46,15 @@ const InfoContainer = styled.div`
 
 const Bond = () => {
   const treasury = useTreasury()
+  const { isXl } = useMatchBreakpoints()
+  const isMobile = isXl === false
   return (
     <>
       <WidePage style={{ paddingBottom: '1vh', minHeight: '0' }}>
-        <ImageContainer>
+        {!isMobile && <ImageContainer>
           <BlueBack />
           <BlackBack />
-        </ImageContainer>
+        </ImageContainer>}
         <TextContainer>
           <Text color='#003E78' fontSize='40px' bold>BUY {'&'} REDEEM BONDS</Text>
           <Text color='#4E4E4E' fontSize='24px' bold mt='8px'>Earn premiums upon redemption</Text>
@@ -62,7 +65,8 @@ const Bond = () => {
           <RedeemRavCard treasury={treasury} />
         </InfoContainer>
       </WidePage>
-      <Footer style={{ height: '32vh' }} />
+      {!isMobile && <BondGraphic />}
+      {!isMobile && <Footer style={{ marginTop: '33px' }} />}
     </>
   )
 }

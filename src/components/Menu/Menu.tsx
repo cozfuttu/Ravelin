@@ -79,8 +79,8 @@ const Menu = () => {
     <Menubar>
       <MenuItems>
         <LogoContainer>
-          <Image src="images/logos/RavelinLogo.svg" />
-          <Text color='#E6E6E6' fontSize='20px' style={{ letterSpacing: '4px', fontSize: isMobile && '18px' }}>RAVELIN FINANCE</Text>
+          <Image src="images/logos/RavelinLogo.svg" style={{ marginLeft: isMobile && '16px' }} />
+          <Text color='#E6E6E6' fontSize='20px' style={{ letterSpacing: '4px', fontSize: isMobile && '14px' }}>RAVELIN FINANCE</Text>
         </LogoContainer>
         {!isMobile ? <MenuLabels>
           {config.map((menuItem) => {

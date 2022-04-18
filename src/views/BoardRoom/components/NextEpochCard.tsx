@@ -19,7 +19,7 @@ const NextEpochCard: React.FC<CardProps> = ({ nextEpochPoint }) => {
   const { onAllocate } = useAllocateSeigniorage()
 
   return (
-    <Card heading='NEXT EPOCH' value={timeDiff.toMillis() < 0 ? <Button size='sm' onClick={onAllocate} style={{ maxWidth: '100%' }}>Allocate Rewards</Button> : timeDiff.toFormat("dd:hh:mm:ss")} />
+    <Card heading='NEXT EPOCH' value={timeDiff.toMillis() < 0 ? <Button size='sm' onClick={onAllocate} style={{ maxWidth: '100%', padding: '1.5rem 0.5rem' }}>Allocate Rewards</Button> : timeDiff.toFormat("dd:hh:mm:ss")} />
   )
 }
 

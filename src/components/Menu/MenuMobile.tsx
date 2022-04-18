@@ -7,7 +7,7 @@ import ReviewBadgePaladin from 'uikit/components/ReviewProofBadge/ReviewProofBad
 import { SvgProps, CloseIcon } from 'uikit/components/Svg'
 import { IconButton } from 'uikit/components/Button'
 import * as IconModule from 'uikit/widgets/Menu/icons'
-import config from './config'
+import config, { socials } from './config'
 import MenuLink from 'uikit/widgets/Menu/MenuLink'
 import { LinkLabel, MenuEntry } from './MenuEntry'
 
@@ -21,7 +21,7 @@ const OuterContainer = styled.div`
   top: 0;
   width: 100%;
   height: 100vh;
-  background-image: url("images/other/menubg.png");
+  background-image: url("images/other/MenuBg.svg");
   background-repeat: no-repeat;
   background-position: right top;
   background-size: inherit;
@@ -36,15 +36,18 @@ const OuterContainer = styled.div`
 
 const ItemsContainer = styled.div`
   display: flex;
-  padding-top: 10%;
+  padding-top: 12%;
+  padding-right: 64px;
   padding-bottom: 10%;
-  height: 50%;
+  height: 41%;
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
+  gap: 48px;
   align-items: flex-end;
   align-self: center;
   z-index: 999;
+  font-family: 'Inter', sans-serif;
 `
 
 const SocialContainer = styled.div`
@@ -63,8 +66,8 @@ const Logo = styled.img`
 
 const CloseIconContainer = styled.div`
   position: absolute;
-  right: 32px;
-  top: 64px;
+  right: 16px;
+  top: 8px;
 `
 
 const AccordionDivider = styled.div`
@@ -89,7 +92,7 @@ const MenuMobile: React.FC<Props> = ({ isMobile, onClose }) => {
 
       <CloseIconContainer>
         <IconButton variant="text" onClick={onClose} aria-label="Close the dialog">
-          <CloseIcon color="#75706a" />
+          <CloseIcon color="#d3d3d3" />
         </IconButton>
       </CloseIconContainer>
 
@@ -103,15 +106,14 @@ const MenuMobile: React.FC<Props> = ({ isMobile, onClose }) => {
                   <LinkLabel>{entry.label.toUpperCase()}</LinkLabel>
                 </MenuLink>
               </MenuEntry>
-              <AccordionDivider />
             </>
           )
         })}
-        {/*         <SocialContainer>
+        <SocialContainer>
           {
             socials.map((social, index) => {
               const Icon = Icons[social.icon]
-              const iconProps = { width: '24px', color: 'textSubtle', style: { cursor: 'pointer' } }
+              const iconProps = { width: social.icon === 'TelegramIcon' ? '28px' : '36px', color: '#ffffff', style: { cursor: 'pointer' } }
               const mr = index < socials.length - 1 ? '20px' : 0
 
               return (
@@ -121,7 +123,7 @@ const MenuMobile: React.FC<Props> = ({ isMobile, onClose }) => {
               )
             })
           }
-        </SocialContainer> */}
+        </SocialContainer>
       </ItemsContainer>
     </OuterContainer>
   )

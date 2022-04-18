@@ -13,7 +13,7 @@ const Card = styled.div`
   background-color: #F2F2F2;
   text-align: center;
   position: relative;
-  margin: 2em 6em;
+  margin: 0 6em 2em 6em;
   width: 12em; height: 20.784em;
   border-radius: 1.2em/.6em;
 
@@ -43,10 +43,17 @@ const MetamaskButton = styled.button`
   padding: 4px;
   border: 2px solid #DADADA;
   border-radius: 6px;
-  padding: 0px 8px;
+  padding: 0px 4px;
   display: flex;
   align-items: center;
   cursor: pointer;
+  transition: 300ms;
+  opacity: 0.85;
+
+  :hover {
+    opacity: 1;
+    background-color: #e2e2e2;
+  }
 `
 
 const Image = styled.img`
@@ -98,8 +105,8 @@ const HexCard: React.FC<CardProps> = ({ tokenAddress, tokenName, tokenPriceUSD, 
   return (
     <Card>
       <MetamaskButton onClick={onMetamaskButtonClick}>
-        <Text color='#9D9D9D' fontSize='32px' bold>+&nbsp;</Text>
-        <Image src="images/icons/metamask-fox.svg" style={{ maxWidth: '32px' }} />
+        <Text color='#9D9D9D' fontSize='24px' bold>+&nbsp;</Text>
+        <Image src="images/icons/metamask-fox.svg" style={{ maxWidth: '24px' }} />
       </MetamaskButton>
       <TextAntonio>{tokenName.toUpperCase()}</TextAntonio>
       <Image src={tokenImage} />
