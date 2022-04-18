@@ -74,8 +74,8 @@ const BoardRoom = () => {
 
   const { userData } = masonry
 
-  const canClaimReward = userData?.canClaimReward
-  const canWithdraw = userData?.canWithdraw
+  const canClaimReward = userData?.canClaimReward && new BigNumber(userData?.earned).isGreaterThan(0)
+  const canWithdraw = userData?.canWithdraw && new BigNumber(userData?.stakedBalance).isGreaterThan(0)
 
   const isStaked = new BigNumber(userData?.stakedBalance).isGreaterThan(0)
 
@@ -83,13 +83,13 @@ const BoardRoom = () => {
   const { onExit } = useExitMasonry()
 
   const handleExit = async () => {
-    setPending(true)
-    try {
-      await onExit()
-    }
-    finally {
-      setPending(false)
-    }
+    /*     setPending(true)
+        try {
+          await onExit()
+        }
+        finally {
+          setPending(false)
+        } */
   }
 
   return (
@@ -117,7 +117,7 @@ const BoardRoom = () => {
           {!canWithdraw && isStaked && <WithdrawCard masonry={masonry} period={treasury?.period} />}
         </TokenCards>
         <ButtonCont>
-          <Button size='sm' onClick={handleExit} disabled={pending || !canClaimReward || !canWithdraw} style={{ padding: '1.2rem 2rem' }}>CLAIM AND WITHDRAW</Button>
+          <Button size='sm' onClick={handleExit} disabled /* ={pending || !canClaimReward || !canWithdraw} */ style={{ padding: '1.2rem 2rem' }}>CLAIM AND WITHDRAW</Button>
         </ButtonCont>
       </WidePage>
       {!isMobile && <FarmsBRGraphic />}

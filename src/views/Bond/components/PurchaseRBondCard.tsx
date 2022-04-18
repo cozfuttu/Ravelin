@@ -47,15 +47,15 @@ const PurchaseRBondCard: React.FC<Props> = ({ treasury }) => {
   const { onApprove } = useApproveTreasury(lpContract)
 
   const handleApprove = useCallback(async () => {
-    try {
-      setRequestedApproval(true)
-      await onApprove()
-    } catch (e) {
-      console.error(e)
-    }
-    finally {
-      setRequestedApproval(false)
-    }
+    /*     try {
+          setRequestedApproval(true)
+          await onApprove()
+        } catch (e) {
+          console.error(e)
+        }
+        finally {
+          setRequestedApproval(false)
+        } */
   }, [onApprove])
 
   const [onPresentPurchase] = useModal(
@@ -70,8 +70,8 @@ const PurchaseRBondCard: React.FC<Props> = ({ treasury }) => {
   )
 
   const renderApprovalOrPurchaseButton = () => {
-    return isApproved ? <Button disabled={!isRbondAvailable} size="sm" onClick={onPresentPurchase}>Purchase</Button> : (
-      <Button mt="16px" size='sm' disabled={requestedApproval} onClick={handleApprove}>
+    return isApproved ? <Button disabled/* ={!isRbondAvailable} */ size="sm" onClick={onPresentPurchase}>Purchase</Button> : (
+      <Button mt="16px" size='sm' disabled /* ={requestedApproval} */ onClick={handleApprove}>
         Approve Contract
       </Button>
     )

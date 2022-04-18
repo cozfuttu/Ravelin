@@ -137,28 +137,28 @@ const Home = () => {
               {!isMobile && <Text color="#000" mt='16px' bold>Stake your RAV-ADA LP in the FARM to earn RSHARE rewards. Then stake your earned RSHARE in the BOARDROOM to earn more RAV!</Text>}
             </WelcomeContainer>
             <TVLandButtonsContainer>
-              {!isMobile && <Text color="#000000"><span><AttentionIcon /></span>Please visit our <a href="https://www.google.com/" style={{ textDecoration: 'none', color: '#007ABE', fontWeight: '700' }}>documentation</a> before purchasing RAV or RSHARE!</Text>}
+              {!isMobile && <Text color="#000000"><span><AttentionIcon /></span>Please visit our <a href="https://ravelin-finance.gitbook.io/ravelin-finance/" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', color: '#007ABE', fontWeight: '700' }}>documentation</a> before purchasing RAV or RSHARE!</Text>}
               <Row>
                 <Col>
                   <Text color="#007ABE" fontSize='18px' bold style={{ fontSize: isMobile && '12px' }}>TOTAL VALUE LOCKED:</Text>
-                  <Text color="#007ABE" fontSize='32px' bold style={{ transition: 'all 1s linear', fontSize: isMobile && '22px' }}>${totalValue.isNaN() ? new BigNumber(0).toFormat(0) : totalValue.toFormat(0)}</Text>
+                  <Text color="#007ABE" fontSize='32px' bold style={{ transition: 'all 1s linear', fontSize: isMobile && '22px' }}>${/* totalValue.isNaN() ? new BigNumber(0).toFormat(0) : totalValue.toFormat(0) */ 0}</Text>
                 </Col>
                 <Buttons>
                   <a href="/boardroom" style={{ textDecoration: 'none' }}>
                     <Button padding='28px' style={{ width: isMobile && '100%', fontSize: '14px' }}>STAKE NOW</Button>
                   </a>
-                  <a href="/farms" style={{ textDecoration: 'none' }}>
+                  <a href="/farm" style={{ textDecoration: 'none' }}>
                     <Button padding='28px' style={{ width: isMobile && '100%', fontSize: '14px' }}>FARM NOW</Button>
                   </a>
-                  <a href={`https://www.milkyswap.exchange/swap?outputCurrency=${getRavAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
+                  <a href={/* `https://www.milkyswap.exchange/swap?outputCurrency=${getRavAddress()}` */ '/'} /* target='_blank' rel="noreferrer" */ style={{ textDecoration: 'none' }}>
                     <Button padding='28px' style={{ width: isMobile && '100%', fontSize: '14px' }}>BUY RAV</Button>
                   </a>
-                  <a href={`https://www.milkyswap.exchange/swap?outputCurrency=${getRshareAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
+                  <a href={/* `https://www.milkyswap.exchange/swap?outputCurrency=${getRshareAddress()}` */ '/'} /* target='_blank' rel="noreferrer" */ style={{ textDecoration: 'none' }}>
                     <Button padding='28px' style={{ width: isMobile && '100%', fontSize: '14px' }}>BUY RSHARE</Button>
                   </a>
                 </Buttons>
               </Row>
-              {isMobile && <Text color="#000000" mt="8vh" style={{ textAlign: 'center' }}><span><AttentionIcon /></span>Please visit our <a href="https://www.google.com/" style={{ textDecoration: 'none', color: '#007ABE', fontWeight: '700' }}>documentation</a> before purchasing RAV or RSHARE!</Text>}
+              {isMobile && <Text color="#000000" mt="100px" style={{ textAlign: 'center' }}><span><AttentionIcon /></span>Please visit our <a href="https://www.google.com/" style={{ textDecoration: 'none', color: '#007ABE', fontWeight: '700' }}>documentation</a> before purchasing RAV or RSHARE!</Text>}
             </TVLandButtonsContainer>
             <TokenCards />
             <LPCards />

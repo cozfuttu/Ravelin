@@ -71,14 +71,14 @@ const LPCard: React.FC<CardProps> = ({ lpName, LPPriceUSD, adaPrice, marketCap, 
       <Col>
         <TextAntonio>{lpName.toUpperCase()} LP</TextAntonio>
         <Col2>
-          <Text color='#9D9D9D' fontSize='16px'><b>Liquidity: </b>${marketCap.div(1e18).toFormat(2)}</Text>
-          <Text color='#9D9D9D' fontSize='16px'><b>Total Supply: </b>{totalSupply?.div(1e18).toFormat(0)}</Text>
-          <Text color='#9D9D9D' fontSize='16px'><b>Price: </b>${new BigNumber(LPPriceUSD).toFormat(2)}</Text>
+          <Text color='#9D9D9D' fontSize='16px'><b>Liquidity: </b>${/* marketCap.div(1e18).toFormat(2) */ 0.00}</Text>
+          <Text color='#9D9D9D' fontSize='16px'><b>Total Supply: </b>{/* totalSupply?.div(1e18).toFormat(0) */ 0.00}</Text>
+          <Text color='#9D9D9D' fontSize='16px'><b>Price: </b>${/* new BigNumber(LPPriceUSD).toFormat(2) */ 0.00}</Text>
         </Col2>
       </Col>
       <Col style={{ alignItems: 'center' }}>
         <Image src={lpImage} />
-        <a href={`https://www.milkyswap.exchange/add/ETH/${lpName === 'rav-ada' ? getRavAddress() : getRshareAddress()}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+        <a href={/* `https://www.milkyswap.exchange/add/ETH/${lpName === 'rav-ada' ? getRavAddress() : getRshareAddress()}` */ '/'} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
           <Button size='sm'>ZAP IN</Button>
         </a>
       </Col>

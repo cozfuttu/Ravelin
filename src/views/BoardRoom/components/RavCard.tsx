@@ -21,7 +21,7 @@ const RavCard: React.FC<CardProps> = ({ masonry }) => {
   const ravPriceUsd = usePriceRavBusd()
   const { onReward } = useHarvestMasonry()
 
-  const canClaimReward = userData?.canClaimReward
+  const canClaimReward = userData?.canClaimReward && new BigNumber(userData?.earned).isGreaterThan(0)
   const [pending, setPending] = useState(false)
 
   console.log('masonry: ', masonry)
@@ -44,7 +44,7 @@ const RavCard: React.FC<CardProps> = ({ masonry }) => {
       <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(4)}</Text>
       <Text color='#9D9D9D' fontSize='14px'>≈ ${rewardEarnedUsd.toFormat(4)}</Text>
       <Text color='#9D9D9D' fontSize='14px'>RAV Earned</Text>
-      <Button size='sm' disabled={!canClaimReward || pending} onClick={handleClaimReward} mt="16px">CLAIM REWARD</Button>
+      <Button size='sm' disabled/* =</HexCard>={!canClaimReward || pending} */ onClick={handleClaimReward} mt="16px">CLAIM REWARD</Button>
     </HexCard>
   )
 }

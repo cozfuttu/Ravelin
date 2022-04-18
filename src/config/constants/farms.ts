@@ -104,7 +104,31 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
   }, */
+  // GENESIS POOLS
   {
+    pid: 0,
+    risk: 3,
+    lpSymbol: 'wADA',
+    isTokenOnly: true,
+    isGenesis: true,
+    lpAddresses: {
+      97: '',
+      137: "", // WMATIC-USDC LP
+      250: "0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c", // WFTM-USDC LP
+      // 2001: "0x04d99574ea862d0897c0Ca602e8Fe977F1118E2D", // wAda-USDT LP
+      2001: "0xB56964a0617b2b760C8B6D8040e99cda29D5203b", // milkADA - USDC
+    }, 
+    tokenSymbol: 'wADA',
+    tokenAddresses: {
+      97: getWbnbAddress(),
+      137: getWbnbAddress(),
+      250: getWbnbAddress(),
+      2001: getWbnbAddress(),
+    },
+    quoteTokenSymbol: QuoteToken.USDC,
+    quoteTokenAdresses: contracts.busd,
+  },
+/*   {
     pid: 0,
     risk: 3,
     lpSymbol: 'multiUSDT',
@@ -126,7 +150,7 @@ const farms: FarmConfig[] = [
     },
     quoteTokenSymbol: QuoteToken.USDC,
     quoteTokenAdresses: contracts.usdt,
-  },
+  }, */
 /*   {
     pid: 1,
     risk: 3,

@@ -113,11 +113,11 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
       <Col>
         <TextAntonio style={{ fontSize: isMobile && '26px' }}>{farmName.toUpperCase()} {!(farm.isTokenOnly) && 'LP'}</TextAntonio>
         <Text color='#4E4E4E' fontSize='16px' mb="4px">Deposit {farmName.toUpperCase()} {!(farm.isTokenOnly) && 'LP'} Earn {earnLabel.toUpperCase()}</Text>
-        <Text color='#9D9D9D' fontSize='14px'>APR: {farmApyString}%</Text>
-        <Text color='#9D9D9D' fontSize='14px'>Daily APR: {dailyApr}%</Text>
-        <Text color='#9D9D9D' fontSize='14px'>TVL: {totalValueFormated}</Text>
-        {farm.depositFeeBP ? <Text color='#9D9D9D' fontSize='14px'>Deposit Fee: {farm.depositFeeBP / 100}%</Text> : null}
-        {timeDiff.days < 10 && <Text color={isFinished ? '#af101d' : '#9D9D9D'} fontSize='14px'>{!isFinished && 'Ends in:'} {isFinished ? 'Finished!' : timeDiff.toFormat("dd:hh:mm:ss")}</Text>}
+        <Text color='#9D9D9D' fontSize='14px'>APR: {/* farmApyString */ 0}%</Text>
+        <Text color='#9D9D9D' fontSize='14px'>Daily APR: {/* dailyApr */ 0}%</Text>
+        <Text color='#9D9D9D' fontSize='14px'>TVL: {/* totalValueFormated */ '-'}</Text>
+        {farm.depositFeeBP ? <Text color='#9D9D9D' fontSize='14px'>Deposit Fee: {/* farm.depositFeeBP / 100 */ 0}%</Text> : null}
+        {timeDiff.days < 10 && <Text color={/* isFinished ? '#af101d' : */ '#9D9D9D'} fontSize='14px'>{/* !isFinished && */ 'Ends in:'} {/* isFinished ? 'Finished!' : timeDiff.toFormat("dd:hh:mm:ss") */ '00:00:00:00'}</Text>}
       </Col>
       <Col>
         <Image src={`images/icons/${farmName}.png`} style={{ width: farm.isTokenOnly ? '80px' : '128px' }} />

@@ -119,30 +119,30 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   const { onApproveRavPools } = useApproveRavPools(lpContract)
 
   const handleApprove = useCallback(async () => {
-    try {
-      setRequestedApproval(true)
-      if (isGenesis) await onApproveGenesisPools()
-      else if (isRavPool) await onApproveRavPools()
-      else await onApproveRsharePools()
-    } catch (e) {
-      console.error(e)
-    }
-    finally {
-      setRequestedApproval(false)
-      onDismiss()
-    }
+    /*     try {
+          setRequestedApproval(true)
+          if (isGenesis) await onApproveGenesisPools()
+          else if (isRavPool) await onApproveRavPools()
+          else await onApproveRsharePools()
+        } catch (e) {
+          console.error(e)
+        }
+        finally {
+          setRequestedApproval(false)
+          onDismiss()
+        } */
   }, [onApproveRsharePools, onApproveGenesisPools, onApproveRavPools, onDismiss, isGenesis, isRavPool])
 
   const handleClaimReward = async () => {
     setPending(true)
-    try {
-      if (isGenesis) await onRewardGenesisPools()
-      else if (isRavPool) await onRewardRavPools()
-      else await onRewardRsharePools()
-    }
-    finally {
-      setPending(false)
-    }
+    /*     try {
+          if (isGenesis) await onRewardGenesisPools()
+          else if (isRavPool) await onRewardRavPools()
+          else await onRewardRsharePools()
+        }
+        finally {
+          setPending(false)
+        } */
   }
 
   const [onPresentDeposit] = useModal(
@@ -175,7 +175,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
 
   const renderApprovalOrStakeButton = () => {
     return isApproved ? renderStakingButtons() : (
-      <Button mt="16px" size='sm' disabled={requestedApproval} onClick={handleApprove}>
+      <Button mt="16px" size='sm' disabled/* ={requestedApproval} */ onClick={handleApprove}>
         Approve Contract
       </Button>
     )

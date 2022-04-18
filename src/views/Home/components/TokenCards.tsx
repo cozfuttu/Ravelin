@@ -13,6 +13,10 @@ const Cards = styled.div`
   gap: 8px;
   width: 80%;
 
+  @media (max-width: 1600px) {
+    justify-content: center;
+  }
+
   @media (max-width: 1080px) {
     flex-direction: column;
   }

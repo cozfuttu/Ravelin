@@ -61,13 +61,13 @@ const RshareCard: React.FC<CardProps> = ({ masonry, ethereum, account }) => {
   const { onUnstake } = useUnstakeMasonry()
 
   const handleApprove = useCallback(async () => {
-    try {
-      setRequestedApproval(true)
-      await onApprove()
-      setRequestedApproval(false)
-    } catch (e) {
-      console.error(e)
-    }
+    /*     try {
+          setRequestedApproval(true)
+          await onApprove()
+          setRequestedApproval(false)
+        } catch (e) {
+          console.error(e)
+        } */
   }, [onApprove])
 
   const [onPresentDeposit] = useModal(
@@ -100,7 +100,7 @@ const RshareCard: React.FC<CardProps> = ({ masonry, ethereum, account }) => {
 
   const renderApprovalOrStakeButton = () => {
     return isApproved ? renderStakingButtons() : (
-      <Button mt="16px" size='sm' disabled={requestedApproval} onClick={handleApprove}>
+      <Button mt="16px" size='sm' disabled /*={requestedApproval} */ onClick={handleApprove}>
         Approve Contract
       </Button>
     )

@@ -12,12 +12,14 @@ const Cards = styled.div`
   width: 80%;
   margin-top: 2em;
   gap: 32px;
+  margin-left: 3vw;
 
   @media (max-width: 1080px) {
     flex-direction: column;
     gap: 24px;
     width: 90%;
     padding-bottom: 100px;
+    margin-left: 0;
   }
 `
 
