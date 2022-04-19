@@ -8,6 +8,9 @@ import * as IconModule from 'uikit/widgets/Menu/icons'
 import MenuButton from 'uikit/widgets/Menu/MenuButton'
 import { HamburgerIcon } from 'uikit/widgets/Menu/icons'
 import MenuMobile from './MenuMobile'
+import Accordion from 'uikit/widgets/Menu/Accordion'
+import { MenuEntry } from './MenuEntry'
+import MenuLink from 'uikit/widgets/Menu/MenuLink'
 
 const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> }
 
@@ -84,6 +87,25 @@ const Menu = () => {
         </LogoContainer>
         {!isMobile ? <MenuLabels>
           {config.map((menuItem) => {
+            if (menuItem.items) {
+              const calloutClass = menuItem.calloutClass ?? undefined
+              return (
+                <Accordion
+                  key={menuItem.label}
+                  isPushed={!isMobile}
+                  label={menuItem.label.toUpperCase()}
+                  initialOpenState={menuItem.initialOpenState}
+                  className={calloutClass}
+                >
+                  {!isMobile &&
+                    menuItem.items.map((item) => (
+                      <Link external href={item.href} key={item.label} style={{ textDecoration: 'none', marginTop: '8px' }}>
+                        <Text fontSize='14px' bold>{item.label}</Text>
+                      </Link>
+                    ))}
+                </Accordion>
+              )
+            }
             return (
               <Link href={menuItem.href} key={menuItem.label} style={{ textDecoration: 'none' }}>
                 <Text fontSize='14px' bold>{menuItem.label}</Text>

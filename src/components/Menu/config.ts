@@ -22,6 +22,20 @@ const config: MenuEntry[] = [
     href: '/bond',
   },
   {
+    label: 'BRIDGE',
+    color: '#ededed',
+    items: [
+      {
+        label: 'Multichain',
+        href: 'https://app.multichain.org/#/router'
+      },
+      {
+        label: 'Celer',
+        href: 'https://cbridge.celer.network/#/transfer'
+      }
+    ]
+  },
+  {
     label: 'DOCS',
     color: '#ededed',
     href: 'https://ravelin-finance.gitbook.io/ravelin-finance/',

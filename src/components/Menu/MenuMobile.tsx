@@ -39,7 +39,7 @@ const ItemsContainer = styled.div`
   padding-top: 12%;
   padding-right: 64px;
   padding-bottom: 10%;
-  height: 41%;
+  height: 43%;
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
@@ -99,6 +99,7 @@ const MenuMobile: React.FC<Props> = ({ isMobile, onClose }) => {
       <ItemsContainer >
         {config.map((entry) => {
           const calloutClass = entry.calloutClass ? entry.calloutClass : undefined
+          if (entry.items) return
           return (
             <>
               <MenuEntry key={entry.label} className={calloutClass}>

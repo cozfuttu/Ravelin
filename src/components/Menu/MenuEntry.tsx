@@ -31,7 +31,7 @@ const MenuEntry = styled.div<Props>`
   margin-top: 12px;
   font-size: ${({ secondary }) => (secondary ? '14px' : '16px')};
   background-color: 'transparent';
-  color: ${({ theme, color }) => !color ? theme.colors.textSubtle : color};
+  color: #007ABE;
   /* box-shadow: ${({ isActive, theme }) => (isActive ? `inset 4px 0px 0px ${theme.colors.primary}` : 'none')}; */
 
   a {

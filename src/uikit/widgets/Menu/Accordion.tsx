@@ -27,11 +27,11 @@ const AccordionContent = styled.div<{ isOpen: boolean; isPushed: boolean; maxHei
   align-items: center;
   position: absolute;
   padding: ${({ isOpen, maxHeight }) => (isOpen ? `8px` : 0)};
-  margin-top: 40px;
+  margin-top: 56px;
   max-height: ${({ isOpen, maxHeight }) => (isOpen ? `${maxHeight}px` : 0)};
   transition: max-height 0.3s ease-out;
   overflow: hidden;
-  background-color: #27514c;
+  background: linear-gradient(0deg,rgba(0,62,120,1) 0%,rgba(0,122,190,1) 100%);
   box-shadow: 5px 4px 4px -8px #1a4d5d55, 1px 1px 1px #1a4d5d33;
   width: ${({ maxHeight }) => maxHeight};
 `
@@ -56,15 +56,15 @@ const Accordion: React.FC<Props> = ({
 
   return (
     <Container onMouseEnter={show} onMouseLeave={hide}>
-      <MenuEntry className={className} >
-        <LinkLabel isPushed={isPushed} style={{ color: '#ededed' }}>{label} </LinkLabel>
+      <MenuEntry className={className} style={{ padding: '0' }} >
+        <LinkLabel isPushed={isPushed} style={{ fontFamily: 'Inter', color: '#ededed', fontWeight: '700', fontSize: '14px' }}>{label}</LinkLabel>
       </MenuEntry>
       <AccordionContent
         isOpen={isOpen}
         isPushed={isPushed}
         maxHeight={React.Children.count(children) * MENU_ENTRY_HEIGHT}
       >
-        <div style={{ padding: '16px 8px' }}>
+        <div style={{ padding: '0 8px 8px 8px' }}>
           {children}
         </div>
       </AccordionContent>
