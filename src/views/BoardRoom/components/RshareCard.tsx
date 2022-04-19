@@ -50,7 +50,7 @@ const RshareCard: React.FC<CardProps> = ({ masonry, ethereum, account }) => {
   const isApproved = new BigNumber(userData?.allowance).isGreaterThan(0)
   const isStaked = new BigNumber(userData?.stakedBalance).isGreaterThan(0)
 
-  const canWithdraw = userData?.canWithdraw
+  const canWithdraw = userData?.canWithdraw && new BigNumber(userData?.stakedBalance).isGreaterThan(0)
 
   const lpContract = useMemo(() => {
     return getContract(ethereum as provider, rshareAddress)
