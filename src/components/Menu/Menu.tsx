@@ -81,10 +81,12 @@ const Menu = () => {
   return (
     <Menubar>
       <MenuItems>
-        <LogoContainer>
-          <Image src="images/logos/RavelinLogo.svg" style={{ marginLeft: isMobile && '16px' }} />
-          <Text color='#E6E6E6' fontSize='20px' style={{ letterSpacing: '4px', fontSize: isMobile && '14px' }}>RAVELIN FINANCE</Text>
-        </LogoContainer>
+        <a href="/" style={{ textDecoration: 'none' }}>
+          <LogoContainer>
+            <Image src="images/logos/RavelinLogo.svg" style={{ marginLeft: isMobile && '16px' }} />
+            <Text color='#E6E6E6' fontSize='20px' style={{ letterSpacing: '4px', fontSize: isMobile && '14px' }}>RAVELIN FINANCE</Text>
+          </LogoContainer>
+        </a>
         {!isMobile ? <MenuLabels>
           {config.map((menuItem) => {
             if (menuItem.items) {
@@ -138,7 +140,7 @@ const Menu = () => {
         }
       </MenuItems>
 
-      {isMobileMenuActive && <MenuMobile isMobile={isMobile} onClose={handleMenuClick} />}
+      {isMobile && <MenuMobile isMobile={isMobile} onClose={handleMenuClick} isOpen={isMobileMenuActive} />}
     </Menubar>
   )
 }

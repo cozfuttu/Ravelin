@@ -120,8 +120,8 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
         {timeDiff.days < 10 && <Text color={/* isFinished ? '#af101d' : */ '#9D9D9D'} fontSize='14px'>{/* !isFinished && */ 'Ends in:'} {/* isFinished ? 'Finished!' : timeDiff.toFormat("dd:hh:mm:ss") */ '00:00:00:00'}</Text>}
       </Col>
       <Col>
-        <Image src={`images/icons/${farmName}.png`} style={{ width: farm.isTokenOnly ? '80px' : '128px' }} />
-        <Button size='sm' style={{ alignSelf: 'center' }} onClick={onPresentFarmView}>VIEW</Button>
+        <Image src={`images/icons/${farmName.toLowerCase()}.png`} style={{ width: farm.isTokenOnly ? '80px' : '128px' }} />
+        <Button size='sm' style={{ alignSelf: 'flex-end' }} onClick={onPresentFarmView}>VIEW</Button>
       </Col>
     </Card>
   )

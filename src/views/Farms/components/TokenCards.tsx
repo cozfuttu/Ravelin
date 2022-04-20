@@ -175,7 +175,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
 
   const renderApprovalOrStakeButton = () => {
     return isApproved ? renderStakingButtons() : (
-      <Button mt="16px" size='sm' disabled/* ={requestedApproval} */ onClick={handleApprove}>
+      <Button mt="16px" size='sm' disabled/* ={requestedApproval} */ onClick={handleApprove} style={{ fontSize: isMobile && '14px' }}>
         Approve Contract
       </Button>
     )

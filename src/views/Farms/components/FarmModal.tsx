@@ -64,6 +64,8 @@ const ModalTitle = styled(Flex)`
   flex-direction: column;
 `
 
+const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
+
 const FarmModal: React.FC<Props> = ({
   onDismiss,
   onBack,
@@ -99,6 +101,10 @@ const FarmModal: React.FC<Props> = ({
         } */
   }
 
+  const swapLink = farm.isTokenOnly ? `https://app.occam-x.fi/swap?outputCurrency=${farm.tokenAddresses[CHAIN_ID]}` : `https://app.occam-x.fi/liquidity/add/0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9/${farm.lpAddresses[CHAIN_ID]}`
+
+  const swapText = farm.isTokenOnly ? `Purchase ${farm.tokenSymbol} now on Occam` : `Provide liquidity for ${farm.lpSymbol} pair now on Occam`
+
   return (
     <StyledModal>
       <ModalHeader>
@@ -108,13 +114,14 @@ const FarmModal: React.FC<Props> = ({
       </ModalHeader>
       <StatisticCards farm={farm} tvl={tvl} dailyApr={dailyApr} isMobile={isMobile} />
       <TokenCards farm={farm} onDismiss={onDismiss} isMobile={isMobile} />
-      {(farm.lpSymbol === 'RAV-wADA LP' || farm.lpSymbol === 'RSHARE-wADA LP') &&
-        <a href={/* `https://www.milkyswap.exchange/add/0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9/${farm.lpSymbol === 'RAV-wADA LP' ? getRavAddress() : getRshareAddress()}` */ '/'} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: isMobile ? '32px' : '16px', textAlign: 'center' }}>
-          <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: isMobile ? '80%' : '100%' }}>Provide liquidity for {farm.lpSymbol} pair now on MilkySwap</Button>
-        </a>}
+      {
+        <a href={/* swapLink */ '/'} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: isMobile ? '32px' : '16px', textAlign: 'center' }}>
+          <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: isMobile ? '80%' : '100%' }}>{swapText}</Button>
+        </a>
+      }
       {!isMobile && <Button size='md' onClick={handleExit} disabled={pending} mt="16px" style={{ background: 'linear-gradient(180deg, rgba(0, 62, 120, 1) 0%, rgba(21, 139, 206, 0.6) 100%)', boxShadow: '0 4px 6px -4px #000' }}>CLAIM {'&'} WITHDRAW</Button>}
-      <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: '20px', border: '2px solid #007ABE' }}>
-        <CloseIcon color="primary" style={{ fill: isMobile ? '#fff' : '#007ABE' }} />
+      <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: isMobile ? '20px' : '190px', top: !isMobile && '20px' }}>
+        <CloseIcon color="primary" style={{ fill: '#fff' }} />
       </IconButton>
     </StyledModal>
   )

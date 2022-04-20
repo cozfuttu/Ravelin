@@ -11,7 +11,7 @@ import config, { socials } from './config'
 import MenuLink from 'uikit/widgets/Menu/MenuLink'
 import { LinkLabel, MenuEntry } from './MenuEntry'
 
-const OuterContainer = styled.div`
+const OuterContainer = styled.div<{ isOpen?: boolean }>`
   display: flex;
 //  padding-top: 80px;
   flex-direction: column;
@@ -20,30 +20,28 @@ const OuterContainer = styled.div`
   right: 0;
   top: 0;
   width: 100%;
+  max-width: ${({ isOpen }) => isOpen ? '100%' : '0'};
+  transition: max-width 0.3s ease-out;
   height: 100vh;
-  background-image: url("images/other/MenuBg.svg");
+  overflow: hidden;
+  background-image: url("images/other/menubg.png");
   background-repeat: no-repeat;
   background-position: right top;
   background-size: inherit;
   transform: rotate(0deg);
   background-color: #00000040;
   z-index: 10;
-
-  @media (max-width: 1080px) {
-    padding-top: 80px;
-  }
 `
 
 const ItemsContainer = styled.div`
+  padding-top: 32px;
   display: flex;
-  padding-top: 12%;
   padding-right: 64px;
-  padding-bottom: 10%;
-  height: 43%;
+  max-height: 520px;
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
-  gap: 48px;
+  gap: 12px;
   align-items: flex-end;
   align-self: center;
   z-index: 999;
@@ -71,10 +69,11 @@ const CloseIconContainer = styled.div`
 `
 
 const AccordionDivider = styled.div`
-  background-color: #0000009f;
-  width: 40%;
-  height: 1px;
+  background: linear-gradient(270deg, rgba(0, 122, 190, 1) 0%, rgba(0, 122, 190, 0) 100%);
+  width: 50%;
+  min-height: 2px;
   margin-top: 16px;
+  margin-right: -32px;
 `
 
 const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> }
@@ -82,24 +81,26 @@ const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> }
 interface Props {
   isMobile: boolean
   onClose: () => void
+  isOpen?: boolean
 }
 
-const MenuMobile: React.FC<Props> = ({ isMobile, onClose }) => {
-  const location = useLocation()
-
+const MenuMobile: React.FC<Props> = ({ isMobile, onClose, isOpen }) => {
   return (
-    <OuterContainer onClick={onClose}>
+    <OuterContainer onClick={onClose} isOpen={isOpen}>
 
-      <CloseIconContainer>
-        <IconButton variant="text" onClick={onClose} aria-label="Close the dialog">
-          <CloseIcon color="#d3d3d3" />
-        </IconButton>
-      </CloseIconContainer>
-
-      <ItemsContainer >
+      <ItemsContainer>
         {config.map((entry) => {
           const calloutClass = entry.calloutClass ? entry.calloutClass : undefined
-          if (entry.items) return
+          if (entry.items) return (
+            <>
+              <MenuEntry key={entry.label} className={calloutClass}>
+                <MenuLink onClick={onClose} href={entry.items[0].href} style={{ textDecoration: 'none' }}>
+                  <LinkLabel>{entry.label.toUpperCase()}</LinkLabel>
+                </MenuLink>
+              </MenuEntry>
+              <AccordionDivider />
+            </>
+          )
           return (
             <>
               <MenuEntry key={entry.label} className={calloutClass}>
@@ -107,6 +108,7 @@ const MenuMobile: React.FC<Props> = ({ isMobile, onClose }) => {
                   <LinkLabel>{entry.label.toUpperCase()}</LinkLabel>
                 </MenuLink>
               </MenuEntry>
+              <AccordionDivider />
             </>
           )
         })}

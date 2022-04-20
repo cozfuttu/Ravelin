@@ -150,10 +150,10 @@ const Home = () => {
                   <a href="/farm" style={{ textDecoration: 'none' }}>
                     <Button padding='28px' style={{ width: isMobile && '100%', fontSize: '14px' }}>FARM NOW</Button>
                   </a>
-                  <a href={/* `https://www.milkyswap.exchange/swap?outputCurrency=${getRavAddress()}` */ '/'} /* target='_blank' rel="noreferrer" */ style={{ textDecoration: 'none' }}>
+                  <a href={/* `https://app.occam-x.fi/swap?outputCurrency=${getRavAddress()}` */ '/'} /* target='_blank' rel="noreferrer" */ style={{ textDecoration: 'none' }}>
                     <Button padding='28px' style={{ width: isMobile && '100%', fontSize: '14px' }}>BUY RAV</Button>
                   </a>
-                  <a href={/* `https://www.milkyswap.exchange/swap?outputCurrency=${getRshareAddress()}` */ '/'} /* target='_blank' rel="noreferrer" */ style={{ textDecoration: 'none' }}>
+                  <a href={/* `https://app.occam-x.fi/swap?outputCurrency=${getRshareAddress()}` */ '/'} /* target='_blank' rel="noreferrer" */ style={{ textDecoration: 'none' }}>
                     <Button padding='28px' style={{ width: isMobile && '100%', fontSize: '14px' }}>BUY RSHARE</Button>
                   </a>
                 </Buttons>

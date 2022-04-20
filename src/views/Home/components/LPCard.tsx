@@ -78,8 +78,8 @@ const LPCard: React.FC<CardProps> = ({ lpName, LPPriceUSD, adaPrice, marketCap, 
       </Col>
       <Col style={{ alignItems: 'center' }}>
         <Image src={lpImage} />
-        <a href={/* `https://www.milkyswap.exchange/add/ETH/${lpName === 'rav-ada' ? getRavAddress() : getRshareAddress()}` */ '/'} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
-          <Button size='sm'>ZAP IN</Button>
+        <a href={/* `https://app.occam-x.fi/add/ETH/${lpName === 'rav-ada' ? getRavAddress() : getRshareAddress()}` */ '/'} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+          <Button size='sm'>ADD LP</Button>
         </a>
       </Col>
     </Card>
