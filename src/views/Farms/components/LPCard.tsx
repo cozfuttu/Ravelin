@@ -65,8 +65,8 @@ interface CardProps {
 const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice, isMobile }) => {
 
   const farmName = farm.isTokenOnly
-    ? `${farm.tokenSymbol.toLowerCase()}`
-    : `${farm.tokenSymbol.toLowerCase()}-${farm.quoteTokenSymbol.toLowerCase()}`
+    ? `${farm.tokenSymbol}`
+    : `${farm.tokenSymbol}-${farm.quoteTokenSymbol}`
 
   const totalValue: BigNumber = useMemo(() => {
     if (!farm.lpTotalInQuoteToken || new BigNumber(farm.lpTotalInQuoteToken).isLessThan(1)) {
@@ -108,10 +108,12 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
   const timeDiff = lTarget.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
   const isFinished = timeDiff.toMillis() < 0
 
+  console.log('farmname: ', farmName)
+
   return (
     <Card>
       <Col>
-        <TextAntonio style={{ fontSize: isMobile && '26px' }}>{farmName.toUpperCase()} {!(farm.isTokenOnly) && 'LP'}</TextAntonio>
+        <TextAntonio style={{ fontSize: isMobile && '26px' }}>{farmName} {!(farm.isTokenOnly) && 'LP'}</TextAntonio>
         <Text color='#4E4E4E' fontSize='16px' mb="4px">Deposit {farmName.toUpperCase()} {!(farm.isTokenOnly) && 'LP'} Earn {earnLabel.toUpperCase()}</Text>
         <Text color='#9D9D9D' fontSize='14px'>APR: {/* farmApyString */ 0}%</Text>
         <Text color='#9D9D9D' fontSize='14px'>Daily APR: {/* dailyApr */ 0}%</Text>

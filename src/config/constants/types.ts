@@ -22,7 +22,7 @@ export interface Ifo {
 }
 
 export enum QuoteToken {
-  'ADA' = 'ADA',
+  'ADA' = 'mADA',
   'WFTM' = 'WFTM',
   'MATIC' = 'MATIC',
   'CAKE' = 'CAKE',
