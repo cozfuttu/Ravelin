@@ -73,7 +73,7 @@ const RedeemRavCard: React.FC<Props> = ({ treasury }) => {
   )
 
   const renderApprovalOrRedeemButton = () => {
-    return isApproved ? <Button disabled /*={!isEnabled} */ size="sm" onClick={onPresentRedeem}>{isEnabled ? 'REDEEM' : 'ENABLED WHEN RAV > 1.01 ADA'}</Button> : (
+    return isApproved ? <Button disabled /*={!isEnabled} */ size="sm" onClick={onPresentRedeem} style={{ fontSize: !isEnabled && '12px' }}>{isEnabled ? 'REDEEM' : 'ENABLED WHEN RAV > 1.01 ADA'}</Button> : (
       <Button mt="16px" size='sm' disabled /*={requestedApproval} */ onClick={handleApprove}>
         Approve Contract
       </Button>

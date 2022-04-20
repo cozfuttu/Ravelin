@@ -64,6 +64,12 @@ const ButtonCont = styled.div`
   justify-content: center;
 `
 
+const FooterContainer = styled.div`
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+`
+
 const BoardRoom = () => {
   const masonry = useMasonry()
   const treasury = useTreasury()
@@ -94,7 +100,7 @@ const BoardRoom = () => {
 
   return (
     <>
-      <WidePage style={{ minHeight: '70vh' }}>
+      <WidePage style={{ minHeight: '62vh', paddingBottom: '3vh' }}>
         {!isMobile && <ImageContainer>
           <BlueBack />
           <BlackBack />
@@ -121,7 +127,9 @@ const BoardRoom = () => {
         </ButtonCont>
       </WidePage>
       {!isMobile && <FarmsBRGraphic />}
-      {!isMobile && <Footer style={{ marginTop: '0' }} />}
+      {!isMobile && <FooterContainer>
+        <Footer style={{ marginTop: '0', height: '120px' }} />
+      </FooterContainer>}
     </>
   )
 }

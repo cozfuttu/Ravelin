@@ -108,8 +108,6 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
   const timeDiff = lTarget.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
   const isFinished = timeDiff.toMillis() < 0
 
-  console.log('farmname: ', farmName)
-
   return (
     <Card>
       <Col>
