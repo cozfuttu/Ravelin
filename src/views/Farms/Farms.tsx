@@ -9,13 +9,13 @@ import { useDispatch } from 'react-redux'
 import { FarmWithStakedValue } from './components/LPCard'
 import { fetchFarmUserDataAsync } from 'state/farms'
 import BigNumber from 'bignumber.js'
-import { BLOCKS_PER_YEAR } from 'config'
 import { QuoteToken } from 'config/constants/types'
 import Genesis from './components/Genesis'
 import BlueBack from 'views/Home/components/BlueBack'
 import BlackBack from 'views/Home/components/BlackBack'
 import { Footer } from 'components/Footer'
 import FarmsBRGraphic from 'views/components/FarmsBRGraphic'
+import NewsCard from './components/NewsCard'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -26,6 +26,8 @@ const ImageContainer = styled.div`
   align-items: center;
   z-index: -99;
 `
+
+const BLOCKS_PER_YEAR = new BigNumber(15016392)
 
 const Farms = () => {
   const farmsLP = useFarms()
@@ -85,6 +87,7 @@ const Farms = () => {
           <BlackBack />
         </ImageContainer>)}
         <Text color='#003E78' fontSize='32px' bold style={{ marginTop: isMobile && '8vh' }}>FARM</Text>
+        <NewsCard />
         <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RSHARE by staking LP</Text>
         <LPCards farmsToDisplayWithApy={rshareFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} />
         <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RAV by Staking in Genesis Pools</Text>

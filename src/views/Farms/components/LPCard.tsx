@@ -15,8 +15,8 @@ const Card = styled.div`
   align-items: center;
   background-color: #F2F2F2;
   box-shadow: 0 6px 10px -4px #646464;
-  width: 400px;
-  height: 200px;
+  width: 435px;
+  height: 250px;
   padding: 0.5em 1em;
   border-radius: 0.5em;
   z-index: 1;
@@ -93,7 +93,8 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
 
   const oneThousandDollarsWorthOfCake = 1000 / rsharePrice.toNumber()
 
-  const cakeEarnedPerThousand1D = calculateCakeEarnedPerThousandDollars({ numberOfDays: 1, farmApy, cakePrice: rsharePrice })
+
+  const cakeEarnedPerThousand1D = calculateCakeEarnedPerThousandDollars({ numberOfDays: 1, farmApy, cakePrice: rsharePrice.toNumber() })
 
   const dailyApr = apyModalRoi({ amountEarned: cakeEarnedPerThousand1D, amountInvested: oneThousandDollarsWorthOfCake })
 
@@ -104,20 +105,25 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
   const currentTimeMillis = useCurrentTime()
 
   const lNow = DateTime.fromMillis(currentTimeMillis).setZone('utc')
-  const lTarget = DateTime.fromMillis(farm?.poolEndTime * 1000).setZone('utc')
-  const timeDiff = lTarget.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
-  const isFinished = timeDiff.toMillis() < 0
+  const lTargetEnd = DateTime.fromMillis(farm?.poolEndTime * 1000).setZone('utc')
+  const timeDiffEnd = lTargetEnd.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
+  const isFinished = timeDiffEnd.toMillis() < 0
+
+  const lTargetStart = DateTime.fromMillis(farm?.poolStartTime * 1000).setZone('utc')
+  const timeDiffStart = lTargetStart.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
+  const isStarted = timeDiffStart.toMillis() < 0
 
   return (
     <Card>
       <Col>
         <TextAntonio style={{ fontSize: isMobile && '26px' }}>{farmName} {!(farm.isTokenOnly) && 'LP'}</TextAntonio>
-        <Text color='#4E4E4E' fontSize='16px' mb="4px">Deposit {farmName.toUpperCase()} {!(farm.isTokenOnly) && 'LP'} Earn {earnLabel.toUpperCase()}</Text>
-        <Text color='#9D9D9D' fontSize='14px'>APR: {/* farmApyString */ 0}%</Text>
-        <Text color='#9D9D9D' fontSize='14px'>Daily APR: {/* dailyApr */ 0}%</Text>
-        <Text color='#9D9D9D' fontSize='14px'>TVL: {/* totalValueFormated */ '-'}</Text>
-        {farm.depositFeeBP ? <Text color='#9D9D9D' fontSize='14px'>Deposit Fee: {/* farm.depositFeeBP / 100 */ 0}%</Text> : null}
-        {timeDiff.days < 10 && <Text color={/* isFinished ? '#af101d' : */ '#9D9D9D'} fontSize='14px'>{/* !isFinished && */ 'Ends in:'} {/* isFinished ? 'Finished!' : timeDiff.toFormat("dd:hh:mm:ss") */ '00:00:00:00'}</Text>}
+        <Text color='#4E4E4E' fontSize='14px' mb="4px">Deposit {farmName} {!(farm.isTokenOnly) && 'LP'} Earn {earnLabel.toUpperCase()}</Text>
+        <Text color='#9D9D9D' fontSize='14px'>APR: {farmApyString}%</Text>
+        <Text color='#9D9D9D' fontSize='14px'>Daily APR: {dailyApr}%</Text>
+        <Text color='#9D9D9D' fontSize='14px'>TVL: {totalValueFormated}</Text>
+        {farm.depositFeeBP ? <Text color='#9D9D9D' fontSize='14px'>Deposit Fee: {farm.depositFeeBP / 100}%</Text> : null}
+        {!isStarted && <Text color='#9D9D9D' fontSize='14px'>Starts in: {timeDiffStart.toFormat("dd:hh:mm:ss")}</Text>}
+        {timeDiffEnd.days < 10 && isStarted && <Text color={isFinished ? '#af101d' : '#9D9D9D'} fontSize='14px'>{!isFinished && 'Ends in:'} {isFinished ? 'Finished!' : timeDiffEnd.toFormat("dd:hh:mm:ss")}</Text>}
       </Col>
       <Col>
         <Image src={`images/icons/${farmName.toLowerCase()}.png`} style={{ width: farm.isTokenOnly ? '80px' : '128px' }} />

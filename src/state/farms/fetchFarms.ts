@@ -104,11 +104,13 @@ const fetchFarms = async () => {
       let info
       let totalAllocPoint
       let poolEndTimee
+      let poolStartTimee
       let gammaPulsarPerBlock
       let allocPoint
       let poolWeight
       let isStarted
       let poolEndTime
+      let poolStartTime
 
         try {
           const abiCalls = (!farmConfig.isRavPool ? [
@@ -124,6 +126,10 @@ const fetchFarms = async () => {
             {
               address: farmConfig.isGenesis ? getGenesisPoolsAddress() : getRsharePoolsAddress(),
               name: 'poolEndTime',
+            },
+            {
+              address: farmConfig.isGenesis ? getGenesisPoolsAddress() : getRsharePoolsAddress(),
+              name: 'poolStartTime',
             },
             {
               address: farmConfig.isGenesis ? getGenesisPoolsAddress() : getRsharePoolsAddress(),
@@ -148,15 +154,20 @@ const fetchFarms = async () => {
             },
             {
               address: getRavPoolsAddress(),
+              name: 'poolStartTime',
+            },
+            {
+              address: getRavPoolsAddress(),
               name: "epochRavPerSecond",
               params: [1]
             },
           ]);
-          [info, totalAllocPoint, poolEndTimee, gammaPulsarPerBlock] = await multicall(farmConfig.isGenesis ? genesisABI : farmConfig.isRavPool ? ravPoolsABI : rsharePoolsABI, abiCalls)
+          [info, totalAllocPoint, poolEndTimee, poolStartTimee, gammaPulsarPerBlock] = await multicall(farmConfig.isGenesis ? genesisABI : farmConfig.isRavPool ? ravPoolsABI : rsharePoolsABI, abiCalls)
 
           allocPoint = new BigNumber(info.allocPoint._hex)
           poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
           poolEndTime = new BigNumber(poolEndTimee[0]._hex)
+          poolStartTime = new BigNumber(poolStartTimee[0]._hex)
           isStarted = info.isStarted
         } catch (error) {
           console.log('ABI poolInfo call error', error)
@@ -176,6 +187,7 @@ const fetchFarms = async () => {
         quoteTokenDecimals: quoteTokenDecimals[0],
         totalLpStaked: lpTokenBalanceMC / 1e18,
         poolEndTime: poolEndTime?.toNumber(),
+        poolStartTime: poolStartTime?.toNumber(),
         isStarted,
       }
     }),

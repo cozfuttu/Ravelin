@@ -3,10 +3,9 @@ import styled from 'styled-components'
 import { FarmWithStakedValue } from 'views/Farms/components/LPCard'
 import Heading from '../../../uikit/components/Heading/Heading'
 import Flex from '../../../uikit/components/Flex/Flex'
-import { ArrowBackIcon, CloseIcon } from '../../../uikit/components/Svg'
+import { CloseIcon } from '../../../uikit/components/Svg'
 import { Button, IconButton } from '../../../uikit/components/Button'
 import { InjectedProps } from '../../../uikit/widgets/Modal/types'
-import { getRavAddress, getRshareAddress } from 'utils/addressHelpers'
 import { useUnstakeGenesisPools, useUnstakeRavPools, useUnstakeRsharePools } from 'hooks/useUnstake'
 import StatisticCards from './StatisticCards'
 import TokenCards from './TokenCards'
@@ -44,10 +43,6 @@ const StyledModal = styled.div`
     height: 100%;
     border-radius: 0;
   }
-`
-
-const ModalContent = styled.div`
-  padding: 1rem;
 `
 
 const ModalHeader = styled.div`
@@ -91,19 +86,19 @@ const FarmModal: React.FC<Props> = ({
 
   const handleExit = async () => {
     setPending(true)
-    /*     try {
-          if (farm.isGenesis) await onUnstakeGenesisPools(fullBalance)
-          else if (farm.isRavPool) await onUnstakeRavPools(fullBalance)
-          else await onUnstakeRsharePools(fullBalance)
-        }
-        finally {
-          setPending(false)
-        } */
+    try {
+      if (farm.isGenesis) await onUnstakeGenesisPools(fullBalance)
+      else if (farm.isRavPool) await onUnstakeRavPools(fullBalance)
+      else await onUnstakeRsharePools(fullBalance)
+    }
+    finally {
+      setPending(false)
+    }
   }
 
-  const swapLink = farm.isTokenOnly ? `https://app.occam-x.fi/swap?outputCurrency=${farm.tokenAddresses[CHAIN_ID]}` : `https://app.occam-x.fi/liquidity/add/0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9/${farm.lpAddresses[CHAIN_ID]}`
+  const swapLink = farm.isTokenOnly ? `https://app.occam-x.fi/swap?outputCurrency=${farm.tokenAddresses[CHAIN_ID]}` : `https://app.occam-x.fi/liquidity/add${'/'/*0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9/${farm.lpAddresses[CHAIN_ID] */}`
 
-  const swapText = farm.isTokenOnly ? `Purchase ${farm.tokenSymbol} now on Occam` : `Provide liquidity for ${farm.lpSymbol} pair now on Occam`
+  const swapText = farm.isTokenOnly ? `BUY ${farm.tokenSymbol}` : `ADD LIQUIDITY ${farm.lpSymbol}`
 
   return (
     <StyledModal>
@@ -115,7 +110,7 @@ const FarmModal: React.FC<Props> = ({
       <StatisticCards farm={farm} tvl={tvl} dailyApr={dailyApr} isMobile={isMobile} />
       <TokenCards farm={farm} onDismiss={onDismiss} isMobile={isMobile} />
       {
-        <a href={/* swapLink */ '/'} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: isMobile ? '32px' : '16px', textAlign: 'center' }}>
+        <a href={swapLink} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: isMobile ? '32px' : '16px', textAlign: 'center' }}>
           <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: isMobile ? '80%' : '100%' }}>{swapText}</Button>
         </a>
       }

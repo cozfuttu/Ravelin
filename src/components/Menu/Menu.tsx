@@ -9,8 +9,6 @@ import MenuButton from 'uikit/widgets/Menu/MenuButton'
 import { HamburgerIcon } from 'uikit/widgets/Menu/icons'
 import MenuMobile from './MenuMobile'
 import Accordion from 'uikit/widgets/Menu/Accordion'
-import { MenuEntry } from './MenuEntry'
-import MenuLink from 'uikit/widgets/Menu/MenuLink'
 
 const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> }
 
@@ -140,7 +138,7 @@ const Menu = () => {
         }
       </MenuItems>
 
-      {isMobile && <MenuMobile isMobile={isMobile} onClose={handleMenuClick} isOpen={isMobileMenuActive} />}
+      {isMobile && <MenuMobile onClose={handleMenuClick} isOpen={isMobileMenuActive} />}
     </Menubar>
   )
 }

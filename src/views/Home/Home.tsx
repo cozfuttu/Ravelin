@@ -141,7 +141,7 @@ const Home = () => {
               <Row>
                 <Col>
                   <Text color="#007ABE" fontSize='18px' bold style={{ fontSize: isMobile && '12px' }}>TOTAL VALUE LOCKED:</Text>
-                  <Text color="#007ABE" fontSize='32px' bold style={{ transition: 'all 1s linear', fontSize: isMobile && '22px' }}>${/* totalValue.isNaN() ? new BigNumber(0).toFormat(0) : totalValue.toFormat(0) */ 0}</Text>
+                  <Text color="#007ABE" fontSize='32px' bold style={{ transition: 'all 1s linear', fontSize: isMobile && '22px' }}>${totalValue.isNaN() ? new BigNumber(0).toFormat(0) : totalValue.toFormat(0)}</Text>
                 </Col>
                 <Buttons>
                   <a href="/boardroom" style={{ textDecoration: 'none' }}>
@@ -150,10 +150,10 @@ const Home = () => {
                   <a href="/farm" style={{ textDecoration: 'none' }}>
                     <Button padding='28px' style={{ width: isMobile && '100%', fontSize: '14px' }}>FARM NOW</Button>
                   </a>
-                  <a href={/* `https://app.occam-x.fi/swap?outputCurrency=${getRavAddress()}` */ '/'} /* target='_blank' rel="noreferrer" */ style={{ textDecoration: 'none' }}>
+                  <a href={`https://app.occam-x.fi/swap?outputCurrency=${getRavAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
                     <Button padding='28px' style={{ width: isMobile && '100%', fontSize: '14px' }}>BUY RAV</Button>
                   </a>
-                  <a href={/* `https://app.occam-x.fi/swap?outputCurrency=${getRshareAddress()}` */ '/'} /* target='_blank' rel="noreferrer" */ style={{ textDecoration: 'none' }}>
+                  <a href={`https://app.occam-x.fi/swap?outputCurrency=${getRshareAddress()}`} target='_blank' rel="noreferrer" style={{ textDecoration: 'none' }}>
                     <Button padding='28px' style={{ width: isMobile && '100%', fontSize: '14px' }}>BUY RSHARE</Button>
                   </a>
                 </Buttons>

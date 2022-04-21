@@ -68,7 +68,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   const [pending, setPending] = useState(false)
   const [requestedApproval, setRequestedApproval] = useState(false)
 
-  const { pid, lpAddresses, tokenAddresses, isTokenOnly, depositFeeBP, decimals, userData, tokenSymbol, quoteTokenSymbol, isGenesis, isRavPool, lpSymbol, tokenPriceVsQuote, quoteTokenDecimals } = farm
+  const { pid, lpAddresses, tokenAddresses, isTokenOnly, depositFeeBP, decimals, userData, tokenSymbol, quoteTokenSymbol, isGenesis, isRavPool, lpSymbol, tokenPriceVsQuote } = farm
 
   const lpAddress = lpAddresses[process.env.REACT_APP_CHAIN_ID]
   const tokenAddress = tokenAddresses[process.env.REACT_APP_CHAIN_ID]
@@ -102,6 +102,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
 
   const isApproved = new BigNumber(userData?.allowance).isGreaterThan(0)
   const isStaked = new BigNumber(userData?.stakedBalance).isGreaterThan(0)
+  const canHarvest = new BigNumber(userData?.earnings).isGreaterThan(0)
 
   const farmName = isTokenOnly
     ? `${tokenSymbol.toLowerCase()}`
@@ -119,30 +120,30 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   const { onApproveRavPools } = useApproveRavPools(lpContract)
 
   const handleApprove = useCallback(async () => {
-    /*     try {
-          setRequestedApproval(true)
-          if (isGenesis) await onApproveGenesisPools()
-          else if (isRavPool) await onApproveRavPools()
-          else await onApproveRsharePools()
-        } catch (e) {
-          console.error(e)
-        }
-        finally {
-          setRequestedApproval(false)
-          onDismiss()
-        } */
+    try {
+      setRequestedApproval(true)
+      if (isGenesis) await onApproveGenesisPools()
+      else if (isRavPool) await onApproveRavPools()
+      else await onApproveRsharePools()
+    } catch (e) {
+      console.error(e)
+    }
+    finally {
+      setRequestedApproval(false)
+      onDismiss()
+    }
   }, [onApproveRsharePools, onApproveGenesisPools, onApproveRavPools, onDismiss, isGenesis, isRavPool])
 
   const handleClaimReward = async () => {
     setPending(true)
-    /*     try {
-          if (isGenesis) await onRewardGenesisPools()
-          else if (isRavPool) await onRewardRavPools()
-          else await onRewardRsharePools()
-        }
-        finally {
-          setPending(false)
-        } */
+    try {
+      if (isGenesis) await onRewardGenesisPools()
+      else if (isRavPool) await onRewardRavPools()
+      else await onRewardRsharePools()
+    }
+    finally {
+      setPending(false)
+    }
   }
 
   const [onPresentDeposit] = useModal(
@@ -175,7 +176,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
 
   const renderApprovalOrStakeButton = () => {
     return isApproved ? renderStakingButtons() : (
-      <Button mt="16px" size='sm' disabled/* ={requestedApproval} */ onClick={handleApprove} style={{ fontSize: isMobile && '14px' }}>
+      <Button mt="16px" size='sm' disabled={requestedApproval} onClick={handleApprove} style={{ fontSize: isMobile && '14px' }}>
         Approve Contract
       </Button>
     )
@@ -188,7 +189,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
         <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(2)}</Text>
         <Text color='#9D9D9D' fontSize='14px'>≈ ${rewardEarnedUsd.toFormat(2)}</Text>
         <Text color='#9D9D9D' fontSize='14px'>${(isGenesis || isRavPool) ? 'RAV' : 'RSHARE'} Earned</Text>
-        <Button size='sm' disabled={!isStaked || pending} onClick={handleClaimReward} mt="16px">{isMobile ? 'CLAIM' : 'CLAIM REWARD'}</Button>
+        <Button size='sm' disabled={!canHarvest || pending} onClick={handleClaimReward} mt="16px">{isMobile ? 'CLAIM' : 'CLAIM REWARD'}</Button>
       </TokenCard>
       <TokenCard>
         <Image src={`images/icons/${farmName}.png`} style={{ maxWidth: !isTokenOnly && '128px' }} />

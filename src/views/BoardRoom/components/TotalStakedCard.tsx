@@ -1,7 +1,5 @@
 import React from 'react'
 import Card from './Card'
-import { useTokenBalanceOfContract } from 'hooks/useTokenBalance'
-import { getMasonryAddress, getRshareAddress } from 'utils/addressHelpers'
 import { Masonry } from 'state/types'
 import BigNumber from 'bignumber.js'
 

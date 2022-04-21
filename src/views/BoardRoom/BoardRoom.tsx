@@ -21,6 +21,7 @@ import ClaimCard from './components/ClaimCard'
 import BigNumber from 'bignumber.js'
 import { Footer } from 'components/Footer'
 import FarmsBRGraphic from 'views/components/FarmsBRGraphic'
+import NewsCard from 'views/Farms/components/NewsCard'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -38,6 +39,7 @@ const InfoCards = styled.div`
   width: 100%;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  margin-top: 32px;
 
   @media (max-width: 1080px) {
     gap: 16px;
@@ -64,11 +66,11 @@ const ButtonCont = styled.div`
   justify-content: center;
 `
 
-const FooterContainer = styled.div`
+/* const FooterContainer = styled.div`
   width: 100vw;
   position: absolute;
   bottom: 0;
-`
+` */
 
 const BoardRoom = () => {
   const masonry = useMasonry()
@@ -89,13 +91,13 @@ const BoardRoom = () => {
   const { onExit } = useExitMasonry()
 
   const handleExit = async () => {
-    /*     setPending(true)
-        try {
-          await onExit()
-        }
-        finally {
-          setPending(false)
-        } */
+    setPending(true)
+    try {
+      await onExit()
+    }
+    finally {
+      setPending(false)
+    }
   }
 
   return (
@@ -106,6 +108,7 @@ const BoardRoom = () => {
           <BlackBack />
         </ImageContainer>}
         <Text color='#003E78' fontSize='32px' bold mt={isMobile && '8vh'} mb="1vh">BOARDROOM</Text>
+        <NewsCard />
         <InfoCards>
           <NextEpochCard nextEpochPoint={parseInt(masonry?.nextEpochPoint)} />
           <CurrentEpochCard epoch={masonry?.epoch} />
@@ -123,13 +126,13 @@ const BoardRoom = () => {
           {!canWithdraw && isStaked && <WithdrawCard masonry={masonry} period={treasury?.period} />}
         </TokenCards>
         <ButtonCont>
-          <Button size='sm' onClick={handleExit} disabled /* ={pending || !canClaimReward || !canWithdraw} */ style={{ padding: '1.2rem 2rem' }}>CLAIM AND WITHDRAW</Button>
+          <Button size='sm' onClick={handleExit} disabled={pending || !canClaimReward || !canWithdraw} style={{ padding: '1.2rem 2rem' }}>CLAIM AND WITHDRAW</Button>
         </ButtonCont>
       </WidePage>
       {!isMobile && <FarmsBRGraphic />}
-      {!isMobile && <FooterContainer>
-        <Footer style={{ marginTop: '0', height: '120px' }} />
-      </FooterContainer>}
+      {!isMobile &&
+        <Footer />
+      }
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Context } from './ModalContext'
 import { Handler } from './types'
 

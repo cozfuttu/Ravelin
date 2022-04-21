@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense, lazy, useState } from 'react'
+import React, { useEffect, Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import NotFound from 'views/NotFound';

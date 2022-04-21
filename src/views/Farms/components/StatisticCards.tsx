@@ -64,15 +64,15 @@ const StatisticCards: React.FC<Props> = ({ farm, tvl, dailyApr, isMobile }) => {
     <Cards>
       <InfoCard>
         <TextAntonio>APR</TextAntonio>
-        <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>%{/* farmApyString */ '-'}</Text>
+        <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>%{farmApyString}</Text>
       </InfoCard>
       <InfoCard>
         <TextAntonio>DAILY APR</TextAntonio>
-        <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>%{/* dailyApr */ '-'}</Text>
+        <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>%{dailyApr}</Text>
       </InfoCard>
       <InfoCard style={{ width: isMobile && '100%' }}>
         <TextAntonio>TVL</TextAntonio>
-        <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>{/* tvl */ '-'}</Text>
+        <Text color='#4E4E4E' fontSize='18px' style={{ wordBreak: 'break-word' }}>{tvl}</Text>
       </InfoCard>
     </Cards>
   )

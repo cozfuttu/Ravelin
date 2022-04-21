@@ -1,11 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { useLocation } from 'react-router-dom'
-import { Dropdown, Link, Text } from 'uikit'
-import ReviewProofBadgeRugdoc from 'uikit/components/ReviewProofBadge'
-import ReviewBadgePaladin from 'uikit/components/ReviewProofBadge/ReviewProofBadgePaladin'
-import { SvgProps, CloseIcon } from 'uikit/components/Svg'
-import { IconButton } from 'uikit/components/Button'
+import { Link } from 'uikit'
+import { SvgProps } from 'uikit/components/Svg'
 import * as IconModule from 'uikit/widgets/Menu/icons'
 import config, { socials } from './config'
 import MenuLink from 'uikit/widgets/Menu/MenuLink'
@@ -56,18 +52,6 @@ const SocialContainer = styled.div`
   margin-left: 32px;
 `
 
-const Logo = styled.img`
-  width: 130px;
-  align-self: center;
-  object-fit: cover;
-`
-
-const CloseIconContainer = styled.div`
-  position: absolute;
-  right: 16px;
-  top: 8px;
-`
-
 const AccordionDivider = styled.div`
   background: linear-gradient(270deg, rgba(0, 122, 190, 1) 0%, rgba(0, 122, 190, 0) 100%);
   width: 50%;
@@ -79,12 +63,11 @@ const AccordionDivider = styled.div`
 const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> }
 
 interface Props {
-  isMobile: boolean
   onClose: () => void
   isOpen?: boolean
 }
 
-const MenuMobile: React.FC<Props> = ({ isMobile, onClose, isOpen }) => {
+const MenuMobile: React.FC<Props> = ({ onClose, isOpen }) => {
   return (
     <OuterContainer onClick={onClose} isOpen={isOpen}>
 

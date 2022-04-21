@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { MENU_ENTRY_HEIGHT } from './config'
 import { MenuEntry, LinkLabel } from './MenuEntry'
 import { PushedProps } from './types'
-import { ArrowDropDownIcon, ArrowDropUpIcon } from '../../components/Svg'
 
 interface Props extends PushedProps {
   label: string

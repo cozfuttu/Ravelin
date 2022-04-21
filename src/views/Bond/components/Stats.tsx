@@ -23,7 +23,7 @@ interface Props {
 }
 
 const Stats: React.FC<Props> = ({ treasury }) => {
-  const { tombPrice, twap } = treasury
+  const { twap } = treasury
 
   const rbondPrice = usePriceRbondBusd()
   const adaPrice = usePriceBnbBusd()
@@ -33,11 +33,11 @@ const Stats: React.FC<Props> = ({ treasury }) => {
   return (
     <StatsContainer>
       <Col>
-        <Text color='#4E4E4E' fontSize='20px' bold>RAV = {/* twapFormatted */ 0} ADA</Text>
+        <Text color='#4E4E4E' fontSize='20px' bold>RAV = {twapFormatted} ADA</Text>
         <Text color='#9D9D9D' fontSize='14px'>Last Hour TWAP Price</Text>
       </Col>
       <Col>
-        <Text color='#4E4E4E' fontSize='20px' bold>RBOND = {/* rbondPriceFormatted */ 0} ADA</Text>
+        <Text color='#4E4E4E' fontSize='20px' bold>RBOND = {rbondPriceFormatted} ADA</Text>
         <Text color='#9D9D9D' fontSize='14px'>Current Price: (RAV)^2</Text>
       </Col>
     </StatsContainer>

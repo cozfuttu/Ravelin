@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { FarmConfig, PoolConfig, NftConfig, MissionNftConfig, PolyGalacticHunterMissionNftConfig, PetNftConfig, InterstellarConfig } from 'config/constants/types'
+import { FarmConfig } from 'config/constants/types'
 
 export interface Farm extends FarmConfig {
   tokenAmount?: BigNumber
@@ -13,6 +13,7 @@ export interface Farm extends FarmConfig {
   quoteTokenDecimals?: number
   totalLpStaked?: number
   poolEndTime?: number
+  poolStartTime?: number
   isStarted?: boolean
   userData?: {
     allowance: BigNumber
