@@ -111,8 +111,8 @@ const HexCard: React.FC<CardProps> = ({ tokenAddress, tokenName, tokenPriceUSD, 
       <TextAntonio>{tokenName.toUpperCase()}</TextAntonio>
       <Image src={tokenImage} />
       <Text color='#9D9D9D' fontSize='10px'>Current Price</Text>
-      <Text color='#007ABE'>{tokenPriceInAda.toFormat(4)} ADA</Text>
-      <Text color='#9D9D9D' fontSize='11px'>${tokenPriceUSD.toFormat(4)}</Text>
+      <Text color='#007ABE'>{tokenPriceInAda.toFormat(2)} ADA</Text>
+      <Text color='#9D9D9D' fontSize='11px'>${tokenPriceUSD.toFormat(2)}</Text>
       <Text color='#9D9D9D' fontSize='12px'><b>Market Cap:</b> ${marketCap.div(1e18).toFormat(2)}</Text>
       <Text color='#9D9D9D' fontSize='12px'><b>Circulating Supply:</b> {circSupply.div(1e18).toFormat(0)}</Text>
       <Text color='#9D9D9D' fontSize='12px'><b>Total Supply:</b> {totalSupply?.div(1e18).toFormat(0)}</Text>

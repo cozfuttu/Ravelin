@@ -1,6 +1,7 @@
 import WidePage from 'components/layout/WidePage'
 import React from 'react'
 import styled from 'styled-components'
+import CountUp from 'react-countup';
 import { Button, Text, useMatchBreakpoints } from 'uikit'
 import BlackBack from './components/BlackBack'
 import BlueBack from './components/BlueBack'
@@ -141,7 +142,7 @@ const Home = () => {
               <Row>
                 <Col>
                   <Text color="#007ABE" fontSize='18px' bold style={{ fontSize: isMobile && '12px' }}>TOTAL VALUE LOCKED:</Text>
-                  <Text color="#007ABE" fontSize='32px' bold style={{ transition: 'all 1s linear', fontSize: isMobile && '22px' }}>${totalValue.isNaN() ? new BigNumber(0).toFormat(0) : totalValue.toFormat(0)}</Text>
+                  <CountUp style={{ fontSize: isMobile ? '22px' : '32px', color: '#007ABE', fontWeight: '700', fontFamily: 'Inter' }} end={totalValue.toNumber()} separator="," prefix="$" />
                 </Col>
                 <Buttons>
                   <a href="/boardroom" style={{ textDecoration: 'none' }}>

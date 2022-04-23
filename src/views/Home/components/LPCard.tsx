@@ -64,12 +64,12 @@ interface CardProps {
 }
 
 const LPCard: React.FC<CardProps> = ({ lpName, LPPriceUSD, adaPrice, marketCap, totalSupply }) => {
-  const lpImage = `images/icons/${lpName}.png`
+  const lpImage = `images/icons/${lpName.toLowerCase()}.png`
   // const lpPriceInAda = LPPriceUSD.div(adaPrice)
   return (
     <Card>
       <Col>
-        <TextAntonio>{lpName.toUpperCase()} LP</TextAntonio>
+        <TextAntonio>{lpName} LP</TextAntonio>
         <Col2>
           <Text color='#9D9D9D' fontSize='16px'><b>Liquidity: </b>${marketCap?.isNaN() ? '0' : marketCap.div(1e18).toFormat(2)}</Text>
           <Text color='#9D9D9D' fontSize='16px'><b>Total Supply: </b>{totalSupply?.isNaN() ? '0' : totalSupply?.div(1e18).toFormat(0)}</Text>
@@ -78,7 +78,7 @@ const LPCard: React.FC<CardProps> = ({ lpName, LPPriceUSD, adaPrice, marketCap, 
       </Col>
       <Col style={{ alignItems: 'center' }}>
         <Image src={lpImage} />
-        <a href={`https://app.occam-x.fi/add/ETH/${lpName === 'rav-mada' ? getRavAddress() : getRshareAddress()}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+        <a href={`https://app.occam-x.fi/add/ETH/${lpName === 'RAV-mADA' ? getRavAddress() : getRshareAddress()}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
           <Button size='sm'>ADD LP</Button>
         </a>
       </Col>

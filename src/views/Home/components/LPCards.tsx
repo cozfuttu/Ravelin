@@ -43,8 +43,8 @@ const LPCards = () => {
 
   return (
     <Cards>
-      <LPCard lpName='rav-mada' totalSupply={totalSupplyRavNativeLP} adaPrice={adaPrice} LPPriceUSD={ravLPPriceUsd} marketCap={marketCapRavLP} />
-      <LPCard lpName='rshare-mada' totalSupply={totalSupplyRshareNativeLP} adaPrice={adaPrice} LPPriceUSD={rshareLPPriceUsd} marketCap={marketCapRshareLP} />
+      <LPCard lpName='RAV-mADA' totalSupply={totalSupplyRavNativeLP} adaPrice={adaPrice} LPPriceUSD={ravLPPriceUsd} marketCap={marketCapRavLP} />
+      <LPCard lpName='RSHARE-mADA' totalSupply={totalSupplyRshareNativeLP} adaPrice={adaPrice} LPPriceUSD={rshareLPPriceUsd} marketCap={marketCapRshareLP} />
     </Cards>
   )
 }

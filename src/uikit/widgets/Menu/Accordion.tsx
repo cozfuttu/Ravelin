@@ -26,7 +26,7 @@ const AccordionContent = styled.div<{ isOpen: boolean; isPushed: boolean; maxHei
   align-items: center;
   position: absolute;
   padding: ${({ isOpen, maxHeight }) => (isOpen ? `8px` : 0)};
-  margin-top: 56px;
+  margin-top: 28px;
   max-height: ${({ isOpen, maxHeight }) => (isOpen ? `${maxHeight}px` : 0)};
   transition: max-height 0.3s ease-out;
   overflow: hidden;
