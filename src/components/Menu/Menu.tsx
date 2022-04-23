@@ -9,6 +9,7 @@ import MenuButton from 'uikit/widgets/Menu/MenuButton'
 import { HamburgerIcon } from 'uikit/widgets/Menu/icons'
 import MenuMobile from './MenuMobile'
 import Accordion from 'uikit/widgets/Menu/Accordion'
+import MenuLink from 'uikit/widgets/Menu/MenuLink'
 
 const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> }
 
@@ -99,17 +100,17 @@ const Menu = () => {
                 >
                   {!isMobile &&
                     menuItem.items.map((item) => (
-                      <Link external href={item.href} key={item.label} style={{ textDecoration: 'none', marginTop: '8px' }}>
+                      <MenuLink href={item.href} key={item.label} style={{ textDecoration: 'none', marginTop: '8px' }}>
                         <Text fontSize='14px' bold>{item.label}</Text>
-                      </Link>
+                      </MenuLink>
                     ))}
                 </Accordion>
               )
             }
             return (
-              <Link href={menuItem.href} key={menuItem.label} style={{ textDecoration: 'none' }}>
+              <MenuLink href={menuItem.href} key={menuItem.label} style={{ textDecoration: 'none' }}>
                 <Text fontSize='14px' bold>{menuItem.label}</Text>
-              </Link>
+              </MenuLink>
             )
           })}
           <Socials>
