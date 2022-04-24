@@ -127,7 +127,7 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
       </Col>
       <Col>
         <Image src={`images/icons/${farmName.toLowerCase()}.png`} style={{ width: farm.isTokenOnly ? '80px' : '128px' }} />
-        <Button size='sm' style={{ alignSelf: 'flex-end' }} onClick={onPresentFarmView}>VIEW</Button>
+        <Button size='sm' style={{ alignSelf: 'flex-end' }} disabled={farm.depositFeeBP > 0} onClick={onPresentFarmView}>VIEW</Button>
       </Col>
     </Card>
   )

@@ -60,9 +60,16 @@ const DepositModal: React.FC<DepositModalProps> = ({
           disabled={pendingTx}
           onClick={async () => {
             setPendingTx(true)
-            await onConfirm(new BigNumber(val).times(new BigNumber(10).pow(decimals)).toString())
-            setPendingTx(false)
-            onDismiss()
+            try {
+              await onConfirm(new BigNumber(val).times(new BigNumber(10).pow(decimals)).toString())
+            }
+            catch (e) {
+              console.log('An error occured while depositing: ', e)
+            }
+            finally {
+              setPendingTx(false)
+              onDismiss()
+            }
           }}
         >
           {pendingTx ? 'Pending Confirmation' : 'Confirm'}

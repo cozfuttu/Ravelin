@@ -80,7 +80,7 @@ const RshareCard: React.FC<CardProps> = ({ masonry, ethereum, account }) => {
     />,
   )
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={rshareStaked} decimals={masonry?.tshareDecimals} onConfirm={onUnstake} tokenName='RSHARE' />,
+    <WithdrawModal max={rshareStaked.times(new BigNumber(10).pow(masonry?.tshareDecimals))} decimals={masonry?.tshareDecimals} onConfirm={onUnstake} tokenName='RSHARE' />,
   )
 
   const renderStakingButtons = () => {

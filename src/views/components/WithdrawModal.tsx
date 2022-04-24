@@ -48,9 +48,16 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ decimals, onConfirm, onDi
           disabled={pendingTx}
           onClick={async () => {
             setPendingTx(true)
-            await onConfirm(new BigNumber(val).times(new BigNumber(10).pow(decimals)).toString())
-            setPendingTx(false)
-            onDismiss()
+            try {
+              await onConfirm(new BigNumber(val).times(new BigNumber(10).pow(decimals)).toString())
+            }
+            catch (e) {
+              console.log('An error occured while withdrawing: ', e)
+            }
+            finally {
+              setPendingTx(false)
+              onDismiss()
+            }
           }}
         >
           {pendingTx ? 'Pending Confirmation' : 'Confirm'}
