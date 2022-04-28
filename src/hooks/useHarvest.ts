@@ -1,52 +1,62 @@
-import { useCallback } from 'react'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { useDispatch } from 'react-redux'
+import { useCallback } from "react";
+import { useWallet } from "@binance-chain/bsc-use-wallet";
+import { useDispatch } from "react-redux";
 
-import { fetchFarmUserDataAsync, fetchMasonDataAsync } from 'state/actions'
-import { claimReward, harvest } from 'utils/callHelpers'
-import { useGenesisPoolsContract, useRsharePoolsContract, useMasonryContract, useRavPoolsContract } from './useContract'
+import {
+  fetchFarmsPublicDataAsync,
+  fetchFarmUserDataAsync,
+  fetchMasonDataAsync,
+} from "state/actions";
+import { claimReward, claimRewardDev, harvest } from "utils/callHelpers";
+import {
+  useGenesisPoolsContract,
+  useRsharePoolsContract,
+  useMasonryContract,
+  useRavPoolsContract,
+  useRshare,
+} from "./useContract";
 
 export const useHarvestGenesisPools = (farmPid: number) => {
-  const dispatch = useDispatch()
-  const { account } = useWallet()
-  const masterChefContract = useGenesisPoolsContract()
+  const dispatch = useDispatch();
+  const { account } = useWallet();
+  const masterChefContract = useGenesisPoolsContract();
 
   const handleHarvest = useCallback(async () => {
-    const txHash = await harvest(masterChefContract, farmPid, account)
-    dispatch(fetchFarmUserDataAsync(account))
-    return txHash
-  }, [account, dispatch, farmPid, masterChefContract])
+    const txHash = await harvest(masterChefContract, farmPid, account);
+    dispatch(fetchFarmUserDataAsync(account));
+    return txHash;
+  }, [account, dispatch, farmPid, masterChefContract]);
 
-  return { onRewardGenesisPools: handleHarvest }
-}
+  return { onRewardGenesisPools: handleHarvest };
+};
 
 export const useHarvestRsharePools = (farmPid: number) => {
-  const dispatch = useDispatch()
-  const { account } = useWallet()
-  const masterChefContract = useRsharePoolsContract()
+  const dispatch = useDispatch();
+  const { account } = useWallet();
+  const masterChefContract = useRsharePoolsContract();
 
   const handleHarvest = useCallback(async () => {
-    const txHash = await harvest(masterChefContract, farmPid, account)
-    dispatch(fetchFarmUserDataAsync(account))
-    return txHash
-  }, [account, dispatch, farmPid, masterChefContract])
+    const txHash = await harvest(masterChefContract, farmPid, account);
+    dispatch(fetchFarmUserDataAsync(account));
+    return txHash;
+  }, [account, dispatch, farmPid, masterChefContract]);
 
-  return { onRewardRsharePools: handleHarvest }
-}
+  return { onRewardRsharePools: handleHarvest };
+};
 
 export const useHarvestRavPools = (farmPid: number) => {
-  const dispatch = useDispatch()
-  const { account } = useWallet()
-  const masterChefContract = useRavPoolsContract()
+  const dispatch = useDispatch();
+  const { account } = useWallet();
+  const masterChefContract = useRavPoolsContract();
 
   const handleHarvest = useCallback(async () => {
-    const txHash = await harvest(masterChefContract, farmPid, account)
-    dispatch(fetchFarmUserDataAsync(account))
-    return txHash
-  }, [account, dispatch, farmPid, masterChefContract])
+    const txHash = await harvest(masterChefContract, farmPid, account);
+    dispatch(fetchFarmUserDataAsync(account));
+    return txHash;
+  }, [account, dispatch, farmPid, masterChefContract]);
 
-  return { onRewardRavPools: handleHarvest }
-}
+  return { onRewardRavPools: handleHarvest };
+};
 
 /* export const useAllHarvest = (farmPids: number[]) => {
   const { account } = useWallet()
@@ -64,15 +74,29 @@ export const useHarvestRavPools = (farmPid: number) => {
 } */
 
 export const useHarvestMasonry = () => {
-  const dispatch = useDispatch()
-  const { account } = useWallet()
-  const masonryContract = useMasonryContract()
+  const dispatch = useDispatch();
+  const { account } = useWallet();
+  const masonryContract = useMasonryContract();
 
   const handleHarvest = useCallback(async () => {
-    const txHash = await claimReward(masonryContract, account)
-    dispatch(fetchMasonDataAsync(account))
-    return txHash
-  }, [account, dispatch, masonryContract])
+    const txHash = await claimReward(masonryContract, account);
+    dispatch(fetchMasonDataAsync(account));
+    return txHash;
+  }, [account, dispatch, masonryContract]);
 
-  return { onReward: handleHarvest }
-}
+  return { onReward: handleHarvest };
+};
+
+export const useClaimRewardDev = () => {
+  const dispatch = useDispatch();
+  const { account } = useWallet();
+  const rshareContract = useRshare();
+
+  const handleHarvest = useCallback(async () => {
+    const txHash = await claimRewardDev(rshareContract, account);
+    dispatch(fetchFarmsPublicDataAsync());
+    return txHash;
+  }, [account, dispatch, rshareContract]);
+
+  return { onReward: handleHarvest };
+};

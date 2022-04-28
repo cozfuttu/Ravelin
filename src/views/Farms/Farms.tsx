@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import WidePage from 'components/layout/WidePage'
 import styled from 'styled-components'
-import { Text, useMatchBreakpoints } from 'uikit'
+import { Button, Text, useMatchBreakpoints } from 'uikit'
 import LPCards from './components/LPCards'
-import { useFarms, usePriceBnbBusd, usePriceRavBusd, usePriceRshareBusd } from 'state/hooks'
+import { useFarms, usePriceBnbBusd, usePriceRavBusd, usePriceRshareBusd, useTreasury } from 'state/hooks'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useDispatch } from 'react-redux'
 import { FarmWithStakedValue } from './components/LPCard'
@@ -16,6 +16,8 @@ import BlackBack from 'views/Home/components/BlackBack'
 import { Footer } from 'components/Footer'
 import FarmsBRGraphic from 'views/components/FarmsBRGraphic'
 import NewsCard from './components/NewsCard'
+import { getDevAddresses } from 'utils/addressHelpers'
+import { useClaimRewardDev } from 'hooks/useHarvest'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -31,6 +33,7 @@ const BLOCKS_PER_YEAR = new BigNumber(15016392)
 
 const Farms = () => {
   const farmsLP = useFarms()
+  const { unclaimedDevFund, unclaimedTreasuryFund } = useTreasury()
   const { isXl } = useMatchBreakpoints()
 
   const isMobile = isXl === false
@@ -40,7 +43,9 @@ const Farms = () => {
   const nativePrice = usePriceBnbBusd()
 
   const { account, ethereum }: { account: string; ethereum: any } = useWallet()
+  const devAddress = getDevAddresses()
   const dispatch = useDispatch()
+  const { onReward } = useClaimRewardDev()
 
   useEffect(() => {
     if (account) {
@@ -79,6 +84,9 @@ const Farms = () => {
   const rshareFarms = farmsToDisplayWithAPY.filter((farm) => !(farm.isGenesis) && !(farm.isRavPool))
   const ravFarms = farmsToDisplayWithAPY.filter((farm) => farm.isGenesis || farm.isRavPool)
 
+  const unclaimedDevFundFormatted = new BigNumber(unclaimedDevFund).div(1e18).toFormat(4)
+  const unclaimedTreasuryFundFormatted = new BigNumber(unclaimedTreasuryFund).div(1e18).toFormat(4)
+
   return (
     <>
       <WidePage style={{ maxWidth: '1000px' }}>
@@ -88,6 +96,14 @@ const Farms = () => {
         </ImageContainer>)}
         <Text color='#003E78' fontSize='32px' bold style={{ marginTop: isMobile && '8vh' }}>FARM</Text>
         <NewsCard />
+        {
+          devAddress.includes(account) &&
+          <>
+            <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Unclaimed Dev Fund: {unclaimedDevFundFormatted} RSHARE</Text>
+            <Text color='#4E4E4E' fontSize='28px' bold>Unclaimed Community Fund: {unclaimedTreasuryFundFormatted} RSHARE</Text>
+            <Button size="md" onClick={onReward}>HARVEST</Button>
+          </>
+        }
         <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RSHARE by staking LP</Text>
         <LPCards farmsToDisplayWithApy={rshareFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} />
         <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RAV by Staking in Genesis Pools</Text>

@@ -1,46 +1,50 @@
-import addresses from 'config/constants/contracts'
+import addresses from "config/constants/contracts";
+import devAddresses from "config/constants/addresses";
 
-const chainId = process.env.REACT_APP_CHAIN_ID
+const chainId = process.env.REACT_APP_CHAIN_ID;
 
 export const getMulticallAddress = () => {
-  return addresses.multiCall[chainId]
-}
+  return addresses.multiCall[chainId];
+};
 export const getWbnbAddress = () => {
-  return addresses.wbnb[chainId]
-}
+  return addresses.wbnb[chainId];
+};
 export const getBusdAddress = () => {
-  return addresses.busd[chainId]
-}
+  return addresses.busd[chainId];
+};
 export const getUsdtAddress = () => {
-  return addresses.usdt[chainId]
-}
+  return addresses.usdt[chainId];
+};
 export const getRavAddress = () => {
-  return addresses.rav[chainId]
-}
+  return addresses.rav[chainId];
+};
 export const getRshareAddress = () => {
-  return addresses.rshare[chainId]
-}
+  return addresses.rshare[chainId];
+};
 export const getRbondAddress = () => {
-  return addresses.rbond[chainId]
-}
+  return addresses.rbond[chainId];
+};
 export const getRavNativeLPAddress = () => {
-  return addresses.ravNativeLP[chainId]
-}
+  return addresses.ravNativeLP[chainId];
+};
 export const getRshareNativeLPAddress = () => {
-  return addresses.rshareNativeLP[chainId]
-}
+  return addresses.rshareNativeLP[chainId];
+};
 export const getGenesisPoolsAddress = () => {
-  return addresses.genesisPools[chainId]
-}
+  return addresses.genesisPools[chainId];
+};
 export const getRsharePoolsAddress = () => {
-  return addresses.rsharePools[chainId]
-}
+  return addresses.rsharePools[chainId];
+};
 export const getRavPoolsAddress = () => {
-  return addresses.ravPools[chainId]
-}
+  return addresses.ravPools[chainId];
+};
 export const getMasonryAddress = () => {
-  return addresses.masonry[chainId]
-}
+  return addresses.masonry[chainId];
+};
 export const getTreasuryAddress = () => {
-  return addresses.treasury[chainId]
-}
+  return addresses.treasury[chainId];
+};
+export const getDevAddresses = () => {
+  return devAddresses;
+};

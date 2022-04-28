@@ -86,6 +86,15 @@ export const claimReward = async (masonryContract, account) => {
     });
 };
 
+export const claimRewardDev = async (rshareContract, account) => {
+  return rshareContract.methods
+    .claimRewards()
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};
+
 export const buyBonds = async (
   treasuryContract,
   tombAmount,

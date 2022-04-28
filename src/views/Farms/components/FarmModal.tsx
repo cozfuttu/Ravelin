@@ -72,7 +72,7 @@ const FarmModal: React.FC<Props> = ({
   const isMobile = isXl === false
 
   const [pending, setPending] = useState(false)
-  console.log('farm: ', farm)
+  //  console.log('farm: ', farm)
 
   const stakedBalance = useMemo(() => new BigNumber(farm?.userData?.stakedBalance), [farm?.userData?.stakedBalance])
 

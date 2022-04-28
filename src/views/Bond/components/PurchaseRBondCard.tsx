@@ -22,7 +22,7 @@ interface Props {
 }
 
 const PurchaseRBondCard: React.FC<Props> = ({ treasury }) => {
-  console.log('treasury: ', treasury)
+  //  console.log('treasury: ', treasury)
 
   const { account, ethereum }: { account: string, ethereum: provider } = useWallet()
 
