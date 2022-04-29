@@ -116,7 +116,7 @@ const Menu = () => {
           <Socials>
             {socials.map((social) => {
               const Icon = Icons[social.icon]
-              const iconProps = { width: social.icon === 'TelegramIcon' ? '28px' : '36px', color: '#ffffff', style: { cursor: 'pointer' }, marginLeft: '-16px', marginTop: '4px' }
+              const iconProps = { width: social.icon === 'TelegramIcon' || social.icon === 'GithubIcon' ? '28px' : '36px', color: '#ffffff', style: { cursor: 'pointer' }, marginLeft: '-16px', marginTop: '4px' }
               return (
                 <Link external href={social.href} key={social.label} style={{ textDecoration: 'none' }}>
                   <Icon {...iconProps} />

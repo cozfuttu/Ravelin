@@ -72,7 +72,7 @@ const FarmModal: React.FC<Props> = ({
   const isMobile = isXl === false
 
   const [pending, setPending] = useState(false)
-  //  console.log('farm: ', farm)
+  // console.log('farm: ', farm)
 
   const stakedBalance = useMemo(() => new BigNumber(farm?.userData?.stakedBalance), [farm?.userData?.stakedBalance])
 
@@ -87,12 +87,16 @@ const FarmModal: React.FC<Props> = ({
   const handleExit = async () => {
     setPending(true)
     try {
-      if (farm.isGenesis) await onUnstakeGenesisPools(fullBalance)
-      else if (farm.isRavPool) await onUnstakeRavPools(fullBalance)
-      else await onUnstakeRsharePools(fullBalance)
+      if (farm.isGenesis) await onUnstakeGenesisPools(new BigNumber(stakedBalance).toFixed())
+      else if (farm.isRavPool) await onUnstakeRavPools(new BigNumber(stakedBalance).toFixed())
+      else await onUnstakeRsharePools(new BigNumber(stakedBalance).toFixed())
+    }
+    catch (e) {
+      console.log('an error occured while claiming and withdrawing: ', e)
     }
     finally {
       setPending(false)
+      onDismiss()
     }
   }
 

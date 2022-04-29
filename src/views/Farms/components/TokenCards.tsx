@@ -94,11 +94,11 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
 
   const userBalance = new BigNumber(userData?.tokenBalance)
 
-  const rshareStaked = userData?.stakedBalance ? new BigNumber(userData?.stakedBalance).div(new BigNumber(10).pow(decimals)) : new BigNumber(0)
-  const rshareStakedUsd = userData?.stakedBalance ? rshareStaked.times(new BigNumber(tokenPriceVsQuote)) : new BigNumber(0)
+  const tokenStaked = userData?.stakedBalance ? new BigNumber(userData?.stakedBalance).div(new BigNumber(10).pow(decimals)) : new BigNumber(0)
+  const tokenStakedUsd = userData?.stakedBalance ? tokenStaked.times(new BigNumber(tokenPriceVsQuote)) : new BigNumber(0)
 
-  const rshareStakedFormatted = rshareStaked.toFormat(2)
-  const rshareStakedUsdFormatted = rshareStakedUsd.toFormat(2)
+  const tokenStakedFormatted = tokenStaked.toFormat(2)
+  const tokenStakedUsdFormatted = tokenStakedUsd.toFormat(2)
 
   const isApproved = new BigNumber(userData?.allowance).isGreaterThan(0)
   const isStaked = new BigNumber(userData?.stakedBalance).isGreaterThan(0)
@@ -156,7 +156,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
     />,
   )
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={rshareStaked.times(new BigNumber(10).pow(decimals))} decimals={decimals} onConfirm={isGenesis ? onUnstakeGenesisPools : isRavPool ? onUnstakeRavPools : onUnstakeRsharePools} tokenName={lpSymbol.toUpperCase()} />,
+    <WithdrawModal max={tokenStaked.times(new BigNumber(10).pow(decimals))} decimals={decimals} onConfirm={isGenesis ? onUnstakeGenesisPools : isRavPool ? onUnstakeRavPools : onUnstakeRsharePools} tokenName={lpSymbol.toUpperCase()} />,
   )
 
   const renderStakingButtons = () => {
@@ -193,8 +193,8 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
       </TokenCard>
       <TokenCard>
         <Image src={`images/icons/${farmName}.png`} style={{ maxWidth: !isTokenOnly && '128px' }} />
-        <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rshareStakedFormatted}</Text>
-        <Text color='#9D9D9D' fontSize='14px'>≈ ${rshareStakedUsdFormatted}</Text>
+        <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{tokenStakedFormatted}</Text>
+        <Text color='#9D9D9D' fontSize='14px'>≈ ${tokenStakedUsdFormatted}</Text>
         <Text color='#9D9D9D' fontSize='14px'>{farmName.toUpperCase()} Staked</Text>
         {!account ? <UnlockButton mt="16px" size='sm' /> : renderApprovalOrStakeButton()}
       </TokenCard>

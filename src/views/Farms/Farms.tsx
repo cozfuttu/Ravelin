@@ -29,7 +29,7 @@ const ImageContainer = styled.div`
   z-index: -99;
 `
 
-const BLOCKS_PER_YEAR = new BigNumber(15016392)
+const SECONDS_PER_YEAR = new BigNumber(31557600)
 
 const Farms = () => {
   const farmsLP = useFarms()
@@ -60,10 +60,10 @@ const Farms = () => {
     const cakeRewardPerBlock = new BigNumber(farm.gammaPulsarPerBlock || 1)
       .times(new BigNumber(farm.poolWeight))
       .div(new BigNumber(10).pow(18))
-    const cakeRewardPerYear = cakeRewardPerBlock.times(BLOCKS_PER_YEAR)
+    const cakeRewardPerYear = cakeRewardPerBlock.times(SECONDS_PER_YEAR)
 
     let apy;
-    if (farm.isGenesis) apy = ravPrice.times(cakeRewardPerYear)
+    if (farm.isGenesis || farm.isRavPool) apy = ravPrice.times(cakeRewardPerYear)
     else apy = rsharePrice.times(cakeRewardPerYear)
 
     let totalValue = farm.lpTotalInQuoteToken ? new BigNumber(farm.lpTotalInQuoteToken || 0) : new BigNumber(0)
@@ -77,6 +77,8 @@ const Farms = () => {
     if (totalValue.comparedTo(0) > 0) {
       apy = apy.div(totalValue)
     }
+
+    if (!farm.isRavPool && !farm.isGenesis) apy = apy.div(100)
 
     return { ...farm, apy }
   })
