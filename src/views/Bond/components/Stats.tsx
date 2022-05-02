@@ -27,9 +27,9 @@ const Stats: React.FC<Props> = ({ treasury }) => {
 
   const rbondPrice = usePriceRbondBusd()
   const adaPrice = usePriceBnbBusd()
-  const rbondPriceFormatted = rbondPrice.div(adaPrice).toFormat(4)
+  const rbondPriceFormatted = rbondPrice.div(adaPrice).toFormat(2)
 
-  const twapFormatted = new BigNumber(twap).div(1e18).toFormat(4)
+  const twapFormatted = new BigNumber(twap).div(1e18).toFormat(2)
   return (
     <StatsContainer>
       <Col>

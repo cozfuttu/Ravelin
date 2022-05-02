@@ -78,8 +78,6 @@ const Farms = () => {
       apy = apy.div(totalValue)
     }
 
-    if (!farm.isRavPool && !farm.isGenesis) apy = apy.div(100)
-
     return { ...farm, apy }
   })
 

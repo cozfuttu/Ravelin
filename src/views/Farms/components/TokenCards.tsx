@@ -6,7 +6,7 @@ import { useUnstakeGenesisPools, useUnstakeRavPools, useUnstakeRsharePools } fro
 import { useStakeGenesisPools, useStakeRavPools, useStakeRsharePools } from 'hooks/useStake'
 import { FarmWithStakedValue } from './LPCard'
 import BigNumber from 'bignumber.js'
-import { usePriceRavBusd } from 'state/hooks'
+import { usePriceBnbBusd, usePriceRavBusd, usePriceRshareBusd } from 'state/hooks'
 import { useHarvestGenesisPools, useHarvestRavPools, useHarvestRsharePools } from 'hooks/useHarvest'
 import UnlockButton from 'components/UnlockButton'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
@@ -74,6 +74,8 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   const tokenAddress = tokenAddresses[process.env.REACT_APP_CHAIN_ID]
 
   const ravPriceUsd = usePriceRavBusd()
+  const rsharePriceUsd = usePriceRshareBusd()
+  const adaPrice = usePriceBnbBusd()
 
   const { account, ethereum }: { account: string, ethereum: provider } = useWallet()
 
@@ -90,12 +92,13 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   const { onRewardRavPools } = useHarvestRavPools(pid)
 
   const rewardEarned = userData?.earnings ? new BigNumber(userData?.earnings).div(1e18) : new BigNumber(0)
-  const rewardEarnedUsd = userData?.earnings ? rewardEarned.times(ravPriceUsd) : new BigNumber(0)
+  const modifier = (!isRavPool && !isGenesis) ? rsharePriceUsd : ravPriceUsd
+  const rewardEarnedUsd = userData?.earnings ? rewardEarned.times(modifier) : new BigNumber(0)
 
   const userBalance = new BigNumber(userData?.tokenBalance)
 
   const tokenStaked = userData?.stakedBalance ? new BigNumber(userData?.stakedBalance).div(new BigNumber(10).pow(decimals)) : new BigNumber(0)
-  const tokenStakedUsd = userData?.stakedBalance ? tokenStaked.times(new BigNumber(tokenPriceVsQuote)) : new BigNumber(0)
+  const tokenStakedUsd = userData?.stakedBalance ? farm.isTokenOnly ? tokenStaked.times(new BigNumber(tokenPriceVsQuote)) : tokenStaked.times(new BigNumber(farm?.lpTotalInQuoteToken).times(adaPrice).div(farm?.totalLpStaked)) : new BigNumber(0)
 
   const tokenStakedFormatted = tokenStaked.toFormat(2)
   const tokenStakedUsdFormatted = tokenStakedUsd.toFormat(2)
@@ -186,7 +189,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
     <Cards>
       <TokenCard>
         <Image src={`images/icons/${(isGenesis || isRavPool) ? 'rav' : 'rshare'}.png`} />
-        <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(2)}</Text>
+        <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(farm.isGenesis || farm.isRavPool ? 2 : 3)}</Text>
         <Text color='#9D9D9D' fontSize='14px'>≈ ${rewardEarnedUsd.toFormat(2)}</Text>
         <Text color='#9D9D9D' fontSize='14px'>${(isGenesis || isRavPool) ? 'RAV' : 'RSHARE'} Earned</Text>
         <Button size='sm' disabled={!canHarvest || pending} onClick={handleClaimReward} mt="16px">{isMobile ? 'CLAIM' : 'CLAIM REWARD'}</Button>
