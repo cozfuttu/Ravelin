@@ -12,7 +12,6 @@ import LPCards from './components/LPCards'
 import { useTotalValue } from 'state/hooks'
 import { getRavAddress, getRshareAddress } from 'utils/addressHelpers'
 import { Footer } from 'components/Footer'
-import BigNumber from 'bignumber.js'
 import HomeGraphic from './components/HomeGraphic'
 
 const TextContainer = styled.div`

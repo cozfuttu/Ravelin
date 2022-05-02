@@ -105,7 +105,7 @@ const fetchMasonry = async () => {
     },
   ];
 
-  const [unclaimedDevFund, unclaimedTreasuryFund] = await multicall(
+  const [unclaimedTreasuryFund, unclaimedDevFund] = await multicall(
     rshareABI,
     rshareCalls
   );

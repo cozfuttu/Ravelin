@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js'
-import { useBurnedBalanceRav, useBurnedBalanceRbond, useBurnedBalanceRshare, useTotalSupplyRav, useTotalSupplyRbond, useTotalSupplyRshare } from 'hooks/useTokenBalance'
-import React from 'react'
+import { useBurnedBalanceRav, useBurnedBalanceRbond, useBurnedBalanceRshare, useTokenBalanceOfContract, useTotalSupplyRav, useTotalSupplyRbond, useTotalSupplyRshare } from 'hooks/useTokenBalance'
+import React, { useMemo } from 'react'
 import { usePriceRavBusd, usePriceRshareBusd, usePriceRbondBusd, usePriceBnbBusd } from 'state/hooks'
-import { getRavAddress, getRshareAddress, getRbondAddress } from 'utils/addressHelpers'
+import { getRavAddress, getRshareAddress, getRbondAddress, getRsharePoolsAddress } from 'utils/addressHelpers'
 import styled from 'styled-components'
 import HexCard from './HexCard'
 
@@ -23,6 +23,11 @@ const Cards = styled.div`
 `
 
 const TokenCards = () => {
+  const ravAddress = useMemo(() => getRavAddress(), [])
+  const rshareAddress = useMemo(() => getRshareAddress(), [])
+  const rbondAddress = useMemo(() => getRbondAddress(), [])
+  const rsharePoolsAddress = useMemo(() => getRsharePoolsAddress(), [])
+
   const totalSupplyRav = useTotalSupplyRav()
   const totalSupplyRshare = useTotalSupplyRshare()
   const totalSupplyRbond = useTotalSupplyRbond()
@@ -34,20 +39,17 @@ const TokenCards = () => {
   const ravPriceUsd = usePriceRavBusd()
   const rsharePriceUsd = usePriceRshareBusd()
   const rbondPriceUsd = usePriceRbondBusd()
-
   const adaPrice = usePriceBnbBusd()
 
-  const circSupplyRav = totalSupplyRav ? totalSupplyRav.minus(burnedBalanceRav) : new BigNumber(0)
-  const circSupplyRshare = totalSupplyRshare ? totalSupplyRshare.minus(burnedBalanceRshare) : new BigNumber(0)
-  const circSupplyRbond = totalSupplyRbond ? totalSupplyRbond.minus(burnedBalanceRbond) : new BigNumber(0)
+  const rshareAmountInPools = useTokenBalanceOfContract(rshareAddress, rsharePoolsAddress)
 
-  const marketCapRav = ravPriceUsd.times(circSupplyRav)
-  const marketCapRshare = rsharePriceUsd.times(circSupplyRshare)
-  const marketCapRbond = rbondPriceUsd.times(circSupplyRbond)
+  const circSupplyRav = useMemo(() => totalSupplyRav ? totalSupplyRav.minus(burnedBalanceRav) : new BigNumber(0), [totalSupplyRav, burnedBalanceRav])
+  const circSupplyRshare = useMemo(() => totalSupplyRshare ? totalSupplyRshare.minus(burnedBalanceRshare).minus(rshareAmountInPools) : new BigNumber(0), [totalSupplyRshare, burnedBalanceRshare, rshareAmountInPools])
+  const circSupplyRbond = useMemo(() => totalSupplyRbond ? totalSupplyRbond.minus(burnedBalanceRbond) : new BigNumber(0), [totalSupplyRbond, burnedBalanceRbond])
 
-  const ravAddress = getRavAddress()
-  const rshareAddress = getRshareAddress()
-  const rbondAddress = getRbondAddress()
+  const marketCapRav = useMemo(() => ravPriceUsd.times(circSupplyRav), [ravPriceUsd, circSupplyRav])
+  const marketCapRshare = useMemo(() => rsharePriceUsd.times(circSupplyRshare), [rsharePriceUsd, circSupplyRshare])
+  const marketCapRbond = useMemo(() => rbondPriceUsd.times(circSupplyRbond), [rbondPriceUsd, circSupplyRbond])
 
   return (
     <Cards>

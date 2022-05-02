@@ -10,7 +10,6 @@ import { useUnstakeGenesisPools, useUnstakeRavPools, useUnstakeRsharePools } fro
 import StatisticCards from './StatisticCards'
 import TokenCards from './TokenCards'
 import BigNumber from 'bignumber.js'
-import { getFullDisplayBalance } from 'utils/formatBalance'
 import { useMatchBreakpoints } from 'uikit'
 
 interface Props extends InjectedProps {
@@ -72,17 +71,16 @@ const FarmModal: React.FC<Props> = ({
   const isMobile = isXl === false
 
   const [pending, setPending] = useState(false)
-  // console.log('farm: ', farm)
-
+  /*   console.log('farm: ', farm) */
   const stakedBalance = useMemo(() => new BigNumber(farm?.userData?.stakedBalance), [farm?.userData?.stakedBalance])
 
   const { onUnstakeGenesisPools } = useUnstakeGenesisPools(farm.pid)
   const { onUnstakeRsharePools } = useUnstakeRsharePools(farm.pid)
   const { onUnstakeRavPools } = useUnstakeRavPools(farm.pid)
 
-  const fullBalance = useMemo(() => {
-    return getFullDisplayBalance(stakedBalance, farm.decimals)
-  }, [stakedBalance, farm.decimals])
+  /*   const fullBalance = useMemo(() => {
+      return getFullDisplayBalance(stakedBalance, farm.decimals)
+    }, [stakedBalance, farm.decimals]) */
 
   const handleExit = async () => {
     setPending(true)

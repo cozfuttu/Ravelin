@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { useBurnedBalanceRav, useTotalSupplyRav } from 'hooks/useTokenBalance'
 import React from 'react'
+import { usePriceBnbBusd, usePriceRavBusd } from 'state/hooks'
 import { Masonry } from 'state/types'
 import Card from './Card'
 
@@ -12,10 +13,12 @@ const EXPANSION_BREAKPOINTS = [500000, 1000000, 1500000, 2000000, 5000000, 10000
 const EPOCH_AMOUNT_IN_YEAR = 365 * 24 / 6 // 1 year * 24 hours / epoch period
 
 const APRCard: React.FC<CardProps> = ({ masonry }) => {
-  const tombPrice = new BigNumber(masonry.tombPrice)
+  //  const tombPrice = new BigNumber(masonry.tombPrice)
 
   const cakeTotalSupply = useTotalSupplyRav()
   const cakeBurnedSupply = useBurnedBalanceRav()
+  const ravPrice = usePriceRavBusd()
+  const adaPrice = usePriceBnbBusd()
 
   const circSupplyRav = cakeTotalSupply ? cakeTotalSupply.minus(cakeBurnedSupply).div(1e18).toNumber() : 0
 
@@ -33,9 +36,9 @@ const APRCard: React.FC<CardProps> = ({ masonry }) => {
   const cakeRewardPerEpoch = circSupplyRav * expansionRate
   const cakeRewardPerYear = cakeRewardPerEpoch * EPOCH_AMOUNT_IN_YEAR
 
-  let apy = tombPrice.times(cakeRewardPerYear)
+  let apy = ravPrice.times(cakeRewardPerYear)
 
-  let totalValue = new BigNumber(masonry.lpTotalInQuoteToken || 0)
+  let totalValue = new BigNumber(masonry.lpTotalInQuoteToken || 0).times(adaPrice)
 
   if (totalValue.comparedTo(0) > 0) {
     apy = apy.div(totalValue)
