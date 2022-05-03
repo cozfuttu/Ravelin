@@ -33,19 +33,21 @@ const APRCard: React.FC<CardProps> = ({ masonry }) => {
   else if (circSupplyRav < EXPANSION_BREAKPOINTS[7]) expansionRate = 0.0125
   else expansionRate = 0.01
 
-  const cakeRewardPerEpoch = circSupplyRav * expansionRate
-  const cakeRewardPerYear = cakeRewardPerEpoch * EPOCH_AMOUNT_IN_YEAR
+  const ravRewardPerEpoch = circSupplyRav * expansionRate
+  const ravRewardPerYear = ravRewardPerEpoch * EPOCH_AMOUNT_IN_YEAR
 
-  let apy = ravPrice.times(cakeRewardPerYear)
+  const totalValue = new BigNumber(masonry.lpTotalInQuoteToken || 0).times(adaPrice)
 
-  let totalValue = new BigNumber(masonry.lpTotalInQuoteToken || 0).times(adaPrice)
+  let apy = ravPrice.times(ravRewardPerYear)
 
   if (totalValue.comparedTo(0) > 0) {
     apy = apy.div(totalValue)
   }
 
+  const dailyApy = apy.div(365)
+
   return (
-    <Card heading='APR' value={`${apy.times(new BigNumber(100)).toFormat(2)}%`} />
+    <Card heading='APR' value={`${apy.times(new BigNumber(100)).toFormat(2)}%`} secondaryValue={`${dailyApy.times(100).toFormat(2)}% Daily`} />
   )
 }
 

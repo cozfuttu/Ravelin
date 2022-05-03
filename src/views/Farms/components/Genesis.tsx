@@ -55,7 +55,7 @@ const Genesis: React.FC<CardsProps> = ({ farmsToDisplayWithApy, rsharePrice, nat
 
   return (
     <Background>
-      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"}><span><AttentionIcon /></span>The pools below will end on the dates written on the card.</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"}><span><AttentionIcon /></span>Genesis pools are over. Please, withdraw your funds.</Text>
       <Cards>
         {FarmCards}
       </Cards>
