@@ -95,7 +95,6 @@ const Farms = () => {
           <BlackBack />
         </ImageContainer>)}
         <Text color='#003E78' fontSize='32px' bold style={{ marginTop: isMobile && '8vh' }}>FARM</Text>
-        <NewsCard />
         {
           devAddress.includes(account) &&
           <>

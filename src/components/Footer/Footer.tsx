@@ -18,12 +18,19 @@ const FooterText = styled.div`
   left: 20%;
 `
 
+const FooterImage = styled.img`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+`
+
 const Footer = ({ ...props }) => {
   return (
     <FooterDiv {...props} >
       <FooterText>
         Copyright © Ravelin Finance 2022
       </FooterText>
+      <FooterImage src="images/logos/milkomedaBanner.webp" alt="Milkomeda Banner" />
     </FooterDiv>
   )
 }

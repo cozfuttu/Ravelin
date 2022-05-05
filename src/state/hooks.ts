@@ -134,8 +134,8 @@ export const usePriceRbondBusd = (): BigNumber => {
   // const pid = 1 // CAKE-BNB LP
   const ravPrice = usePriceRavBusd();
   const { bondPremiumRate } = useTreasury();
-  const modifier = new BigNumber(bondPremiumRate).isGreaterThan(1e14)
-    ? new BigNumber(bondPremiumRate).div(1e14)
+  const modifier = new BigNumber(bondPremiumRate).isGreaterThan(1e18)
+    ? new BigNumber(bondPremiumRate).div(1e18)
     : new BigNumber(1);
 
   return ravPrice ? ravPrice.times(modifier) : ZERO;

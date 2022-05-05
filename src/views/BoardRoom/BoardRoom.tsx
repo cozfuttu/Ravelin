@@ -108,7 +108,6 @@ const BoardRoom = () => {
           <BlackBack />
         </ImageContainer>}
         <Text color='#003E78' fontSize='32px' bold mt={isMobile && '8vh'} mb="1vh">BOARDROOM</Text>
-        <NewsCard />
         <InfoCards>
           <NextEpochCard nextEpochPoint={parseInt(masonry?.nextEpochPoint)} />
           <CurrentEpochCard epoch={masonry?.epoch} />
@@ -116,7 +115,7 @@ const BoardRoom = () => {
           <APRCard masonry={masonry} />
           <TotalStakedCard masonry={masonry} />
         </InfoCards>
-        <Text color='#000000' fontSize='16px' mt='5%' style={{ textAlign: 'center' }}><span><AttentionIcon /></span>Staked RSHAREs can only be withdrawn after 6 epochs.</Text>
+        <Text color='#000000' fontSize='16px' mt='5%' style={{ textAlign: 'center' }}><span><AttentionIcon /></span>Withdraw is locked for 6 epochs. Claim Reward is locked for 3 epochs. Each interaction with Boardroom resets the lock time.</Text>
         <TokenCards>
           <RavCard masonry={masonry} />
           <RshareCard masonry={masonry} account={account} ethereum={ethereum} />

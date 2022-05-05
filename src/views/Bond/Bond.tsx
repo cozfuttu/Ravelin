@@ -72,7 +72,7 @@ const Bond = () => {
       </WidePage>
       {!isMobile && <BondGraphic />}
       {!isMobile && <FooterContainer>
-        <Footer style={{ marginTop: '33px', height: '120px' }} />
+        <Footer style={{ marginTop: '0', height: '160px' }} />
       </FooterContainer>}
     </>
   )
