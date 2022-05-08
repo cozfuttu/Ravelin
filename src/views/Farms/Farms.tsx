@@ -72,6 +72,8 @@ const Farms = () => {
       totalValue = totalValue.times(nativePrice)
     } else if (farm.quoteTokenSymbol === QuoteToken.RAV) {
       totalValue = totalValue.times(ravPrice)
+    } else if (farm.quoteTokenSymbol === QuoteToken.RSHARE) {
+      totalValue = totalValue.times(rsharePrice)
     }
 
     if (totalValue.comparedTo(0) > 0) {

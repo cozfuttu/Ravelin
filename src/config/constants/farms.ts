@@ -2,6 +2,7 @@ import {
   getBusdAddress,
   getRavAddress,
   getRavNativeLPAddress,
+  getRavRshareLPAddress,
   getRshareAddress,
   getRshareNativeLPAddress,
   getWbnbAddress,
@@ -94,11 +95,31 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
   },
+  {
+    pid: 2,
+    risk: 3,
+    lpSymbol: "RAV-RSHARE LP",
+    lpAddresses: {
+      97: "",
+      137: getRshareNativeLPAddress(),
+      250: getRshareNativeLPAddress(),
+      2001: getRavRshareLPAddress(),
+    },
+    tokenSymbol: "RAV",
+    tokenAddresses: {
+      97: "",
+      137: getRshareAddress(),
+      250: getRshareAddress(),
+      2001: getRavAddress(),
+    },
+    quoteTokenSymbol: QuoteToken.RSHARE,
+    quoteTokenAdresses: contracts.rshare,
+  },
 
   /* GENESIS POOLS */
   {
     pid: 0,
-    risk: 3,
+    risk: 4,
     lpSymbol: "wADA",
     isTokenOnly: true,
     isGenesis: true,
@@ -121,7 +142,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 1,
-    risk: 4,
+    risk: 5,
     lpSymbol: "multiUSDC",
     isTokenOnly: true,
     isGenesis: true,
@@ -144,7 +165,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 2,
-    risk: 5,
+    risk: 6,
     lpSymbol: "multiOCC",
     isTokenOnly: true,
     isGenesis: true,
@@ -167,7 +188,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 3,
-    risk: 6,
+    risk: 7,
     lpSymbol: "ceUSDC",
     isTokenOnly: true,
     isGenesis: true,

@@ -5,6 +5,7 @@ import LPCard, { FarmWithStakedValue } from './LPCard'
 
 const Cards = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 16px;

@@ -30,6 +30,9 @@ export const getRavNativeLPAddress = () => {
 export const getRshareNativeLPAddress = () => {
   return addresses.rshareNativeLP[chainId];
 };
+export const getRavRshareLPAddress = () => {
+  return addresses.ravRshareLP[chainId];
+};
 export const getGenesisPoolsAddress = () => {
   return addresses.genesisPools[chainId];
 };

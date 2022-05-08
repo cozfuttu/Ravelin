@@ -126,6 +126,12 @@ const PRODUCTION_CONTRACTS = {
     137: "0xc6fcd85ddd4a301c9babffefc07dadddf7b413a4",
     97: "",
   },
+  ravRshareLP: {
+    2001: "0xb2a902354579424a0E9f2fcf1f3640DAA8ACD3b2",
+    250: "0x4733bc45eF91cF7CcEcaeeDb794727075fB209F2",
+    137: "0xc6fcd85ddd4a301c9babffefc07dadddf7b413a4",
+    97: "",
+  },
   genesisPools: {
     2001: "0xe33Eb50f21708348b759140E83637571b538f910",
     250: "0x9A896d3c54D7e45B558BD5fFf26bF1E8C031F93b",

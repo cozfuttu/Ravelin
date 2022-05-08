@@ -136,6 +136,7 @@ const fetchFarms = async () => {
       let isStarted;
       let poolEndTime;
       let poolStartTime;
+      let lastRewardTime;
 
       try {
         const abiCalls = !farmConfig.isRavPool
@@ -216,6 +217,7 @@ const fetchFarms = async () => {
         poolWeight = allocPoint.div(new BigNumber(totalAllocPoint));
         poolEndTime = new BigNumber(poolEndTimee[0]._hex);
         poolStartTime = new BigNumber(poolStartTimee[0]._hex);
+        lastRewardTime = new BigNumber(info.lastRewardTime._hex);
         isStarted = info.isStarted;
       } catch (error) {
         console.log("ABI poolInfo call error", error);
@@ -236,6 +238,7 @@ const fetchFarms = async () => {
         totalLpStaked: lpTokenBalanceMC / 1e18,
         poolEndTime: poolEndTime?.toNumber(),
         poolStartTime: poolStartTime?.toNumber(),
+        lastRewardTime: lastRewardTime?.toNumber(),
         isStarted,
       };
     })

@@ -14,6 +14,7 @@ export interface Farm extends FarmConfig {
   totalLpStaked?: number;
   poolEndTime?: number;
   poolStartTime?: number;
+  lastRewardTime?: number;
   isStarted?: boolean;
   userData?: {
     allowance: BigNumber;

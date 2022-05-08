@@ -69,14 +69,16 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
     : `${farm.tokenSymbol}-${farm.quoteTokenSymbol}`
 
   const totalValue: BigNumber = useMemo(() => {
-    if (!farm.lpTotalInQuoteToken || new BigNumber(farm.lpTotalInQuoteToken).isLessThan(1)) {
+    if (!farm.lpTotalInQuoteToken || new BigNumber(farm.lpTotalInQuoteToken).isLessThan(0.1)) {
       return null
     }
     if (farm.quoteTokenSymbol === QuoteToken.ADA) {
       return nativePrice.times(farm.lpTotalInQuoteToken)
+    } else if (farm.quoteTokenSymbol === QuoteToken.RSHARE) {
+      return rsharePrice.times(farm.lpTotalInQuoteToken)
     }
     return farm.lpTotalInQuoteToken
-  }, [nativePrice, farm.lpTotalInQuoteToken, farm.quoteTokenSymbol])
+  }, [nativePrice, rsharePrice, farm.lpTotalInQuoteToken, farm.quoteTokenSymbol])
 
   const totalValueFormated = totalValue
     ? `$${Number(totalValue).toLocaleString('en', { maximumFractionDigits: 0 })}`
@@ -109,7 +111,7 @@ const LPCard: React.FC<CardProps> = ({ farm, earnLabel, nativePrice, rsharePrice
   const timeDiffEnd = lTargetEnd.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
   const isFinished = timeDiffEnd.toMillis() < 0
 
-  const lTargetStart = DateTime.fromMillis(farm?.poolStartTime * 1000).setZone('utc')
+  const lTargetStart = DateTime.fromMillis((farm.risk === 3 ? farm?.lastRewardTime : farm?.poolStartTime) * 1000).setZone('utc')
   const timeDiffStart = lTargetStart.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
   const isStarted = timeDiffStart.toMillis() < 0
 

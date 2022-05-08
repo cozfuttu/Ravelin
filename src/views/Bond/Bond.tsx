@@ -43,11 +43,6 @@ const InfoContainer = styled.div`
     flex-direction: column;
   }
 `
-const FooterContainer = styled.div`
-  width: 100vw;
-  position: absolute;
-  bottom: 0;
-`
 
 const Bond = () => {
   const treasury = useTreasury()
@@ -71,9 +66,9 @@ const Bond = () => {
         </InfoContainer>
       </WidePage>
       {!isMobile && <BondGraphic />}
-      {!isMobile && <FooterContainer>
-        <Footer style={{ marginTop: '0', height: '160px' }} />
-      </FooterContainer>}
+      {!isMobile &&
+        <Footer style={{ height: '128px' }} />
+      }
     </>
   )
 }

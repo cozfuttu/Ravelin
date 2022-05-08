@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 const FooterDiv = styled.footer`
   width: 100vw;
-  height: 195px;
+  min-height: 195px;
   margin-top: 100px;
   background-color: #2D3A4A;
   position: relative;
-  z-index: -1;
+  z-index: -2;
 `
 
 const FooterText = styled.div`
@@ -30,8 +30,8 @@ const Footer = ({ ...props }) => {
       <FooterText>
         Copyright © Ravelin Finance 2022
       </FooterText>
-      <FooterImage src="images/logos/milkomedaBanner.webp" alt="Milkomeda Banner" />
-    </FooterDiv>
+      {/*       <FooterImage src="images/logos/milkomedaBanner.webp" alt="Milkomeda Banner" />
+ */}    </FooterDiv>
   )
 }
 
