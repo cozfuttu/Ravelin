@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { FarmConfig } from "config/constants/types";
+import { FarmConfig, InterstellarConfig } from "config/constants/types";
 
 export interface Farm extends FarmConfig {
   tokenAmount?: BigNumber;
@@ -81,6 +81,26 @@ export interface TreasuryUser {
   tokenBalanceRbond: string;
 }
 
+export interface Interstellar extends InterstellarConfig {
+  stakeTokenAddress?: string;
+  rewardTokenAddress?: string;
+  stakedTokenAmount?: BigNumber;
+  rewardTokenAmount?: BigNumber;
+  rewardTokenPerBlock?: number;
+  stakedTokenDecimals?: number;
+  rewardTokenDecimals?: number;
+  stakeTokenPrice?: BigNumber;
+  rewardTokenPrice?: BigNumber;
+  startBlock?: number;
+  endBlock?: number;
+  userData?: {
+    allowance: BigNumber;
+    tokenBalance: BigNumber;
+    stakedBalance: BigNumber;
+    earnings: BigNumber;
+  };
+}
+
 // Slices states
 
 export interface FarmsState {
@@ -95,10 +115,15 @@ export interface TreasuryState {
   data: Treasury;
 }
 
+export interface InterstellarsState {
+  data: Interstellar[];
+}
+
 // Global state
 
 export interface State {
   farms: FarmsState;
   masonry: MasonryState;
   treasury: TreasuryState;
+  interstellars: InterstellarsState;
 }

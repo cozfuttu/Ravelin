@@ -6,18 +6,12 @@ import Flex from '../../../uikit/components/Flex/Flex'
 import { CloseIcon } from '../../../uikit/components/Svg'
 import { Button, IconButton } from '../../../uikit/components/Button'
 import { InjectedProps } from '../../../uikit/widgets/Modal/types'
-import { useUnstakeGenesisPools, useUnstakeRavPools, useUnstakeRsharePools } from 'hooks/useUnstake'
+import { useUnstakeGenesisPools, useUnstakeInterstellar, useUnstakeRavPools, useUnstakeRsharePools } from 'hooks/useUnstake'
 import StatisticCards from './StatisticCards'
 import TokenCards from './TokenCards'
 import BigNumber from 'bignumber.js'
 import { useMatchBreakpoints } from 'uikit'
-
-interface Props extends InjectedProps {
-  onBack?: () => void
-  farm: FarmWithStakedValue
-  tvl: string
-  dailyApr: string
-}
+import { InterstellarWithStakedValue } from './InterstellarCard'
 
 const StyledModal = styled.div`
   position: relative;
@@ -60,10 +54,19 @@ const ModalTitle = styled(Flex)`
 
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
 
+interface Props extends InjectedProps {
+  onBack?: () => void
+  farm?: FarmWithStakedValue
+  interstellar?: InterstellarWithStakedValue
+  tvl: string
+  dailyApr: string
+}
+
 const FarmModal: React.FC<Props> = ({
   onDismiss,
   onBack,
   farm,
+  interstellar,
   tvl,
   dailyApr,
 }) => {
@@ -77,6 +80,7 @@ const FarmModal: React.FC<Props> = ({
   const { onUnstakeGenesisPools } = useUnstakeGenesisPools(farm.pid)
   const { onUnstakeRsharePools } = useUnstakeRsharePools(farm.pid)
   const { onUnstakeRavPools } = useUnstakeRavPools(farm.pid)
+  const { onUnstakeInterstellar } = useUnstakeInterstellar(interstellar.contractAddress)
 
   /*   const fullBalance = useMemo(() => {
       return getFullDisplayBalance(stakedBalance, farm.decimals)
@@ -87,6 +91,7 @@ const FarmModal: React.FC<Props> = ({
     try {
       if (farm.isGenesis) await onUnstakeGenesisPools(new BigNumber(stakedBalance).toFixed())
       else if (farm.isRavPool) await onUnstakeRavPools(new BigNumber(stakedBalance).toFixed())
+      else if (interstellar) await onUnstakeInterstellar(new BigNumber(stakedBalance).toFixed())
       else await onUnstakeRsharePools(new BigNumber(stakedBalance).toFixed())
     }
     catch (e) {

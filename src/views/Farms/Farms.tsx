@@ -3,7 +3,7 @@ import WidePage from 'components/layout/WidePage'
 import styled from 'styled-components'
 import { Button, Text, useMatchBreakpoints } from 'uikit'
 import LPCards from './components/LPCards'
-import { useFarms, usePriceBnbBusd, usePriceRavBusd, usePriceRshareBusd, useTreasury } from 'state/hooks'
+import { useFarms, useInterstellars, usePriceBnbBusd, usePriceRavBusd, usePriceRshareBusd, useTreasury } from 'state/hooks'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useDispatch } from 'react-redux'
 import { FarmWithStakedValue } from './components/LPCard'
@@ -18,6 +18,8 @@ import FarmsBRGraphic from 'views/components/FarmsBRGraphic'
 import NewsCard from './components/NewsCard'
 import { getDevAddresses } from 'utils/addressHelpers'
 import { useClaimRewardDev } from 'hooks/useHarvest'
+import InterstellarCards from './components/InterstellarCards'
+import { InterstellarWithStakedValue } from './components/InterstellarCard'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -33,6 +35,7 @@ const SECONDS_PER_YEAR = new BigNumber(31557600)
 
 const Farms = () => {
   const farmsLP = useFarms()
+  const interstellars = useInterstellars()
   const { unclaimedDevFund, unclaimedTreasuryFund } = useTreasury()
   const { isXl } = useMatchBreakpoints()
 
@@ -54,6 +57,8 @@ const Farms = () => {
   }, [account, dispatch])
 
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
+  const activeInterstellars = interstellars?.filter((interstellar) => interstellar.endBlock >= (Date.now() / 1000))
+  const inactiveInterstellars = interstellars?.filter((interstellar) => interstellar.endBlock < (Date.now() / 1000))
 
   const farmsToDisplayWithAPY: FarmWithStakedValue[] = activeFarms.map((farm) => {
 
@@ -83,6 +88,26 @@ const Farms = () => {
     return { ...farm, apy }
   })
 
+  const interstellarsToDisplayWithAPY: InterstellarWithStakedValue[] = activeInterstellars?.map((interstellar) => {
+    // if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
+    //   return farm
+    // }
+
+    const rewardPerSecond = new BigNumber(interstellar.rewardTokenPerBlock || 1)
+      .div(new BigNumber(10).pow(interstellar.rewardTokenDecimals))
+    const rewardPerYear = rewardPerSecond.times(SECONDS_PER_YEAR)
+
+    let apy = new BigNumber(interstellar.rewardTokenPrice).times(rewardPerYear)
+
+    const totalValue = new BigNumber(interstellar.stakedTokenAmount || 0).times(interstellar.stakeTokenPrice)
+
+    if (totalValue.comparedTo(0) > 0) {
+      apy = apy.div(totalValue)
+    }
+
+    return { ...interstellar, apy }
+  })
+
   const rshareFarms = farmsToDisplayWithAPY.filter((farm) => !(farm.isGenesis) && !(farm.isRavPool))
   const ravFarms = farmsToDisplayWithAPY.filter((farm) => farm.isGenesis || farm.isRavPool)
 
@@ -107,6 +132,8 @@ const Farms = () => {
         }
         <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RSHARE by staking LP</Text>
         <LPCards farmsToDisplayWithApy={rshareFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} />
+        <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn tokens by staking RAV</Text>
+        <InterstellarCards interstellarsToDisplayWithApy={interstellarsToDisplayWithAPY} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} />
         <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RAV by Staking in Genesis Pools</Text>
         <Genesis farmsToDisplayWithApy={ravFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} />
       </WidePage>

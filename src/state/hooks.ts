@@ -11,7 +11,7 @@ import {
   fetchMasonryPublicDataAsync,
   fetchTreasuryPublicDataAsync,
 } from "./actions";
-import { State, Farm, Masonry, Treasury } from "./types";
+import { State, Farm, Masonry, Treasury, Interstellar } from "./types";
 import { QuoteToken } from "../config/constants/types";
 import { useWallet } from "@binance-chain/bsc-use-wallet";
 import { fetchTreasuryUserDataAsync } from "./treasury";
@@ -90,6 +90,11 @@ export const useMasonry = (): Masonry => {
 export const useTreasury = (): Treasury => {
   const treasury = useSelector((state: State) => state.treasury.data);
   return treasury;
+};
+
+export const useInterstellars = (): Interstellar[] => {
+  const interstellars = useSelector((state: State) => state.interstellars.data);
+  return interstellars;
 };
 
 // Prices
