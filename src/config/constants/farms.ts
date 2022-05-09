@@ -59,6 +59,7 @@ const farms: FarmConfig[] = [
     pid: 0,
     risk: 1,
     lpSymbol: "RAV-mADA LP",
+    lpSource: "Occam",
     lpAddresses: {
       97: "",
       137: getRavNativeLPAddress(),
@@ -79,6 +80,7 @@ const farms: FarmConfig[] = [
     pid: 1,
     risk: 2,
     lpSymbol: "RSHARE-mADA LP",
+    lpSource: "Occam",
     lpAddresses: {
       97: "",
       137: getRshareNativeLPAddress(),
@@ -99,6 +101,7 @@ const farms: FarmConfig[] = [
     pid: 2,
     risk: 3,
     lpSymbol: "RAV-RSHARE LP",
+    lpSource: "Occam",
     lpAddresses: {
       97: "",
       137: getRshareNativeLPAddress(),
@@ -115,11 +118,53 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.RSHARE,
     quoteTokenAdresses: contracts.rshare,
   },
+  {
+    pid: 3,
+    risk: 4,
+    lpSymbol: "RAV",
+    isTokenOnly: true,
+    lpAddresses: {
+      97: "",
+      137: getRshareNativeLPAddress(),
+      250: getRshareNativeLPAddress(),
+      2001: getRavNativeLPAddress(),
+    },
+    tokenSymbol: "RAV",
+    tokenAddresses: {
+      97: "",
+      137: getRshareAddress(),
+      250: getRshareAddress(),
+      2001: getRavAddress(),
+    },
+    quoteTokenSymbol: QuoteToken.ADA,
+    quoteTokenAdresses: contracts.wbnb,
+  },
+  {
+    pid: 4,
+    risk: 5,
+    lpSymbol: "RAV-mADA LP",
+    lpSource: "MilkySwap",
+    lpAddresses: {
+      97: "",
+      137: getRshareNativeLPAddress(),
+      250: getRshareNativeLPAddress(),
+      2001: "0x756b0C7A0E77b4A36D360795D2f6b094864f5D50",
+    },
+    tokenSymbol: "RAV",
+    tokenAddresses: {
+      97: "",
+      137: getRshareAddress(),
+      250: getRshareAddress(),
+      2001: getRavAddress(),
+    },
+    quoteTokenSymbol: QuoteToken.ADA,
+    quoteTokenAdresses: contracts.wbnb,
+  },
 
   /* GENESIS POOLS */
   {
     pid: 0,
-    risk: 4,
+    risk: 6,
     lpSymbol: "wADA",
     isTokenOnly: true,
     isGenesis: true,
@@ -142,7 +187,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 1,
-    risk: 5,
+    risk: 7,
     lpSymbol: "multiUSDC",
     isTokenOnly: true,
     isGenesis: true,
@@ -165,7 +210,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 2,
-    risk: 6,
+    risk: 8,
     lpSymbol: "multiOCC",
     isTokenOnly: true,
     isGenesis: true,
@@ -188,7 +233,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 3,
-    risk: 7,
+    risk: 9,
     lpSymbol: "ceUSDC",
     isTokenOnly: true,
     isGenesis: true,
