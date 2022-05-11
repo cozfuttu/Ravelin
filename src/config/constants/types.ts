@@ -53,6 +53,7 @@ export interface FarmConfig {
   pid: number;
   lpSymbol: string;
   lpAddresses: Address;
+  lpSource?: string;
   tokenSymbol: string;
   tokenAddresses: Address;
   quoteTokenSymbol: QuoteToken;

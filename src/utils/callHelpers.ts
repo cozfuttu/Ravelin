@@ -52,7 +52,7 @@ export const unstake = async (masterChefContract, pid, amount, account) => {
 export const unstakeMasonry = async (masonryContract, amount, account) => {
   console.log("withdrawing: ", new BigNumber(amount).toFixed());
   return masonryContract.methods
-    .withdraw(new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed())
+    .withdraw(new BigNumber(amount).toFixed())
     .send({ from: account, gasPrice: "100000000000" })
     .on("transactionHash", (tx) => {
       return tx.transactionHash;
