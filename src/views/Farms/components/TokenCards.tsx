@@ -98,7 +98,7 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   const userBalance = new BigNumber(userData?.tokenBalance)
 
   const tokenStaked = userData?.stakedBalance ? new BigNumber(userData?.stakedBalance).div(new BigNumber(10).pow(decimals)) : new BigNumber(0)
-  const tokenStakedUsd = userData?.stakedBalance ? farm.isTokenOnly ? tokenStaked.times(new BigNumber(tokenPriceVsQuote)) : tokenStaked.times(new BigNumber(farm?.lpTotalInQuoteToken).times(farm.risk === 3 ? rsharePriceUsd : adaPrice).div(farm?.totalLpStaked)) : new BigNumber(0)
+  const tokenStakedUsd = userData?.stakedBalance ? farm.isTokenOnly ? tokenStaked.times(new BigNumber(tokenPriceVsQuote)).times(adaPrice) : tokenStaked.times(new BigNumber(farm?.lpTotalInQuoteToken).times(farm.risk === 3 ? rsharePriceUsd : adaPrice).div(farm?.totalLpStaked)) : new BigNumber(0)
 
   const tokenStakedFormatted = tokenStaked.toFormat(2)
   const tokenStakedUsdFormatted = tokenStakedUsd.toFormat(2)
