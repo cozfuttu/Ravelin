@@ -104,7 +104,7 @@ const FarmModal: React.FC<Props> = ({
     }
   }
 
-  const swapLink = farm.isTokenOnly ? `https://app.occam-x.fi/swap?outputCurrency=${farm.tokenAddresses[CHAIN_ID]}` : farm.lpSource === "MilkySwap" ? `https://www.milkyswap.exchange/add/milkADA/${farm.tokenAddresses[CHAIN_ID]}` : `https://app.occam-x.fi/liquidity/add${'/'/*0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9/${farm.lpAddresses[CHAIN_ID] */}`
+  const swapLink = farm?.isTokenOnly || interstellar ? `https://app.occam-x.fi/swap?outputCurrency=${farm ? farm.tokenAddresses[CHAIN_ID] : interstellar.stakeTokenAddress}` : farm?.lpSource === "MilkySwap" ? `https://www.milkyswap.exchange/add/milkADA/${farm.tokenAddresses[CHAIN_ID]}` : `https://app.occam-x.fi/liquidity/add${'/'/*0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9/${farm.lpAddresses[CHAIN_ID] */}`
 
   const swapText = farm ? farm?.isTokenOnly ? `BUY ${farm?.tokenSymbol}` : `ADD LIQUIDITY ${farm?.lpSymbol}` : `BUY ${interstellar?.stakeTokenSymbol}`
 
