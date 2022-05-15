@@ -32,9 +32,10 @@ export const stakeInterstellar = async (
   amount,
   account
 ) => {
+  console.log("depositing: ", new BigNumber(amount).toFixed()); // Doesn't convert to scientific notation
   return interstellarContract.methods
     .deposit(new BigNumber(amount).toFixed())
-    .send({ from: account, gasPrice: "32000000000" })
+    .send({ from: account, gasPrice: "100000000000" })
     .on("transactionHash", (tx) => {
       return tx.transactionHash;
     });
@@ -73,7 +74,7 @@ export const unstakeInterstellar = async (
 ) => {
   return interstellarContract.methods
     .withdraw(new BigNumber(amount).toFixed())
-    .send({ from: account, gasPrice: "32000000000" })
+    .send({ from: account, gasPrice: "100000000000" })
     .on("transactionHash", (tx) => {
       return tx.transactionHash;
     });
@@ -100,7 +101,7 @@ export const harvest = async (masterChefContract, pid, account) => {
 export const harvestInterstellar = async (interstellarContract, account) => {
   return interstellarContract.methods
     .deposit("0")
-    .send({ from: account, gasPrice: "32000000000" })
+    .send({ from: account, gasPrice: "100000000000" })
     .on("transactionHash", (tx) => {
       return tx.transactionHash;
     });

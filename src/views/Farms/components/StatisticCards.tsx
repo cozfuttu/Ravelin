@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Text } from 'uikit'
 import { FarmWithStakedValue } from './LPCard'
+import { InterstellarWithStakedValue } from './InterstellarCard'
 
 const Cards = styled.div`
   display: flex;
@@ -48,15 +49,16 @@ const TextAntonio = styled.div`
 `
 
 interface Props {
-  farm: FarmWithStakedValue
+  farm?: FarmWithStakedValue
+  interstellar?: InterstellarWithStakedValue
   tvl: string
   dailyApr: string
   isMobile: boolean
 }
 
-const StatisticCards: React.FC<Props> = ({ farm, tvl, dailyApr, isMobile }) => {
-  const isFarmFinished = farm.poolEndTime * 1000 <= Date.now()
-  const farmApy = !isFarmFinished ? farm.apy?.times(new BigNumber(100)).toNumber() : 0
+const StatisticCards: React.FC<Props> = ({ farm, interstellar, tvl, dailyApr, isMobile }) => {
+  const isFarmFinished = farm?.poolEndTime * 1000 <= Date.now()
+  const farmApy = farm ? !isFarmFinished ? farm?.apy?.times(new BigNumber(100)).toNumber() : 0 : interstellar?.apy?.times(new BigNumber(100)).toNumber()
 
   const farmApyString = new BigNumber(farmApy).toFormat(0)
 

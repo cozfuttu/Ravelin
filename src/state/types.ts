@@ -125,5 +125,5 @@ export interface State {
   farms: FarmsState;
   masonry: MasonryState;
   treasury: TreasuryState;
-  interstellars: InterstellarsState;
+  interstellar: InterstellarsState;
 }

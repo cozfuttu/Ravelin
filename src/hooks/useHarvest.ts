@@ -94,7 +94,7 @@ export const useHarvestMasonry = () => {
   return { onReward: handleHarvest };
 };
 
-export const useInterstellarHarvest = (contractAddress: string) => {
+export const useHarvestInterstellar = (contractAddress: string) => {
   const dispatch = useDispatch();
   const { account } = useWallet();
   const interstellarContract = useInterstellarContract(contractAddress);

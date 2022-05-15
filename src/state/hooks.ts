@@ -10,11 +10,13 @@ import {
   fetchMasonDataAsync,
   fetchMasonryPublicDataAsync,
   fetchTreasuryPublicDataAsync,
+  fetchTreasuryUserDataAsync,
+  fetchInterstellarsPublicDataAsync,
+  fetchInterstellarUserDataAsync,
 } from "./actions";
 import { State, Farm, Masonry, Treasury, Interstellar } from "./types";
 import { QuoteToken } from "../config/constants/types";
 import { useWallet } from "@binance-chain/bsc-use-wallet";
-import { fetchTreasuryUserDataAsync } from "./treasury";
 
 const ZERO = new BigNumber(0);
 
@@ -27,10 +29,12 @@ export const useFetchPublicData = () => {
     dispatch(fetchFarmsPublicDataAsync());
     dispatch(fetchMasonryPublicDataAsync());
     dispatch(fetchTreasuryPublicDataAsync());
+    dispatch(fetchInterstellarsPublicDataAsync());
     if (account) {
       dispatch(fetchFarmUserDataAsync(account));
       dispatch(fetchMasonDataAsync(account));
       dispatch(fetchTreasuryUserDataAsync(account));
+      dispatch(fetchInterstellarUserDataAsync(account));
     }
   }, [dispatch, slowRefresh, account]);
 };
@@ -93,7 +97,7 @@ export const useTreasury = (): Treasury => {
 };
 
 export const useInterstellars = (): Interstellar[] => {
-  const interstellars = useSelector((state: State) => state.interstellars.data);
+  const interstellars = useSelector((state: State) => state.interstellar.data);
   return interstellars;
 };
 
