@@ -5,15 +5,22 @@ import { useDispatch } from "react-redux";
 import {
   fetchFarmsPublicDataAsync,
   fetchFarmUserDataAsync,
+  fetchInterstellarUserDataAsync,
   fetchMasonDataAsync,
 } from "state/actions";
-import { claimReward, claimRewardDev, harvest } from "utils/callHelpers";
+import {
+  claimReward,
+  claimRewardDev,
+  harvest,
+  harvestInterstellar,
+} from "utils/callHelpers";
 import {
   useGenesisPoolsContract,
   useRsharePoolsContract,
   useMasonryContract,
   useRavPoolsContract,
   useRshare,
+  useInterstellarContract,
 } from "./useContract";
 
 export const useHarvestGenesisPools = (farmPid: number) => {
@@ -85,6 +92,20 @@ export const useHarvestMasonry = () => {
   }, [account, dispatch, masonryContract]);
 
   return { onReward: handleHarvest };
+};
+
+export const useHarvestInterstellar = (contractAddress: string) => {
+  const dispatch = useDispatch();
+  const { account } = useWallet();
+  const interstellarContract = useInterstellarContract(contractAddress);
+
+  const handleHarvest = useCallback(async () => {
+    const txHash = await harvestInterstellar(interstellarContract, account);
+    dispatch(fetchInterstellarUserDataAsync(account));
+    return txHash;
+  }, [account, dispatch, interstellarContract]);
+
+  return { onRewardInterstellar: handleHarvest };
 };
 
 export const useClaimRewardDev = () => {

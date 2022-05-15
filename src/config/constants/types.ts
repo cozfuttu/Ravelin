@@ -72,3 +72,14 @@ export interface FarmConfig {
     endBlock: number;
   };
 }
+
+export interface InterstellarConfig {
+  name: string;
+  contractAddress: string;
+  stakeLpAddress: string;
+  rewardLpAddress: string;
+  stakeTokenSymbol: string;
+  rewardTokenSymbol: string;
+  partnerWebsite?: string;
+  partnerName?: string;
+}

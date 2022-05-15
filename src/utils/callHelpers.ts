@@ -9,12 +9,6 @@ export const approve = async (lpContract, masterChefContract, account) => {
 
 export const stake = async (masterChefContract, pid, amount, account) => {
   console.log("depositing: ", new BigNumber(amount).toFixed()); // Doesn't convert to scientific notation
-  /*   console.log(          // Converts to scientific notation
-    "depositing number 3:",
-    new BigNumber(amount)
-      .toNumber()
-      .toLocaleString("en", { useGrouping: false })
-  ); */
   return masterChefContract.methods
     .deposit(pid, new BigNumber(amount).toFixed())
     .send({ from: account, gasPrice: "100000000000" })
@@ -27,6 +21,20 @@ export const stakeMasonry = async (masonryContract, amount, account) => {
   console.log("depositing: ", new BigNumber(amount).toFixed()); // Doesn't convert to scientific notation
   return masonryContract.methods
     .stake(new BigNumber(amount).toFixed())
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};
+
+export const stakeInterstellar = async (
+  interstellarContract,
+  amount,
+  account
+) => {
+  console.log("depositing: ", new BigNumber(amount).toFixed()); // Doesn't convert to scientific notation
+  return interstellarContract.methods
+    .deposit(new BigNumber(amount).toFixed())
     .send({ from: account, gasPrice: "100000000000" })
     .on("transactionHash", (tx) => {
       return tx.transactionHash;
@@ -59,6 +67,19 @@ export const unstakeMasonry = async (masonryContract, amount, account) => {
     });
 };
 
+export const unstakeInterstellar = async (
+  interstellarContract,
+  amount,
+  account
+) => {
+  return interstellarContract.methods
+    .withdraw(new BigNumber(amount).toFixed())
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};
+
 export const exitMasonry = async (masonryContract, account) => {
   return masonryContract.methods
     .exit()
@@ -71,6 +92,15 @@ export const exitMasonry = async (masonryContract, account) => {
 export const harvest = async (masterChefContract, pid, account) => {
   return masterChefContract.methods
     .deposit(pid, "0")
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};
+
+export const harvestInterstellar = async (interstellarContract, account) => {
+  return interstellarContract.methods
+    .deposit("0")
     .send({ from: account, gasPrice: "100000000000" })
     .on("transactionHash", (tx) => {
       return tx.transactionHash;

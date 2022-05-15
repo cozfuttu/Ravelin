@@ -6,18 +6,13 @@ import Flex from '../../../uikit/components/Flex/Flex'
 import { CloseIcon } from '../../../uikit/components/Svg'
 import { Button, IconButton } from '../../../uikit/components/Button'
 import { InjectedProps } from '../../../uikit/widgets/Modal/types'
-import { useUnstakeGenesisPools, useUnstakeRavPools, useUnstakeRsharePools } from 'hooks/useUnstake'
+import { useUnstakeGenesisPools, useUnstakeInterstellar, useUnstakeRavPools, useUnstakeRsharePools } from 'hooks/useUnstake'
 import StatisticCards from './StatisticCards'
 import TokenCards from './TokenCards'
 import BigNumber from 'bignumber.js'
 import { useMatchBreakpoints } from 'uikit'
-
-interface Props extends InjectedProps {
-  onBack?: () => void
-  farm: FarmWithStakedValue
-  tvl: string
-  dailyApr: string
-}
+import { InterstellarWithStakedValue } from './InterstellarCard'
+import TokenCardsInterstellar from './TokenCardsInterstellar'
 
 const StyledModal = styled.div`
   position: relative;
@@ -60,10 +55,19 @@ const ModalTitle = styled(Flex)`
 
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
 
+interface Props extends InjectedProps {
+  onBack?: () => void
+  farm?: FarmWithStakedValue
+  interstellar?: InterstellarWithStakedValue
+  tvl: string
+  dailyApr: string
+}
+
 const FarmModal: React.FC<Props> = ({
   onDismiss,
   onBack,
   farm,
+  interstellar,
   tvl,
   dailyApr,
 }) => {
@@ -71,12 +75,13 @@ const FarmModal: React.FC<Props> = ({
   const isMobile = isXl === false
 
   const [pending, setPending] = useState(false)
-  console.log('farm: ', farm)
-  const stakedBalance = useMemo(() => new BigNumber(farm?.userData?.stakedBalance), [farm?.userData?.stakedBalance])
+  // console.log('farm: ', farm)
+  const stakedBalance = useMemo(() => new BigNumber(farm ? farm?.userData?.stakedBalance : interstellar?.userData?.stakedBalance), [farm?.userData?.stakedBalance, interstellar?.userData?.stakedBalance])
 
-  const { onUnstakeGenesisPools } = useUnstakeGenesisPools(farm.pid)
-  const { onUnstakeRsharePools } = useUnstakeRsharePools(farm.pid)
-  const { onUnstakeRavPools } = useUnstakeRavPools(farm.pid)
+  const { onUnstakeGenesisPools } = useUnstakeGenesisPools(farm?.pid)
+  const { onUnstakeRsharePools } = useUnstakeRsharePools(farm?.pid)
+  const { onUnstakeRavPools } = useUnstakeRavPools(farm?.pid)
+  const { onUnstakeInterstellar } = useUnstakeInterstellar(interstellar?.contractAddress)
 
   /*   const fullBalance = useMemo(() => {
       return getFullDisplayBalance(stakedBalance, farm.decimals)
@@ -85,8 +90,9 @@ const FarmModal: React.FC<Props> = ({
   const handleExit = async () => {
     setPending(true)
     try {
-      if (farm.isGenesis) await onUnstakeGenesisPools(new BigNumber(stakedBalance).toFixed())
-      else if (farm.isRavPool) await onUnstakeRavPools(new BigNumber(stakedBalance).toFixed())
+      if (farm?.isGenesis) await onUnstakeGenesisPools(new BigNumber(stakedBalance).toFixed())
+      else if (farm?.isRavPool) await onUnstakeRavPools(new BigNumber(stakedBalance).toFixed())
+      else if (interstellar) await onUnstakeInterstellar(new BigNumber(stakedBalance).toFixed())
       else await onUnstakeRsharePools(new BigNumber(stakedBalance).toFixed())
     }
     catch (e) {
@@ -100,17 +106,17 @@ const FarmModal: React.FC<Props> = ({
 
   const swapLink = farm.isTokenOnly ? `https://app.occam-x.fi/swap?outputCurrency=${farm.tokenAddresses[CHAIN_ID]}` : farm.lpSource === "MilkySwap" ? `https://www.milkyswap.exchange/add/milkADA/${farm.tokenAddresses[CHAIN_ID]}` : `https://app.occam-x.fi/liquidity/add${'/'/*0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9/${farm.lpAddresses[CHAIN_ID] */}`
 
-  const swapText = farm.isTokenOnly ? `BUY ${farm.tokenSymbol}` : `ADD LIQUIDITY ${farm.lpSymbol}`
+  const swapText = farm ? farm?.isTokenOnly ? `BUY ${farm?.tokenSymbol}` : `ADD LIQUIDITY ${farm?.lpSymbol}` : `BUY ${interstellar?.stakeTokenSymbol}`
 
   return (
     <StyledModal>
       <ModalHeader>
         <ModalTitle>
-          <Heading style={{ fontSize: isMobile ? "14px" : '16px', marginTop: '0' }}>Deposit {farm.lpSymbol} and earn {farm.isGenesis || farm.isRavPool ? "RAV" : "RSHARE"}</Heading>
+          <Heading style={{ fontSize: isMobile ? "14px" : '16px', marginTop: '0' }}>Deposit {farm?.lpSymbol} and earn {farm?.isGenesis || farm?.isRavPool ? "RAV" : interstellar ? interstellar.rewardTokenSymbol : "RSHARE"}</Heading>
         </ModalTitle>
       </ModalHeader>
-      <StatisticCards farm={farm} tvl={tvl} dailyApr={dailyApr} isMobile={isMobile} />
-      <TokenCards farm={farm} onDismiss={onDismiss} isMobile={isMobile} />
+      <StatisticCards farm={farm} interstellar={interstellar} tvl={tvl} dailyApr={dailyApr} isMobile={isMobile} />
+      {farm ? <TokenCards farm={farm} onDismiss={onDismiss} isMobile={isMobile} /> : <TokenCardsInterstellar interstellar={interstellar} onDismiss={onDismiss} isMobile={isMobile} />}
       {
         <a href={swapLink} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: isMobile ? '32px' : '16px', textAlign: 'center' }}>
           <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: isMobile ? '80%' : '100%' }}>{swapText}</Button>

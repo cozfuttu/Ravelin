@@ -2,18 +2,19 @@ import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { provider } from 'web3-core'
 import { AddIcon, Button, IconButton, MinusIcon, Text, useModal } from 'uikit'
-import { useUnstakeGenesisPools, useUnstakeRavPools, useUnstakeRsharePools } from 'hooks/useUnstake'
-import { useStakeGenesisPools, useStakeRavPools, useStakeRsharePools } from 'hooks/useStake'
+import { useUnstakeGenesisPools, useUnstakeInterstellar, useUnstakeRavPools, useUnstakeRsharePools } from 'hooks/useUnstake'
+import { useStakeGenesisPools, useStakeInterstellar, useStakeRavPools, useStakeRsharePools } from 'hooks/useStake'
 import { FarmWithStakedValue } from './LPCard'
 import BigNumber from 'bignumber.js'
 import { usePriceBnbBusd, usePriceRavBusd, usePriceRshareBusd } from 'state/hooks'
-import { useHarvestGenesisPools, useHarvestRavPools, useHarvestRsharePools } from 'hooks/useHarvest'
+import { useHarvestGenesisPools, useHarvestInterstellar, useHarvestRavPools, useHarvestRsharePools } from 'hooks/useHarvest'
 import UnlockButton from 'components/UnlockButton'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import DepositModal from 'views/components/DepositModal'
 import WithdrawModal from 'views/components/WithdrawModal'
 import { getContract } from 'utils/erc20'
-import { useApproveGenesisPools, useApproveRavPools, useApproveRsharePools } from 'hooks/useApprove'
+import { useApproveGenesisPools, useApproveInterstellar, useApproveRavPools, useApproveRsharePools } from 'hooks/useApprove'
+import { InterstellarWithStakedValue } from './InterstellarCard'
 
 const Cards = styled.div`
   display: flex;
@@ -59,19 +60,16 @@ const IconButtonWrapper = styled.div`
 `
 
 interface Props {
-  farm: FarmWithStakedValue
+  interstellar: InterstellarWithStakedValue
   onDismiss?: () => void
   isMobile: boolean
 }
 
-const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
+const TokenCardsInterstellar: React.FC<Props> = ({ interstellar, onDismiss, isMobile }) => {
   const [pending, setPending] = useState(false)
   const [requestedApproval, setRequestedApproval] = useState(false)
 
-  const { pid, lpAddresses, tokenAddresses, isTokenOnly, depositFeeBP, decimals, userData, tokenSymbol, quoteTokenSymbol, isGenesis, isRavPool, lpSymbol, tokenPriceVsQuote } = farm
-
-  const lpAddress = lpAddresses[process.env.REACT_APP_CHAIN_ID]
-  const tokenAddress = tokenAddresses[process.env.REACT_APP_CHAIN_ID]
+  const { userData, contractAddress, stakeTokenSymbol, rewardTokenSymbol, stakeTokenPrice, rewardTokenPrice, stakedTokenDecimals, rewardTokenDecimals, stakeTokenAddress, rewardTokenAddress } = interstellar
 
   const ravPriceUsd = usePriceRavBusd()
   const rsharePriceUsd = usePriceRshareBusd()
@@ -79,26 +77,17 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
 
   const { account, ethereum }: { account: string, ethereum: provider } = useWallet()
 
-  const { onStakeRsharePools } = useStakeRsharePools(pid)
-  const { onStakeGenesisPools } = useStakeGenesisPools(pid)
-  const { onStakeRavPools } = useStakeRavPools(pid)
-
-  const { onUnstakeRsharePools } = useUnstakeRsharePools(pid)
-  const { onUnstakeGenesisPools } = useUnstakeGenesisPools(pid)
-  const { onUnstakeRavPools } = useUnstakeRavPools(pid)
-
-  const { onRewardRsharePools } = useHarvestRsharePools(pid)
-  const { onRewardGenesisPools } = useHarvestGenesisPools(pid)
-  const { onRewardRavPools } = useHarvestRavPools(pid)
+  const { onStakeInterstellar } = useStakeInterstellar(contractAddress)
+  const { onUnstakeInterstellar } = useUnstakeInterstellar(contractAddress)
+  const { onRewardInterstellar } = useHarvestInterstellar(contractAddress)
 
   const rewardEarned = userData?.earnings ? new BigNumber(userData?.earnings).div(1e18) : new BigNumber(0)
-  const modifier = (!isRavPool && !isGenesis) ? rsharePriceUsd : ravPriceUsd
-  const rewardEarnedUsd = userData?.earnings ? rewardEarned.times(modifier) : new BigNumber(0)
+  const rewardEarnedUsd = userData?.earnings ? rewardEarned.times(rewardTokenPrice) : new BigNumber(0)
 
   const userBalance = new BigNumber(userData?.tokenBalance)
 
-  const tokenStaked = userData?.stakedBalance ? new BigNumber(userData?.stakedBalance).div(new BigNumber(10).pow(decimals)) : new BigNumber(0)
-  const tokenStakedUsd = userData?.stakedBalance ? farm.isTokenOnly ? tokenStaked.times(new BigNumber(tokenPriceVsQuote)).times(adaPrice) : tokenStaked.times(new BigNumber(farm?.lpTotalInQuoteToken).times(farm.risk === 3 ? rsharePriceUsd : adaPrice).div(farm?.totalLpStaked)) : new BigNumber(0)
+  const tokenStaked = userData?.stakedBalance ? new BigNumber(userData?.stakedBalance).div(new BigNumber(10).pow(stakedTokenDecimals)) : new BigNumber(0)
+  const tokenStakedUsd = userData?.stakedBalance ? tokenStaked.times(stakeTokenPrice) : new BigNumber(0)
 
   const tokenStakedFormatted = tokenStaked.toFormat(2)
   const tokenStakedUsdFormatted = tokenStakedUsd.toFormat(2)
@@ -107,27 +96,20 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   const isStaked = new BigNumber(userData?.stakedBalance).isGreaterThan(0)
   const canHarvest = new BigNumber(userData?.earnings).isGreaterThan(0)
 
-  const farmName = isTokenOnly
-    ? `${tokenSymbol.toLowerCase()}`
-    : `${tokenSymbol.toLowerCase()}-${quoteTokenSymbol.toLowerCase()}`
+  const tokenContract = useMemo(() => {
+    return getContract(ethereum as provider, stakeTokenAddress)
+  }, [ethereum, stakeTokenAddress])
 
   const lpContract = useMemo(() => {
-    if (isTokenOnly) {
-      return getContract(ethereum as provider, tokenAddress)
-    }
-    return getContract(ethereum as provider, lpAddress)
-  }, [ethereum, isTokenOnly, lpAddress, tokenAddress])
+    return getContract(ethereum as provider, contractAddress)
+  }, [ethereum, contractAddress])
 
-  const { onApproveRsharePools } = useApproveRsharePools(lpContract)
-  const { onApproveGenesisPools } = useApproveGenesisPools(lpContract)
-  const { onApproveRavPools } = useApproveRavPools(lpContract)
+  const { onApprove } = useApproveInterstellar(tokenContract, lpContract)
 
   const handleApprove = useCallback(async () => {
     try {
       setRequestedApproval(true)
-      if (isGenesis) await onApproveGenesisPools()
-      else if (isRavPool) await onApproveRavPools()
-      else await onApproveRsharePools()
+      await onApprove()
     } catch (e) {
       console.error(e)
     }
@@ -135,14 +117,12 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
       setRequestedApproval(false)
       onDismiss()
     }
-  }, [onApproveRsharePools, onApproveGenesisPools, onApproveRavPools, onDismiss, isGenesis, isRavPool])
+  }, [onDismiss, onApprove])
 
   const handleClaimReward = async () => {
     setPending(true)
     try {
-      if (isGenesis) await onRewardGenesisPools()
-      else if (isRavPool) await onRewardRavPools()
-      else await onRewardRsharePools()
+      onRewardInterstellar()
     }
     finally {
       setPending(false)
@@ -152,14 +132,14 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   const [onPresentDeposit] = useModal(
     <DepositModal
       max={userBalance}
-      decimals={decimals}
-      onConfirm={isGenesis ? onStakeGenesisPools : isRavPool ? onStakeRavPools : onStakeRsharePools}
-      tokenName={lpSymbol.toUpperCase()}
-      depositFeeBP={depositFeeBP}
+      decimals={stakedTokenDecimals}
+      onConfirm={onStakeInterstellar}
+      tokenName={stakeTokenSymbol}
+      depositFeeBP={0}
     />,
   )
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={tokenStaked.times(new BigNumber(10).pow(decimals))} decimals={decimals} onConfirm={isGenesis ? onUnstakeGenesisPools : isRavPool ? onUnstakeRavPools : onUnstakeRsharePools} tokenName={lpSymbol.toUpperCase()} />,
+    <WithdrawModal max={tokenStaked.times(new BigNumber(10).pow(stakedTokenDecimals))} decimals={stakedTokenDecimals} onConfirm={onUnstakeInterstellar} tokenName={stakeTokenSymbol} />,
   )
 
   const renderStakingButtons = () => {
@@ -188,21 +168,21 @@ const TokenCards: React.FC<Props> = ({ farm, onDismiss, isMobile }) => {
   return (
     <Cards>
       <TokenCard>
-        <Image src={`images/icons/${(isGenesis || isRavPool) ? 'rav' : 'rshare'}.png`} />
-        <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(farm.isGenesis || farm.isRavPool ? 2 : 3)}</Text>
+        <Image src={`images/icons/${rewardTokenSymbol.toLowerCase()}.png`} />
+        <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(3)}</Text>
         <Text color='#9D9D9D' fontSize='14px'>≈ ${rewardEarnedUsd.toFormat(2)}</Text>
-        <Text color='#9D9D9D' fontSize='14px'>{(isGenesis || isRavPool) ? 'RAV' : 'RSHARE'} Earned</Text>
+        <Text color='#9D9D9D' fontSize='14px'>${rewardTokenSymbol} Earned</Text>
         <Button size='sm' disabled={!canHarvest || pending} onClick={handleClaimReward} mt="16px">{isMobile ? 'CLAIM' : 'CLAIM REWARD'}</Button>
       </TokenCard>
       <TokenCard>
-        <Image src={`images/icons/${farmName}.png`} style={{ maxWidth: !isTokenOnly && '128px' }} />
+        <Image src={`images/icons/${stakeTokenSymbol.toLowerCase()}.png`} />
         <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{tokenStakedFormatted}</Text>
         <Text color='#9D9D9D' fontSize='14px'>≈ ${tokenStakedUsdFormatted}</Text>
-        <Text color='#9D9D9D' fontSize='14px'>{farmName.toUpperCase()} Staked</Text>
+        <Text color='#9D9D9D' fontSize='14px'>{stakeTokenSymbol} Staked</Text>
         {!account ? <UnlockButton mt="16px" size='sm' /> : renderApprovalOrStakeButton()}
       </TokenCard>
     </Cards>
   )
 }
 
-export default TokenCards
+export default TokenCardsInterstellar
