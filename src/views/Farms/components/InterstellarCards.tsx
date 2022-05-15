@@ -30,7 +30,7 @@ const InterstellarCards: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy
   const ICards = interstellarsToDisplayWithApy.map((interstellar) =>
     <InterstellarCard
       key={interstellar.contractAddress}
-      earnLabel={'rav'}
+      earnLabel={interstellar.rewardTokenSymbol}
       interstellar={interstellar}
       nativePrice={nativePrice}
       rsharePrice={rsharePrice}

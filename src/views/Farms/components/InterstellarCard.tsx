@@ -111,7 +111,7 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, earnLabel, native
     <Card>
       <Col>
         <TextAntonio style={{ fontSize: isMobile && '26px' }}>{lpLabel}</TextAntonio>
-        <Text color='#4E4E4E' fontSize='14px' mb="4px">Deposit RAV Earn {earnLabel.toUpperCase()}</Text>
+        <Text color='#4E4E4E' fontSize='14px' mb="4px">Deposit RAV Earn {earnLabel}</Text>
         <Text color='#9D9D9D' fontSize='14px'>APR: {interstellarApyString}%</Text>
         <Text color='#9D9D9D' fontSize='14px'>Daily APR: {dailyApr}%</Text>
         <Text color='#9D9D9D' fontSize='14px'>TVL: {totalValueFormated}</Text>
