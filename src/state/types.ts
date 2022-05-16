@@ -1,5 +1,9 @@
 import BigNumber from "bignumber.js";
-import { FarmConfig, InterstellarConfig } from "config/constants/types";
+import {
+  FarmConfig,
+  HunterMissionConfig,
+  InterstellarConfig,
+} from "config/constants/types";
 
 export interface Farm extends FarmConfig {
   tokenAmount?: BigNumber;
@@ -101,6 +105,61 @@ export interface Interstellar extends InterstellarConfig {
   };
 }
 
+export interface HunterMissionData extends HunterMissionConfig {
+  multiple: number; // idk
+  requiredRarity: number; // required least hunter rarity in order to start the mission
+  xp: number; // rewarded xp of the mission
+  doNotLoseXp: number; // saved xp percentage after mission failure
+  paidToken: string; // the token address of mission's cost
+  earnedToken: string; // the token address of mission's reward
+  costAddress: string; // the wallet address which paid tokens transferred to
+  price: number; // cost of the mission
+  reward: number; // reward of the mission
+  totalTry: number; // how many times the mission was tried
+  totalSuccess: number; // how many times the mission was succeded
+  totalFail: number; // how many times the mission was failed
+  totalReward: number; // total distributed reward of the mission
+  paidTokenPriceUsdc: string; // value of the token in $ which is paid to start the mission.
+  earnedTokenPriceUsdc: string; // value of the token in $ which is rewarded after the mission.
+  paidTokenDecimals: number; // decimals of the token which is rewarded after the mission.
+  earnedTokenDecimals: number; // decimals of the token which is paid to start the mission.
+  balanceOfTokenInContract: number; // rewarded token amount in the contract
+  nextPlayTime: number; // the ETA that the user can start another mission
+  cooldown: number; // the time difference from now that the user can start another mission
+  profitPercentage: number; // how profitable the mission is
+  canBeThey: boolean; // true if the mission can be played.
+}
+
+export interface HunterUserData {
+  allowanceHunter: BigNumber;
+  allowanceMission: BigNumber;
+  tokenId: number;
+  maxNftLevel: number;
+  totalTry: number;
+  totalSuccess: number;
+  totalReward: number;
+  userHasHunter: boolean;
+  hunterName: string;
+  hunterLevel: number;
+  hunterRarity: number;
+  hunterXp: number;
+  hunterNeedXpToLevelUp: number;
+  hunterTotalXp: number;
+  hunterOwner: string;
+  hunterCreator: string;
+  hunterTotalTry: number;
+  hunterTotalSuccess: number;
+  hunterNextTryBlock: number;
+  hunterNextTryTime: number;
+  hunterInMission: boolean;
+}
+
+export interface Hunter {
+  userData: HunterUserData;
+  missions: HunterMissionData[];
+  hunterPrice: number;
+}
+
 // Slices states
 
 export interface FarmsState {
@@ -119,6 +178,10 @@ export interface InterstellarsState {
   data: Interstellar[];
 }
 
+export interface HunterState {
+  data: Hunter;
+}
+
 // Global state
 
 export interface State {
@@ -126,4 +189,5 @@ export interface State {
   masonry: MasonryState;
   treasury: TreasuryState;
   interstellar: InterstellarsState;
+  hunter: HunterState;
 }

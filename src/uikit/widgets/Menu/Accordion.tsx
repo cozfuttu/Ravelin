@@ -28,7 +28,7 @@ const AccordionContent = styled.div<{ isOpen: boolean; isPushed: boolean; maxHei
   padding: ${({ isOpen, maxHeight }) => (isOpen ? `8px` : 0)};
   margin-top: 28px;
   max-height: ${({ isOpen, maxHeight }) => (isOpen ? `${maxHeight}px` : 0)};
-  transition: max-height 0.3s ease-out;
+  transition: all 0.3s ease-out;
   overflow: hidden;
   background: linear-gradient(0deg,rgba(0,62,120,1) 0%,rgba(0,122,190,1) 100%);
   box-shadow: 5px 4px 4px -8px #1a4d5d55, 1px 1px 1px #1a4d5d33;

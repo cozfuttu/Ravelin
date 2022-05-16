@@ -171,3 +171,26 @@ export const allocateSeigniorage = async (treasuryContract, account) => {
       return tx.transactionHash;
     });
 };
+
+// HUNTER GAME HELPERS
+
+export const buyHunter = async (polygalacticContract, account, name) => {
+  return polygalacticContract.methods
+    .buyHunter(name)
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};
+
+export const startMission = async (
+  gameContract,
+  hunterId,
+  missionId,
+  account
+) => {
+  const aaa = await gameContract.methods
+    .sendHunterForMission(hunterId, missionId)
+    .send({ from: account, gasPrice: "32000000000" });
+  return aaa;
+};

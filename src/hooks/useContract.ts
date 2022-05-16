@@ -11,6 +11,7 @@ import {
   getRavPoolsAddress,
   getRsharePoolsAddress,
   getTreasuryAddress,
+  getHunterAddress,
 } from "utils/addressHelpers";
 import erc20 from "config/abi/erc20.json";
 import ravABI from "config/abi/rav.json";
@@ -22,6 +23,7 @@ import ravPoolsABI from "config/abi/ravPools.json";
 import masonryABI from "config/abi/masonry.json";
 import treasuryABI from "config/abi/treasury.json";
 import interstellarABI from "config/abi/interstellar.json";
+import hunterABI from "config/abi/polygalactic.json";
 
 export const useContract = (
   abi: AbiItem,
@@ -84,6 +86,10 @@ export const useTreasuryContract = () => {
 export const useInterstellarContract = (contractAddress: string) => {
   const abi = interstellarABI as unknown as AbiItem;
   return useContract(abi, contractAddress);
+};
+export const useHunterContract = () => {
+  const abi = hunterABI as unknown as AbiItem;
+  return useContract(abi, getHunterAddress());
 };
 
 export default useContract;
