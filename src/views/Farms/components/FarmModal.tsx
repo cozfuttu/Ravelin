@@ -76,7 +76,7 @@ const FarmModal: React.FC<Props> = ({
 
   const [pending, setPending] = useState(false)
   // console.log('farm: ', farm)
-  const stakedBalance = useMemo(() => new BigNumber(farm ? farm?.userData?.stakedBalance : interstellar?.userData?.stakedBalance), [farm?.userData?.stakedBalance, interstellar?.userData?.stakedBalance])
+  const stakedBalance = useMemo(() => new BigNumber(farm ? farm?.userData?.stakedBalance : interstellar?.userData?.stakedBalance), [interstellar?.userData?.stakedBalance, farm])
 
   const { onUnstakeGenesisPools } = useUnstakeGenesisPools(farm?.pid)
   const { onUnstakeRsharePools } = useUnstakeRsharePools(farm?.pid)

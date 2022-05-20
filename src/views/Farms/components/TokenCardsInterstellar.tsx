@@ -2,18 +2,16 @@ import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { provider } from 'web3-core'
 import { AddIcon, Button, IconButton, MinusIcon, Text, useModal } from 'uikit'
-import { useUnstakeGenesisPools, useUnstakeInterstellar, useUnstakeRavPools, useUnstakeRsharePools } from 'hooks/useUnstake'
-import { useStakeGenesisPools, useStakeInterstellar, useStakeRavPools, useStakeRsharePools } from 'hooks/useStake'
-import { FarmWithStakedValue } from './LPCard'
+import { useUnstakeInterstellar } from 'hooks/useUnstake'
+import { useStakeInterstellar } from 'hooks/useStake'
 import BigNumber from 'bignumber.js'
-import { usePriceBnbBusd, usePriceRavBusd, usePriceRshareBusd } from 'state/hooks'
-import { useHarvestGenesisPools, useHarvestInterstellar, useHarvestRavPools, useHarvestRsharePools } from 'hooks/useHarvest'
+import { useHarvestInterstellar } from 'hooks/useHarvest'
 import UnlockButton from 'components/UnlockButton'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import DepositModal from 'views/components/DepositModal'
 import WithdrawModal from 'views/components/WithdrawModal'
 import { getContract } from 'utils/erc20'
-import { useApproveGenesisPools, useApproveInterstellar, useApproveRavPools, useApproveRsharePools } from 'hooks/useApprove'
+import { useApproveInterstellar } from 'hooks/useApprove'
 import { InterstellarWithStakedValue } from './InterstellarCard'
 
 const Cards = styled.div`
@@ -69,11 +67,7 @@ const TokenCardsInterstellar: React.FC<Props> = ({ interstellar, onDismiss, isMo
   const [pending, setPending] = useState(false)
   const [requestedApproval, setRequestedApproval] = useState(false)
 
-  const { userData, contractAddress, stakeTokenSymbol, rewardTokenSymbol, stakeTokenPrice, rewardTokenPrice, stakedTokenDecimals, rewardTokenDecimals, stakeTokenAddress, rewardTokenAddress } = interstellar
-
-  const ravPriceUsd = usePriceRavBusd()
-  const rsharePriceUsd = usePriceRshareBusd()
-  const adaPrice = usePriceBnbBusd()
+  const { userData, contractAddress, stakeTokenSymbol, rewardTokenSymbol, stakeTokenPrice, rewardTokenPrice, stakedTokenDecimals, stakeTokenAddress, } = interstellar
 
   const { account, ethereum }: { account: string, ethereum: provider } = useWallet()
 

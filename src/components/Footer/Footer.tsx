@@ -17,12 +17,12 @@ const FooterText = styled.div`
   top: 20%;
   left: 20%;
 `
-
+/* 
 const FooterImage = styled.img`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-`
+` */
 
 const Footer = ({ ...props }) => {
   return (

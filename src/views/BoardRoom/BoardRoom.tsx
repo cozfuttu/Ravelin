@@ -21,7 +21,6 @@ import ClaimCard from './components/ClaimCard'
 import BigNumber from 'bignumber.js'
 import { Footer } from 'components/Footer'
 import FarmsBRGraphic from 'views/components/FarmsBRGraphic'
-import NewsCard from 'views/Farms/components/NewsCard'
 
 const ImageContainer = styled.div`
   position: fixed;

@@ -15,7 +15,6 @@ import BlueBack from 'views/Home/components/BlueBack'
 import BlackBack from 'views/Home/components/BlackBack'
 import { Footer } from 'components/Footer'
 import FarmsBRGraphic from 'views/components/FarmsBRGraphic'
-import NewsCard from './components/NewsCard'
 import { getDevAddresses } from 'utils/addressHelpers'
 import { useClaimRewardDev } from 'hooks/useHarvest'
 import InterstellarCards from './components/InterstellarCards'
@@ -58,7 +57,7 @@ const Farms = () => {
 
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
   const activeInterstellars = interstellars?.filter((interstellar) => interstellar.endBlock >= (Date.now() / 1000))
-  const inactiveInterstellars = interstellars?.filter((interstellar) => interstellar.endBlock < (Date.now() / 1000))
+  //  const inactiveInterstellars = interstellars?.filter((interstellar) => interstellar.endBlock < (Date.now() / 1000))
 
   const farmsToDisplayWithAPY: FarmWithStakedValue[] = activeFarms.map((farm) => {
 

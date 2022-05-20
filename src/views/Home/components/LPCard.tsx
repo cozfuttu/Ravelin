@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js'
 import React from 'react'
 import styled from 'styled-components'
 import { Button, Text } from 'uikit'
-import { getRavAddress, getRshareAddress } from 'utils/addressHelpers'
 
 const Card = styled.div`
   display: flex;

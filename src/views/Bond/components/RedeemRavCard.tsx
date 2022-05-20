@@ -32,14 +32,14 @@ const RedeemRavCard: React.FC<Props> = ({ treasury }) => {
 
   const rbondAddress = getRbondAddress()
 
-  const { userData, twap, tombPrice, reserve } = treasury
+  const { userData, tombPrice, reserve, previousEpochTombPrice } = treasury
 
   const { onRedeem } = useRedeemBonds(tombPrice)
 
-  const twapPrice = new BigNumber(twap).div(1e18)
+  const previousEpochPrice = new BigNumber(previousEpochTombPrice).div(1e18)
 
   const isApproved = new BigNumber(userData?.allowanceRbond).isGreaterThan(0)
-  const isEnabled = twapPrice.isGreaterThan(BOND_REDEEM_PRICE) && new BigNumber(reserve).isGreaterThan(0)
+  const isEnabled = previousEpochPrice.isGreaterThan(BOND_REDEEM_PRICE) && new BigNumber(reserve).div(1e18).isGreaterThan(0)
 
   const rbondInWallet = userData?.tokenBalanceRbond ? new BigNumber(userData?.tokenBalanceRbond) : new BigNumber(0)
 
@@ -61,9 +61,11 @@ const RedeemRavCard: React.FC<Props> = ({ treasury }) => {
     }
   }, [onApprove])
 
+  const max = rbondInWallet.isGreaterThan(reserve) ? new BigNumber(reserve) : rbondInWallet
+
   const [onPresentRedeem] = useModal(
     <DepositModal
-      max={rbondInWallet}
+      max={max}
       decimals={18}
       onConfirm={onRedeem}
       tokenName='RBOND'
@@ -73,7 +75,7 @@ const RedeemRavCard: React.FC<Props> = ({ treasury }) => {
   )
 
   const renderApprovalOrRedeemButton = () => {
-    return isApproved ? <Button disabled={!isEnabled} size="sm" onClick={onPresentRedeem} style={{ fontSize: !isEnabled && '12px' }}>{isEnabled ? 'REDEEM' : 'ENABLED WHEN RAV > 1.01 ADA'}</Button> : (
+    return isApproved ? <Button size="sm" disabled={!isEnabled} onClick={onPresentRedeem} style={{ fontSize: !isEnabled && '12px', width: (!isEnabled) && '220px' }}>{isEnabled ? 'REDEEM' : new BigNumber(reserve).div(1e18).isGreaterThan(0) ? 'ENABLED WHEN EPOCH ENDS > 1.01 RAV TWAP' : 'WAIT FOR NEXT EPOCH FOR RESERVE REFILL'}</Button> : (
       <Button mt="16px" size='sm' disabled={requestedApproval} onClick={handleApprove}>
         Approve Contract
       </Button>
@@ -85,6 +87,7 @@ const RedeemRavCard: React.FC<Props> = ({ treasury }) => {
       <Text color='#888888' fontSize='20px' bold>Redeem RAV</Text>
       <Image src="images/icons/redeemRav.png" />
       <Text color='#9D9D9D' fontSize='14px' style={{ textAlign: 'center' }}>{rbondInWallet.div(1e18).toFormat(2)} RBOND Available in wallet</Text>
+      <Text color='#9D9D9D' fontSize='14px' style={{ textAlign: 'center' }}>Redeemable Reserve: {new BigNumber(reserve).div(1e18).toFormat(2)} RAV</Text>
       {!account ? <UnlockButton mt="16px" size='sm' /> : renderApprovalOrRedeemButton()}
     </HexCardShadow>
   )
