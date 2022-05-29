@@ -51,7 +51,7 @@ export const socials = [
   {
     label: "Twitter",
     icon: "TwitterIcon",
-    href: "https://twitter.com/RavelinFinance",
+    href: "https://twitter.com/ravelin_finance",
   },
   {
     label: "Discord",

@@ -36,6 +36,7 @@ const StyledModal = styled.div`
     background-color: #158BCE;
     height: 100%;
     border-radius: 0;
+    overflow-y: scroll;
   }
 `
 
@@ -45,6 +46,10 @@ const ModalHeader = styled.div`
   padding: 12px 24px;
   text-align: center;
   margin-top: 48px;
+  
+  @media (max-width: 1080px) {
+    margin-top: 32px;
+  }
 `
 
 const ModalTitle = styled(Flex)`

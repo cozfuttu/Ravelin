@@ -16,6 +16,7 @@ const Card = styled.div`
   margin: 0 6em 2em 6em;
   width: 12em; height: 20.784em;
   border-radius: 1.2em/.6em;
+  z-index: 99;
 
   :before, :after {
     position: absolute;

@@ -16,6 +16,7 @@ const Cards = styled.div`
   @media (max-width: 1080px) {
     flex-wrap: wrap;
     width: 80%;
+    margin-top: 0;
   }
 `
 
