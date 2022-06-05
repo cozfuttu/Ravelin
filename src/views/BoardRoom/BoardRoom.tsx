@@ -111,7 +111,7 @@ const BoardRoom = () => {
           <NextEpochCard nextEpochPoint={parseInt(masonry?.nextEpochPoint)} />
           <CurrentEpochCard epoch={masonry?.epoch} />
           <RavPriceCard RavTWAP={treasury?.twap} />
-          <APRCard masonry={masonry} />
+          <APRCard masonry={masonry} reserve={treasury.reserve} twap={treasury.twap} />
           <TotalStakedCard masonry={masonry} />
         </InfoCards>
         <Text color='#000000' fontSize='16px' mt='5%' style={{ textAlign: 'center' }}><span><AttentionIcon /></span>Withdraw is locked for 6 epochs. Claim Reward is locked for 3 epochs. Each interaction with Boardroom resets the lock time.</Text>
