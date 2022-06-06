@@ -13,7 +13,6 @@ export const farmsSlice = createSlice({
   reducers: {
     setFarmsPublicData: (state, action) => {
       const liveFarmsData: Farm[] = action.payload;
-      console.log("stateFarm: ", state);
       liveFarmsData.forEach((farmData, index) => {
         state.data[index] = { ...state.data[index], ...farmData };
       });

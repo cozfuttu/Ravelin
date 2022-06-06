@@ -18,24 +18,15 @@ const Cards = styled.div`
 
 interface CardsProps {
   interstellarsToDisplayWithApy: InterstellarWithStakedValue[]
-  rsharePrice: BigNumber
-  nativePrice: BigNumber
-  account: string
-  ethereum: any
   isMobile?: boolean
 }
 
-const InterstellarCards: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, rsharePrice, nativePrice, account, ethereum, isMobile }) => {
+const InterstellarCards: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isMobile }) => {
 
   const ICards = interstellarsToDisplayWithApy.map((interstellar) =>
     <InterstellarCard
       key={interstellar.contractAddress}
-      earnLabel={interstellar.rewardTokenSymbol}
       interstellar={interstellar}
-      nativePrice={nativePrice}
-      rsharePrice={rsharePrice}
-      ethereum={ethereum}
-      account={account}
       isMobile={isMobile}
     />
   )

@@ -53,39 +53,35 @@ export interface InterstellarWithStakedValue extends Interstellar {
 
 interface CardProps {
   interstellar: InterstellarWithStakedValue
-  earnLabel: string
-  rsharePrice?: BigNumber
-  nativePrice?: BigNumber
-  ethereum?: any
-  account?: string
   isMobile?: boolean
 }
 
-const InterstellarCard: React.FC<CardProps> = ({ interstellar, earnLabel, nativePrice, rsharePrice, isMobile }) => {
+const InterstellarCard: React.FC<CardProps> = ({ interstellar, isMobile }) => {
 
-  const farmImage = interstellar.rewardTokenSymbol.toLowerCase()
+  const { stakeTokenSymbol, rewardTokenSymbol, stakedTokenAmount, stakeTokenPrice, apy, rewardTokenPrice, startBlock, endBlock } = interstellar
+
+  const farmImage = rewardTokenSymbol.toLowerCase()
 
   const totalValue: BigNumber = useMemo(() => {
-    if (!interstellar.stakedTokenAmount) {
+    if (!stakedTokenAmount) {
       return null
     }
-    return new BigNumber(interstellar.stakedTokenAmount).times(interstellar.stakeTokenPrice)
-  }, [interstellar.stakedTokenAmount, interstellar.stakeTokenPrice])
+    return new BigNumber(stakedTokenAmount).times(stakeTokenPrice)
+  }, [stakedTokenAmount, stakeTokenPrice])
 
   const totalValueFormated = totalValue
     ? `$${Number(totalValue).toLocaleString('en', { maximumFractionDigits: 0 })}`
     : '-'
 
-  const lpLabel = `EARN ${interstellar.rewardTokenSymbol}`
+  const lpLabel = `EARN ${rewardTokenSymbol}`
   const interstellarApyString =
-    interstellar.apy &&
-    interstellar.apy.times(new BigNumber(100)).toNumber().toLocaleString('en', {
+    apy &&
+    apy.times(new BigNumber(100)).toNumber().toLocaleString('en', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })
 
-  const farmApy = interstellar.apy.times(new BigNumber(100)).toNumber()
-  const rewardTokenPrice = interstellar.rewardTokenPrice
+  const farmApy = apy.times(new BigNumber(100)).toNumber()
   const oneThousandDollarsWorthOfReward = 1000 / new BigNumber(rewardTokenPrice).toNumber()
 
   const rewardEarnedPerThousand1D = calculateCakeEarnedPerThousandDollars({ numberOfDays: 1, farmApy, cakePrice: rewardTokenPrice })
@@ -99,11 +95,11 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, earnLabel, native
   const currentTimeMillis = useCurrentTime()
 
   const lNow = DateTime.fromMillis(currentTimeMillis).setZone('utc')
-  const lTargetEnd = DateTime.fromMillis(interstellar?.endBlock * 1000).setZone('utc')
+  const lTargetEnd = DateTime.fromMillis(endBlock * 1000).setZone('utc')
   const timeDiffEnd = lTargetEnd.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
   const isFinished = timeDiffEnd.toMillis() < 0
 
-  const lTargetStart = DateTime.fromMillis((interstellar?.startBlock) * 1000).setZone('utc')
+  const lTargetStart = DateTime.fromMillis((startBlock) * 1000).setZone('utc')
   const timeDiffStart = lTargetStart.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
   const isStarted = timeDiffStart.toMillis() < 0
 
@@ -111,7 +107,7 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, earnLabel, native
     <Card>
       <Col>
         <TextAntonio style={{ fontSize: isMobile && '26px' }}>{lpLabel}</TextAntonio>
-        <Text color='#4E4E4E' fontSize='14px' mb="4px">Deposit RAV Earn {earnLabel}</Text>
+        <Text color='#4E4E4E' fontSize='14px' mb="4px">Deposit {stakeTokenSymbol} Earn {rewardTokenSymbol}</Text>
         <Text color='#9D9D9D' fontSize='14px'>APR: {interstellarApyString}%</Text>
         <Text color='#9D9D9D' fontSize='14px'>Daily APR: {dailyApr}%</Text>
         <Text color='#9D9D9D' fontSize='14px'>TVL: {totalValueFormated}</Text>

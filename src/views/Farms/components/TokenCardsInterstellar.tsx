@@ -67,7 +67,7 @@ const TokenCardsInterstellar: React.FC<Props> = ({ interstellar, onDismiss, isMo
   const [pending, setPending] = useState(false)
   const [requestedApproval, setRequestedApproval] = useState(false)
 
-  const { userData, contractAddress, stakeTokenSymbol, rewardTokenSymbol, stakeTokenPrice, rewardTokenPrice, stakedTokenDecimals, stakeTokenAddress, } = interstellar
+  const { userData, contractAddress, stakeTokenSymbol, rewardTokenSymbol, stakeTokenPrice, rewardTokenPrice, rewardTokenDecimals, stakedTokenDecimals, stakeTokenAddress, } = interstellar
 
   const { account, ethereum }: { account: string, ethereum: provider } = useWallet()
 
@@ -75,7 +75,7 @@ const TokenCardsInterstellar: React.FC<Props> = ({ interstellar, onDismiss, isMo
   const { onUnstakeInterstellar } = useUnstakeInterstellar(contractAddress)
   const { onRewardInterstellar } = useHarvestInterstellar(contractAddress)
 
-  const rewardEarned = userData?.earnings ? new BigNumber(userData?.earnings).div(1e18) : new BigNumber(0)
+  const rewardEarned = userData?.earnings ? new BigNumber(userData?.earnings).div(new BigNumber(10).pow(rewardTokenDecimals)) : new BigNumber(0)
   const rewardEarnedUsd = userData?.earnings ? rewardEarned.times(rewardTokenPrice) : new BigNumber(0)
 
   const userBalance = new BigNumber(userData?.tokenBalance)
@@ -169,7 +169,7 @@ const TokenCardsInterstellar: React.FC<Props> = ({ interstellar, onDismiss, isMo
         <Button size='sm' disabled={!canHarvest || pending} onClick={handleClaimReward} mt="16px">{isMobile ? 'CLAIM' : 'CLAIM REWARD'}</Button>
       </TokenCard>
       <TokenCard>
-        <Image src={`images/icons/${stakeTokenSymbol.toLowerCase()}.png`} />
+        <Image src={`images/icons/${stakeTokenSymbol.toLowerCase()}.png`} style={{ maxWidth: stakeTokenSymbol.includes('-') && '128px' }} />
         <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{tokenStakedFormatted}</Text>
         <Text color='#9D9D9D' fontSize='14px'>≈ ${tokenStakedUsdFormatted}</Text>
         <Text color='#9D9D9D' fontSize='14px'>{stakeTokenSymbol} Staked</Text>

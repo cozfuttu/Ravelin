@@ -19,6 +19,7 @@ import { getDevAddresses } from 'utils/addressHelpers'
 import { useClaimRewardDev } from 'hooks/useHarvest'
 import InterstellarCards from './components/InterstellarCards'
 import { InterstellarWithStakedValue } from './components/InterstellarCard'
+import PartnerPools from './components/PartnerPools'
 
 const ImageContainer = styled.div`
   position: fixed;
@@ -108,10 +109,13 @@ const Farms = () => {
   })
 
   const rshareFarms = farmsToDisplayWithAPY.filter((farm) => !(farm.isGenesis) && !(farm.isRavPool))
-  const ravFarms = farmsToDisplayWithAPY.filter((farm) => farm.isGenesis || farm.isRavPool)
+  //  const ravFarms = farmsToDisplayWithAPY.filter((farm) => farm.isGenesis || farm.isRavPool)
 
   const unclaimedDevFundFormatted = new BigNumber(unclaimedDevFund).div(1e18).toFormat(4)
   const unclaimedTreasuryFundFormatted = new BigNumber(unclaimedTreasuryFund).div(1e18).toFormat(4)
+
+  const interstellarsWithPartners = interstellarsToDisplayWithAPY.filter((interstellar) => interstellar.partnerName !== undefined)
+  const interstellarsWithoutPartners = interstellarsToDisplayWithAPY.filter((interstellar) => interstellar.partnerName === undefined)
 
   return (
     <>
@@ -132,9 +136,10 @@ const Farms = () => {
         <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RSHARE by staking LP</Text>
         <LPCards farmsToDisplayWithApy={rshareFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} />
         <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn tokens by staking RAV</Text>
-        <InterstellarCards interstellarsToDisplayWithApy={interstellarsToDisplayWithAPY} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} />
-        <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RAV by Staking in Genesis Pools</Text>
-        <Genesis farmsToDisplayWithApy={ravFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} />
+        <InterstellarCards interstellarsToDisplayWithApy={interstellarsWithoutPartners} isMobile={isMobile} />
+        <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Partner Pools</Text>
+        {/* <Genesis farmsToDisplayWithApy={ravFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} /> */}
+        <PartnerPools interstellarsToDisplayWithApy={interstellarsWithPartners} isMobile={isMobile} />
       </WidePage>
       {!isMobile && <FarmsBRGraphic />}
       {!isMobile && <Footer />}
