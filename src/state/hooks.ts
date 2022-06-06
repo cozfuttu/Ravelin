@@ -13,6 +13,8 @@ import {
   fetchTreasuryUserDataAsync,
   fetchInterstellarsPublicDataAsync,
   fetchInterstellarUserDataAsync,
+  fetchMissionDataAsync,
+  fetchPlayerDataAsync,
 } from "./actions";
 import {
   State,
@@ -38,11 +40,13 @@ export const useFetchPublicData = () => {
     dispatch(fetchMasonryPublicDataAsync());
     dispatch(fetchTreasuryPublicDataAsync());
     dispatch(fetchInterstellarsPublicDataAsync());
+    dispatch(fetchMissionDataAsync());
     if (account) {
       dispatch(fetchFarmUserDataAsync(account));
       dispatch(fetchMasonDataAsync(account));
       dispatch(fetchTreasuryUserDataAsync(account));
       dispatch(fetchInterstellarUserDataAsync(account));
+      dispatch(fetchPlayerDataAsync(account));
     }
   }, [dispatch, slowRefresh, account]);
 };
@@ -114,15 +118,13 @@ export const useInterstellars = (): Interstellar[] => {
 // Hunter Game
 
 export const useHunter = (): Hunter => {
-  const hunter = useSelector((state: State) => state.hunter.data);
+  const hunter = useSelector((state: State) => state.hunter);
   return hunter;
 };
 
 export const useHunterMission = (missionId: number): HunterMissionData => {
   const mission = useSelector((state: State) =>
-    state.hunter.data.missions.find(
-      (mission) => mission.missionId === missionId
-    )
+    state.hunter.missions.find((mission) => mission.missionId === missionId)
   );
   return mission;
 };

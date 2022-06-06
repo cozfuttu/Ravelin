@@ -110,8 +110,8 @@ export interface HunterMissionData extends HunterMissionConfig {
   requiredRarity: number; // required least hunter rarity in order to start the mission
   xp: number; // rewarded xp of the mission
   doNotLoseXp: number; // saved xp percentage after mission failure
-  paidToken: string; // the token address of mission's cost
-  earnedToken: string; // the token address of mission's reward
+  paidTokenAddress: string; // the token address of mission's cost
+  earnedTokenAddress: string; // the token address of mission's reward
   costAddress: string; // the wallet address which paid tokens transferred to
   price: number; // cost of the mission
   reward: number; // reward of the mission
@@ -128,11 +128,17 @@ export interface HunterMissionData extends HunterMissionConfig {
   cooldown: number; // the time difference from now that the user can start another mission
   profitPercentage: number; // how profitable the mission is
   canBeThey: boolean; // true if the mission can be played.
+  name: string; // moved here from config
+  imageUri: string; // moved here from config
+  partnerImageUri?: string; // moved here from config
+  playableWith: string; // moved here from config
+  gain: string; // moved here from config
+  lpAddressOfPaidToken: string; // This is for receiving the native price of the paid token. (no longer in the config)
+  lpAddressOfEarnedToken: string; // This is for receiving the native price of the earned token. (no longer in the config)
 }
 
 export interface HunterUserData {
-  allowanceHunter: BigNumber;
-  allowanceMission: BigNumber;
+  allowanceHunter: string;
   tokenId: number;
   maxNftLevel: number;
   totalTry: number;
@@ -150,8 +156,11 @@ export interface HunterUserData {
   hunterTotalTry: number;
   hunterTotalSuccess: number;
   hunterNextTryBlock: number;
-  hunterNextTryTime: number;
   hunterInMission: boolean;
+  missionData: {
+    allowanceMission: string;
+    hunterNextTryTime: number;
+  }[];
 }
 
 export interface Hunter {
@@ -178,10 +187,6 @@ export interface InterstellarsState {
   data: Interstellar[];
 }
 
-export interface HunterState {
-  data: Hunter;
-}
-
 // Global state
 
 export interface State {
@@ -189,5 +194,5 @@ export interface State {
   masonry: MasonryState;
   treasury: TreasuryState;
   interstellar: InterstellarsState;
-  hunter: HunterState;
+  hunter: Hunter;
 }

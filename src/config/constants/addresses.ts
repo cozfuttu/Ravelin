@@ -21,6 +21,7 @@ export const tokenAddresses = {
   madWETH: "",
   milk: "",
   milky: "",
+  test1: "0x02a704e70E95d21bc1027e8D6dDA87359af25558",
 };
 
 export const lpAddresses = {
@@ -45,6 +46,8 @@ export const lpAddresses = {
   ceusdcCeusdt: "0xd6410e0b55D5800E10Bf25a6349749A7aaD0F376",
 
   ravRshare: "0xb2a902354579424a0E9f2fcf1f3640DAA8ACD3b2",
+
+  test1Mada: "0x9214D1E2Cebd28777d692137c09fb633C15Ad287",
 };
 
 export default devAddresses;

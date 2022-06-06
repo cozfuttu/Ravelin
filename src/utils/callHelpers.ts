@@ -191,6 +191,21 @@ export const startMission = async (
 ) => {
   const aaa = await gameContract.methods
     .sendHunterForMission(hunterId, missionId)
-    .send({ from: account, gasPrice: "32000000000" });
+    .send({ from: account, gasPrice: "32000000000" })
+    .on("transactionHash", (txhash: string) => {
+      return txhash;
+    })
+    .on("error", (error: Error, receipt: Object) => {});
+  return aaa;
+};
+
+export const revealMission = async (gameContract, account) => {
+  const aaa = await gameContract.methods
+    .missionResult()
+    .send({ from: account, gasPrice: "32000000000" })
+    .on("transactionHash", (txhash: string) => {
+      return txhash;
+    })
+    .on("error", (error: Error, receipt: Object) => {});
   return aaa;
 };

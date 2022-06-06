@@ -86,16 +86,37 @@ export interface InterstellarConfig {
 
 export type HunterMissionConfig = {
   missionId: number;
-  name: string;
-  description: string;
-  imageUri: string;
-  detailsImageUri: string;
-  partnerImageUri?: string;
-  playableWith: string;
-  gain: string;
   partner?: string; // This is for the partnerships.
   partnerWebsite?: string;
-  lpAddressOfPaidToken: string; // This is for receiving the native price of the paid token.
-  lpAddressOfEarnedToken: string; // This is for receiving the native price of the earned token.
   useUsdc?: boolean; // if the lp address is paired with USDC instead of the native token of the chain.
 };
+
+export interface FigthTurnData {
+  id: string;
+  animationName: string;
+  minValue: number;
+  maxValue: number;
+}
+
+export enum FighterId {
+  "FIRST" = 1,
+  "SECOND" = 2,
+  "THIRD" = 3,
+  "FOURTH" = 4,
+}
+
+export interface CombatData {
+  id: string;
+  oldHealths: number[];
+  newHealths: number[];
+  attackerIndex: number;
+  animationName: string;
+}
+
+export interface HunterFightTurnData {
+  takeDamage: FigthTurnData;
+  block: FigthTurnData;
+  shoot: FigthTurnData;
+  heal: FigthTurnData;
+  grenade: FigthTurnData;
+}

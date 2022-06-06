@@ -6,8 +6,7 @@ import { Hunter, HunterUserData } from "../types";
 import BigNumber from "bignumber.js";
 
 const initialUserState: HunterUserData = {
-  allowanceHunter: new BigNumber(0),
-  allowanceMission: new BigNumber(0),
+  allowanceHunter: new BigNumber(0).toString(),
   tokenId: 0,
   maxNftLevel: 0,
   totalTry: 0,
@@ -25,8 +24,13 @@ const initialUserState: HunterUserData = {
   hunterTotalTry: 0,
   hunterTotalSuccess: 0,
   hunterNextTryBlock: 0,
-  hunterNextTryTime: 0,
   hunterInMission: false,
+  missionData: [
+    {
+      allowanceMission: new BigNumber(0).toString(),
+      hunterNextTryTime: 0,
+    },
+  ],
 };
 
 const initialState: Hunter = {
@@ -40,7 +44,8 @@ export const hunterSlice = createSlice({
   initialState,
   reducers: {
     setGameUserData: (state, action) => {
-      const { userData } = action.payload;
+      const userData = action.payload;
+      console.log("state: ", state);
       return { ...state, userData };
     },
     setMissionData: (state, action) => {
@@ -57,6 +62,7 @@ export const { setGameUserData, setMissionData } = hunterSlice.actions;
 
 export const fetchPlayerDataAsync = (account: string) => async (dispatch) => {
   const userDataObject = await fetchUserData(account);
+  console.log("userdataobject: ", userDataObject);
   dispatch(setGameUserData(userDataObject));
 };
 

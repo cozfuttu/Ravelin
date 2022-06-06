@@ -12,6 +12,6 @@ export default configureStore({
     masonry: masonryReducer,
     treasury: treasuryReducer,
     interstellar: interstellarReducer,
-    // hunter: hunterReducer,
+    hunter: hunterReducer,
   },
 });

@@ -8,6 +8,7 @@ import multicall from "utils/multicall";
 import { getBusdAddress, getHunterAddress } from "utils/addressHelpers";
 import missionsConfig from "config/constants/missions";
 import { tokenAddresses, lpAddresses } from "config/constants/addresses";
+import getMissionDetails from "utils/getMissionDetails";
 
 const fetchMissions = async () => {
   const polygalacticAddress = getHunterAddress();
@@ -39,8 +40,7 @@ const fetchMissions = async () => {
 
   const data = await Promise.all(
     missionsConfig.map(async (missionConfig) => {
-      const { missionId, lpAddressOfEarnedToken, lpAddressOfPaidToken } =
-        missionConfig;
+      const { missionId } = missionConfig;
 
       const [missionInfo] = await multicall(polygalacticABI, [
         {
@@ -62,6 +62,15 @@ const fetchMissions = async () => {
       } = missionInfo;
       const { paidToken, earnedToken, costAddress, cost, reward } =
         missionPriceInfo;
+
+      const {
+        name,
+        imageUri,
+        playableWith,
+        gain,
+        lpAddressOfPaidToken,
+        lpAddressOfEarnedToken,
+      } = getMissionDetails(needRarity.toNumber(), paidToken, earnedToken);
 
       const tokenCalls = [
         {
@@ -216,14 +225,16 @@ const fetchMissions = async () => {
       ]);
       //      const questValuePercentage = (((earnedTokenPriceUsdc.toNumber() * (reward / 1e18)) / (paidTokenPriceUsdc.toNumber() * (cost / 1e18))) * 100) - 100
 
+      const a = "5";
+
       return {
         ...missionConfig,
         multiple: multiple.toNumber(),
         requiredRarity: needRarity.toNumber(),
         xp: xp.toNumber(),
         doNotLoseXp: doNotLoseXp.toNumber(),
-        paidToken: paidToken.toString(),
-        earnedToken: earnedToken.toString(),
+        paidTokenAddress: paidToken.toString(),
+        earnedTokenAddress: earnedToken.toString(),
         costAddress: costAddress.toString(),
         price: priceFormatted,
         reward: rewardFormatted,
