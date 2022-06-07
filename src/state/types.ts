@@ -124,7 +124,6 @@ export interface HunterMissionData extends HunterMissionConfig {
   paidTokenDecimals: number; // decimals of the token which is rewarded after the mission.
   earnedTokenDecimals: number; // decimals of the token which is paid to start the mission.
   balanceOfTokenInContract: number; // rewarded token amount in the contract
-  nextPlayTime: number; // the ETA that the user can start another mission
   cooldown: number; // the time difference from now that the user can start another mission
   profitPercentage: number; // how profitable the mission is
   canBeThey: boolean; // true if the mission can be played.
@@ -156,10 +155,11 @@ export interface HunterUserData {
   hunterTotalTry: number;
   hunterTotalSuccess: number;
   hunterNextTryBlock: number;
-  hunterInMission: boolean;
+  hunterInMission: number;
   missionData: {
+    missionId: number;
     allowanceMission: string;
-    hunterNextTryTime: number;
+    hunterNextPlayTime: number;
   }[];
 }
 
@@ -167,6 +167,7 @@ export interface Hunter {
   userData: HunterUserData;
   missions: HunterMissionData[];
   hunterPrice: number;
+  hunterPaidToken: string;
 }
 
 // Slices states

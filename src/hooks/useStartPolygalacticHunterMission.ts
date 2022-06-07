@@ -15,13 +15,9 @@ const useStartPolygalacticHunterMission = (
   const gameContract = useHunterContract();
 
   const handleStartMission = useCallback(async () => {
-    try {
-      const tx = await startMission(gameContract, tokenId, missionId, account);
-      dispatch(fetchPlayerDataAsync(account));
-      return tx?.events?.SendHunter?.returnValues?.missionId;
-    } catch (e) {
-      return false;
-    }
+    const tx = await startMission(gameContract, tokenId, missionId, account);
+    dispatch(fetchPlayerDataAsync(account));
+    return tx?.events?.SendHunter?.returnValues?.missionId;
   }, [account, dispatch, tokenId, missionId, gameContract]);
 
   return { onStart: handleStartMission };

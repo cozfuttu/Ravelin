@@ -9,7 +9,7 @@ const checkLastMissionStatus = (account: string, endPoint = "") => {
   const isLastMissionViewed = missionStartTime === null;
   const isLastMissionReadyToReveal = new BigNumber(
     missionStartTime
-  ).isGreaterThan(Math.round(Date.now() / 1000));
+  ).isLessThan(Math.round(Date.now() / 1000) - 15);
 
   return {
     dataSavingKey,

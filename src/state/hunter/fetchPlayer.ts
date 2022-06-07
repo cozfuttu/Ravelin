@@ -12,9 +12,18 @@ const fetchUserData = async (account: string) => {
   const polygalacticAddress = getHunterAddress();
   const ravAddress = getRavAddress();
 
+  const hunterPriceCall = [
+    {
+      address: polygalacticAddress,
+      name: "hunterPaidToken",
+    },
+  ];
+
+  const [hunterPaidToken] = await multicall(polygalacticABI, hunterPriceCall);
+
   const hunterAllowanceCall = [
     {
-      address: ravAddress,
+      address: hunterPaidToken[0],
       name: "allowance",
       params: [account, polygalacticAddress],
     },
@@ -112,8 +121,9 @@ const fetchUserData = async (account: string) => {
       const [nextPlayTime] = await multicall(polygalacticABI, calls);
 
       return {
+        missionId: mission.missionId,
         allowanceMission: new BigNumber(allowanceMission._hex).toString(),
-        hunterNextTryTime: nextPlayTime / 1,
+        hunterNextPlayTime: nextPlayTime / 1,
       };
     })
   );

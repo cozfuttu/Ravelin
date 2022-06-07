@@ -34,9 +34,13 @@ const fetchMissions = async () => {
       address: polygalacticAddress,
       name: "hunterPrice",
     },
+    {
+      address: polygalacticAddress,
+      name: "hunterPaidToken",
+    },
   ];
 
-  const [hunterPrice] = await multicall(polygalacticABI, hunterPriceCall);
+  const [hunterPrice, hunterPaidToken] = await multicall(polygalacticABI, hunterPriceCall);
 
   const data = await Promise.all(
     missionsConfig.map(async (missionConfig) => {
@@ -229,6 +233,10 @@ const fetchMissions = async () => {
 
       return {
         ...missionConfig,
+        name,
+        imageUri,
+        playableWith,
+        gain,
         multiple: multiple.toNumber(),
         requiredRarity: needRarity.toNumber(),
         xp: xp.toNumber(),
@@ -252,7 +260,7 @@ const fetchMissions = async () => {
       };
     })
   );
-  return { data, hunterPrice: hunterPrice / 1e18 };
+  return { data, hunterPrice: hunterPrice / 1e18, hunterPaidToken: hunterPaidToken[0] };
 };
 
 export default fetchMissions;

@@ -17,7 +17,7 @@ import {
   useTreasuryContract,
   useRavPoolsContract,
   useHunterContract,
-  useRav,
+  useERC20,
 } from "./useContract";
 
 // Approve a Farm
@@ -131,11 +131,11 @@ export const useApproveInterstellar = (
   return { onApprove: handleApprove };
 };
 
-export const useApproveHunter = () => {
+export const useApproveHunter = (paidTokenAddress: string) => {
   const dispatch = useDispatch();
   const { account }: { account: string } = useWallet();
   const hunterContract = useHunterContract();
-  const ravContract = useRav();
+  const ravContract = useERC20(paidTokenAddress);
 
   const handleApprove = useCallback(async () => {
     try {

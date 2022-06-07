@@ -24,17 +24,19 @@ const initialUserState: HunterUserData = {
   hunterTotalTry: 0,
   hunterTotalSuccess: 0,
   hunterNextTryBlock: 0,
-  hunterInMission: false,
+  hunterInMission: 0,
   missionData: [
     {
+      missionId: 0,
       allowanceMission: new BigNumber(0).toString(),
-      hunterNextTryTime: 0,
+      hunterNextPlayTime: 0,
     },
   ],
 };
 
 const initialState: Hunter = {
   hunterPrice: 0,
+  hunterPaidToken: "",
   userData: initialUserState,
   missions: [],
 };
@@ -49,8 +51,8 @@ export const hunterSlice = createSlice({
       return { ...state, userData };
     },
     setMissionData: (state, action) => {
-      const { data, hunterPrice } = action.payload;
-      return { ...state, missions: data, hunterPrice };
+      const { data, hunterPrice, hunterPaidToken } = action.payload;
+      return { ...state, missions: data, hunterPrice, hunterPaidToken };
     },
   },
 });

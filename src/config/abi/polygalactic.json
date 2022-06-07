@@ -7,24 +7,9 @@
                 "type": "address"
             },
             {
-                "internalType": "address",
-                "name": "_vrfCoordinator",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "_link",
-                "type": "address"
-            },
-            {
                 "internalType": "contract IERC20",
                 "name": "_hunterPaidToken",
                 "type": "address"
-            },
-            {
-                "internalType": "bytes32",
-                "name": "_keyHash",
-                "type": "bytes32"
             }
         ],
         "stateMutability": "nonpayable",
@@ -1700,6 +1685,13 @@
     },
     {
         "inputs": [],
+        "name": "missionResult",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "name",
         "outputs": [
             {
@@ -1760,6 +1752,19 @@
         "type": "function"
     },
     {
+        "inputs": [],
+        "name": "numberOfCommits",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [
             {
                 "internalType": "uint256",
@@ -1792,21 +1797,16 @@
         "type": "function"
     },
     {
-        "inputs": [
-            {
-                "internalType": "bytes32",
-                "name": "requestId",
-                "type": "bytes32"
-            },
+        "inputs": [],
+        "name": "processTime",
+        "outputs": [
             {
                 "internalType": "uint256",
-                "name": "randomness",
+                "name": "",
                 "type": "uint256"
             }
         ],
-        "name": "rawFulfillRandomness",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -2360,24 +2360,6 @@
             }
         ],
         "name": "transferFrom",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_hunterId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_missionId",
-                "type": "uint256"
-            }
-        ],
-        "name": "tryMission",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
