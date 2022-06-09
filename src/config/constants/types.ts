@@ -80,6 +80,8 @@ export interface InterstellarConfig {
   rewardLpAddress: string;
   stakeTokenSymbol: string;
   rewardTokenSymbol: string;
+  isStakeLP?: boolean;
+  lpSource?: string;
   partnerWebsite?: string;
   partnerName?: string;
 }

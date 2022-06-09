@@ -26,6 +26,7 @@ const fetchInterstellars = async () => {
   const maticPrice = (usdcAmount * 1e12) / maticAmount;
   const data = await Promise.all(
     interstellars.map(async (interstellarConfig) => {
+      const isLP = interstellarConfig.isStakeLP;
       const tokenAddressCalls = [
         {
           address: interstellarConfig.contractAddress,
@@ -101,6 +102,10 @@ const fetchInterstellars = async () => {
           name: "balanceOf",
           params: [interstellarConfig.rewardLpAddress],
         },
+        {
+          address: stakeTokenAddress[0],
+          name: "totalSupply",
+        },
       ];
 
       const [
@@ -108,6 +113,7 @@ const fetchInterstellars = async () => {
         stakeLpStakeTokenAmount,
         rewardLpMaticAmount,
         rewardLpRewardTokenAmount,
+        stakeTokenTotalSupply,
       ] = await multicall(erc20, tokenPriceCalls);
       const stakeLpMaticExactAmount = stakeLpMaticAmount / 1e18;
       const stakeLpStakeTokenExactAmount =
@@ -115,8 +121,10 @@ const fetchInterstellars = async () => {
       const rewardLpMaticExactAmount = rewardLpMaticAmount / 1e18;
       const rewardLpRewardTokenExactAmount =
         rewardLpRewardTokenAmount / 10 ** rewardTokenDecimals[0];
-      const stakeTokenPrice =
-        (stakeLpMaticExactAmount / stakeLpStakeTokenExactAmount) * maticPrice;
+      const stakeTokenPrice = isLP
+        ? (stakeLpMaticExactAmount * maticPrice * 2) /
+          (stakeTokenTotalSupply / 1e18)
+        : (stakeLpMaticExactAmount / stakeLpStakeTokenExactAmount) * maticPrice;
       const rewardTokenPrice =
         (rewardLpMaticExactAmount / rewardLpRewardTokenExactAmount) *
         maticPrice;

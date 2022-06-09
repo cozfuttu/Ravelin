@@ -35,6 +35,14 @@ const Col = styled.div`
   justify-content: space-between;
 `
 
+const Cont = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 8px;
+  justify-content: space-between;
+`
+
 const Image = styled.img`
   width: 80px;
 `
@@ -45,6 +53,23 @@ const TextAntonio = styled.div`
   font-weight: 700;
   font-size: 36px;
   margin-bottom: 8px;
+`
+
+const Tag = styled.div`
+  align-items: center;
+  align-self: flex-end;
+  background-color: transparent;
+  border: 2px solid #158bce;
+  border-radius: 16px;
+  color: #158bce;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 400;
+  height: 28px;
+  line-height: 1.5;
+  padding: 0 8px;
+  white-space: nowrap;
+  margin-top: 8px;
 `
 
 export interface InterstellarWithStakedValue extends Interstellar {
@@ -115,7 +140,10 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, isMobile }) => {
         {timeDiffEnd.days < 99 && isStarted && <Text color={isFinished ? '#af101d' : '#9D9D9D'} fontSize='14px'>{!isFinished && 'Ends in:'} {isFinished ? 'Finished!' : timeDiffEnd.toFormat("dd:hh:mm:ss")}</Text>}
       </Col>
       <Col>
-        <Image src={`images/icons/${farmImage}.png`} />
+        <Cont>
+          <Image src={`images/icons/${farmImage}.png`} />
+          {interstellar.lpSource && <Tag>{interstellar.lpSource + " LP"}</Tag>}
+        </Cont>
         <Button size='sm' style={{ alignSelf: 'flex-end' }} onClick={onPresentinterstellarView}>VIEW</Button>
       </Col>
     </Card>
