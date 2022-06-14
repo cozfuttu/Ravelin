@@ -32,6 +32,7 @@ const ImageContainer = styled.div`
 `
 
 const SECONDS_PER_YEAR = new BigNumber(31557600)
+const SECONDS_IN_WEEK = 7 * 24 * 60 * 60
 
 const Farms = () => {
   const farmsLP = useFarms()
@@ -57,7 +58,7 @@ const Farms = () => {
   }, [account, dispatch])
 
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
-  const activeInterstellars = interstellars?.filter((interstellar) => interstellar.endBlock >= (Date.now() / 1000))
+  const activeInterstellars = interstellars?.filter((interstellar) => interstellar.endBlock + SECONDS_IN_WEEK >= (Date.now() / 1000))
   //  const inactiveInterstellars = interstellars?.filter((interstellar) => interstellar.endBlock < (Date.now() / 1000))
 
   const farmsToDisplayWithAPY: FarmWithStakedValue[] = activeFarms.map((farm) => {
