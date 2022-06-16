@@ -6,7 +6,6 @@ import erc20ABI from "config/abi/erc20.json";
 // import gameABI from 'config/abi/game.json'
 import multicall from "utils/multicall";
 import { getBusdAddress, getHunterAddress } from "utils/addressHelpers";
-import missionsConfig from "config/constants/missions";
 import { tokenAddresses, lpAddresses } from "config/constants/addresses";
 import getMissionDetails from "utils/getMissionDetails";
 
@@ -38,13 +37,23 @@ const fetchMissions = async () => {
       address: polygalacticAddress,
       name: "hunterPaidToken",
     },
+    {
+      address: polygalacticAddress,
+      name: "missionAmount",
+    }
   ];
 
-  const [hunterPrice, hunterPaidToken] = await multicall(polygalacticABI, hunterPriceCall);
+  const [hunterPrice, hunterPaidToken, missionAmount] = await multicall(polygalacticABI, hunterPriceCall);
+  const missionAmountNumber = new BigNumber(missionAmount[0]._hex).toNumber();
+
+  const missionIds = []
+  let i = 1
+  for (i; i <= missionAmountNumber; i++) {
+    missionIds.push(i)
+  }
 
   const data = await Promise.all(
-    missionsConfig.map(async (missionConfig) => {
-      const { missionId } = missionConfig;
+    missionIds.map(async (missionId) => {
 
       const [missionInfo] = await multicall(polygalacticABI, [
         {
@@ -104,7 +113,7 @@ const fetchMissions = async () => {
       let paidTokenPriceUsdc;
       let earnedTokenPriceUsdc;
 
-      if (missionConfig.useUsdc) {
+      if (missionId == 0) {
         const [
           paidTokenAmount,
           paidTokenUsdcAmount,
@@ -229,14 +238,12 @@ const fetchMissions = async () => {
       ]);
       //      const questValuePercentage = (((earnedTokenPriceUsdc.toNumber() * (reward / 1e18)) / (paidTokenPriceUsdc.toNumber() * (cost / 1e18))) * 100) - 100
 
-      const a = "5";
-
       return {
-        ...missionConfig,
         name,
         imageUri,
         playableWith,
         gain,
+        missionId,
         multiple: multiple.toNumber(),
         requiredRarity: needRarity.toNumber(),
         xp: xp.toNumber(),

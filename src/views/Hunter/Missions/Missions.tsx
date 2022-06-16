@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import WidePage from "components/layout/WidePage";
-import { Text } from "uikit";
+import { Button, Spinner, Text, useModal } from "uikit";
 import { useHunter } from "state/hooks";
 import MissionCard from "./components/MissionCard";
 import { useWallet } from "@binance-chain/bsc-use-wallet";
+import { isDev } from "config/constants/addresses";
+import MissionAddModal from "./components/MissionAddModal";
+import { Triangle } from "react-loader-spinner";
 
 const Cards = styled.div`
   display: flex;
@@ -34,11 +37,22 @@ const BackgroundImg = styled.img`
   opacity: 0.2;
 `;
 
+const SpinnerContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const Missions = () => {
   const { account } = useWallet();
 
   const { missions } = useHunter();
-  console.log("djkas: ", missions);
+
+  const isDeveloper = isDev(account);
 
   const gameCards = missions?.map((mission) => (
     <MissionCard
@@ -47,19 +61,44 @@ const Missions = () => {
       missionInfo={mission || null}
     />
   ));
+
+  const [onShowMissionAddModal] = useModal(
+    <MissionAddModal currentMissionId={missions.length} />,
+    true
+  );
   return (
     <>
       <BackgroundImg src="images/hunter/PGHBG.webp" alt="Hunter Background" />
       <WidePage>
+        {isDeveloper && (
+          <Button size="sm" onClick={onShowMissionAddModal}>
+            Add Mission
+          </Button>
+        )}
         <TextContainer>
           <Text color="#003E78" fontSize="40px" bold>
-            TAKE PART IN MISSIONS
+            MISSION BOARD
           </Text>
-          <Text color="#4E4E4E" fontSize="24px" bold mt="8px">
+          <Text
+            color="#4E4E4E"
+            fontSize="24px"
+            bold
+            mt="8px"
+            style={{ textAlign: "center" }}
+          >
             Earn tokens by sending your hunter to missions!
           </Text>
         </TextContainer>
-        <Cards>{gameCards}</Cards>
+        {gameCards.length > 0 ? (
+          <Cards>{gameCards}</Cards>
+        ) : (
+          <SpinnerContainer>
+            <Triangle color="#003E78" />
+            <Text color="#003E78" fontSize="24px">
+              Loading the missions...
+            </Text>
+          </SpinnerContainer>
+        )}
       </WidePage>
     </>
   );

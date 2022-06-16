@@ -61,6 +61,9 @@ const BuyModal: React.FC<BuyModalProps> = ({ onDismiss }) => {
           Note that your hunter&apos;s name can&apos;t contain space, and
           can&apos;t be longer than 12 characters.
         </Text>
+        <Text color="red" bold>
+          Hunter name cannot be changed later; choose your name wisely!
+        </Text>
         <Input onChange={handleTextChange} value={val} />
         <ModalActions>
           <Button

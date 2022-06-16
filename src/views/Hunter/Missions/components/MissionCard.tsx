@@ -114,75 +114,107 @@ const MissionCard: React.FC<MissionCardProps> = memo(
           style={{ fontSize: "20px", textAlign: "center" }}
           color="#2D3A4A"
         >
-          {name.toUpperCase()}
+          CROP INFESTATION
         </Heading>
         <Divider />
         <InfoContainer>
           <Flex justifyContent="space-between">
             <Text
               style={{ fontSize: "16px", textAlign: "start" }}
-              color="#00E0A0"
+              color="#2D3A4A"
+              bold
             >
               Cost:
             </Text>
-            <Text bold style={{ fontSize: "16px", textAlign: "end" }}>
+            <Text
+              color="#00649B"
+              bold
+              style={{ fontSize: "16px", textAlign: "end" }}
+            >
               {priceValueFormatted}
             </Text>
           </Flex>
           <Flex justifyContent="space-between">
             <Text
               style={{ fontSize: "16px", textAlign: "start" }}
-              color="#00E0A0"
+              color="#2D3A4A"
+              bold
             >
               Mediocre Success:
             </Text>
-            <Text bold style={{ fontSize: "16px", textAlign: "end" }}>
+            <Text
+              color="#00649B"
+              bold
+              style={{ fontSize: "16px", textAlign: "end" }}
+            >
               {mediocreReward}
             </Text>
           </Flex>
           <Flex justifyContent="space-between">
             <Text
               style={{ fontSize: "16px", textAlign: "start" }}
-              color="#00E0A0"
+              color="#2D3A4A"
+              bold
             >
               Success:
             </Text>
-            <Text bold style={{ fontSize: "16px", textAlign: "end" }}>
+            <Text
+              color="#00649B"
+              bold
+              style={{ fontSize: "16px", textAlign: "end" }}
+            >
               {successReward}
             </Text>
           </Flex>
           <Flex justifyContent="space-between">
             <Text
               style={{ fontSize: "16px", textAlign: "start" }}
-              color="#00E0A0"
+              color="#2D3A4A"
+              bold
             >
               Great Success:
             </Text>
-            <Text bold style={{ fontSize: "16px", textAlign: "end" }}>
+            <Text
+              color="#00649B"
+              bold
+              style={{ fontSize: "16px", textAlign: "end" }}
+            >
               {greatReward}
             </Text>
           </Flex>
           <Flex justifyContent="space-between" style={{ width: "100%" }}>
-            <Text style={{ fontSize: "16px" }} color="#00E0A0">
+            <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
               Reward Distributed:
             </Text>
-            <Text bold style={{ fontSize: "16px", textAlign: "end" }}>
+            <Text
+              color="#00649B"
+              bold
+              style={{ fontSize: "16px", textAlign: "end" }}
+            >
               {totalRewardFormatted}
             </Text>
           </Flex>
           <Flex justifyContent="space-between" style={{ width: "100%" }}>
-            <Text style={{ fontSize: "16px" }} color="#00E0A0">
+            <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
               Rewards Left:
             </Text>
-            <Text bold style={{ fontSize: "16px", textAlign: "end" }}>
+            <Text
+              color="#00649B"
+              bold
+              style={{ fontSize: "16px", textAlign: "end" }}
+            >
               {rewardLeftFormatted}
             </Text>
           </Flex>
           <Flex justifyContent="space-between" style={{ width: "100%" }}>
-            <Text style={{ fontSize: "16px" }} color="#00E0A0">
+            <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
               Cooldown:
             </Text>
-            <Text bold style={{ fontSize: "16px", textAlign: "end" }}>
+            <Text
+              color="#00649B"
+              bold
+              style={{ fontSize: "16px", textAlign: "end" }}
+            >
               {cooldownText}
             </Text>
           </Flex>
@@ -191,10 +223,14 @@ const MissionCard: React.FC<MissionCardProps> = memo(
             style={{ width: "100%" }}
             mb="2vh"
           >
-            <Text style={{ fontSize: "16px" }} color="#00E0A0">
+            <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
               Level Required to Play:
             </Text>
-            <Text bold style={{ fontSize: "16px", textAlign: "end" }}>
+            <Text
+              color="#00649B"
+              bold
+              style={{ fontSize: "16px", textAlign: "end" }}
+            >
               {25 * (requiredRarity - 1) + 1}
             </Text>
           </Flex>

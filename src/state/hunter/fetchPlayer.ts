@@ -4,7 +4,6 @@ import erc20ABI from "config/abi/erc20.json";
 import polygalacticABI from "config/abi/polygalactic.json";
 import multicall from "utils/multicall";
 import { getRavAddress, getHunterAddress } from "utils/addressHelpers";
-import polygalacticMissions from "config/constants/missions";
 
 const DEFAULT_LEVEL_XP = 150;
 
@@ -12,14 +11,26 @@ const fetchUserData = async (account: string) => {
   const polygalacticAddress = getHunterAddress();
   const ravAddress = getRavAddress();
 
-  const hunterPriceCall = [
+  const initialCall = [
     {
       address: polygalacticAddress,
       name: "hunterPaidToken",
     },
+    {
+      address: polygalacticAddress,
+      name: "missionAmount",
+    }
   ];
 
-  const [hunterPaidToken] = await multicall(polygalacticABI, hunterPriceCall);
+  const [hunterPaidToken, missionAmount] = await multicall(polygalacticABI, initialCall);
+
+  const missionAmountNumber = new BigNumber(missionAmount[0]._hex).toNumber();
+
+  const missionIds = []
+  let i = 1
+  for (i; i <= missionAmountNumber; i++) {
+    missionIds.push(i)
+  }
 
   const hunterAllowanceCall = [
     {
@@ -88,12 +99,12 @@ const fetchUserData = async (account: string) => {
   const hunterNeedXpToLevelUp = DEFAULT_LEVEL_XP * rarity.toNumber();
 
   const missionData = await Promise.all(
-    polygalacticMissions.map(async (mission) => {
+    missionIds.map(async (missionId) => {
       const missionInfoCall = [
         {
           address: polygalacticAddress,
           name: "getMissionById",
-          params: [mission.missionId],
+          params: [missionId],
         },
       ];
       const [missionInfo] = await multicall(polygalacticABI, missionInfoCall);
@@ -121,7 +132,7 @@ const fetchUserData = async (account: string) => {
       const [nextPlayTime] = await multicall(polygalacticABI, calls);
 
       return {
-        missionId: mission.missionId,
+        missionId,
         allowanceMission: new BigNumber(allowanceMission._hex).toString(),
         hunterNextPlayTime: nextPlayTime / 1,
       };

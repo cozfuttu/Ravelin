@@ -3,6 +3,8 @@ const devAddresses = [
   "0x138A31Ff3549adD7f31ecf4026F19C511ED675D5",
 ];
 
+export const isDev = (account: string) => devAddresses.find((address) => account === address) !== undefined
+
 export const tokenAddresses = {
   rav: "0x9B7c74Aa737FE278795fAB2Ad62dEFDbBAedFBCA",
   rshare: "0xD81E377E9cd5093CE752366758207Fc61317fC70",
@@ -21,7 +23,8 @@ export const tokenAddresses = {
   madWETH: "",
   milk: "",
   milky: "",
-  test1: "0x02a704e70E95d21bc1027e8D6dDA87359af25558",
+  tusdt: "0xB35B6435d550af0f11433385ADB9aCa29BdcBCFb",
+  busdt: "0x8930409112B56154d821f395A0Ad1f6e5823Fa00",
 };
 
 export const lpAddresses = {
@@ -47,7 +50,8 @@ export const lpAddresses = {
 
   ravRshare: "0xb2a902354579424a0E9f2fcf1f3640DAA8ACD3b2",
 
-  test1Mada: "0x9214D1E2Cebd28777d692137c09fb633C15Ad287",
+  tusdtMada: "0x9e45FeD59d4De3b00C0D8BFeB8EC8d7E7c0F115c",
+  busdtMada: "0x606fCB906b01f98a16b625F3cb14E636d0E20D44",
 };
 
 export default devAddresses;

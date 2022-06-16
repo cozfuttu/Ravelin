@@ -10,13 +10,19 @@ import XpBar from "./XPBar";
 const Card = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 12px;
+  border-radius: 12px;
   padding: 32px;
   text-align: center;
-  background-color: #000000bb;
-  border: 3px solid #165b54;
-  border-radius: 8px;
-  max-width: 400px;
+  background: rgba(45, 58, 74, 0.15);
+  max-width: 300px;
+  box-shadow: 0 6px 10px -4px #646464;
+
+  @media (max-width: 1080px) {
+    max-width: 300px;
+    max-height: 900px;
+  }
 `;
 
 /* allowanceHunter: BigNumber;
@@ -84,38 +90,38 @@ const HunterCard = () => {
   return (
     <Card>
       <HunterImage src={imageUri} alt="Hunter Image" />
-      <Flex justifyContent="center" marginTop="16px">
-        <Text style={{ fontSize: "32px" }} color="#00E0A0">
+      <Flex justifyContent="center" marginTop="16px" marginBottom="16px">
+        <Text style={{ fontSize: "32px" }} color="#2D3A4A" bold>
           {hunterName}
         </Text>
       </Flex>
       <Flex justifyContent="space-between">
-        <Text style={{ fontSize: "21px" }} color="#00E0A0">
+        <Text style={{ fontSize: "18px" }} color="#2D3A4A">
           Rarity:
         </Text>
-        <Text bold style={{ fontSize: "21px" }}>
+        <Text color="#00649B" bold style={{ fontSize: "18px" }}>
           {nameByRarity}
         </Text>
       </Flex>
       <Flex justifyContent="space-between">
-        <Text style={{ fontSize: "21px" }} color="#00E0A0">
+        <Text style={{ fontSize: "18px" }} color="#2D3A4A">
           Level:
         </Text>
-        <Text bold style={{ fontSize: "21px" }}>
+        <Text color="#00649B" bold style={{ fontSize: "18px" }}>
           {hunterLevel}
         </Text>
       </Flex>
       <Flex justifyContent="space-between">
-        <Text style={{ fontSize: "21px" }} color="#00E0A0">
+        <Text style={{ fontSize: "18px" }} color="#2D3A4A">
           Until Next Level:
         </Text>
         <XpBar xp={hunterXp} needXpToLevelUp={hunterNeedXpToLevelUp} />
       </Flex>
       <Flex justifyContent="space-between">
-        <Text style={{ fontSize: "21px" }} color="#00E0A0">
+        <Text style={{ fontSize: "18px" }} color="#2D3A4A">
           Missions Completed:
         </Text>
-        <Text bold style={{ fontSize: "21px" }}>
+        <Text color="#00649B" bold style={{ fontSize: "18px" }}>
           {hunterTotalSuccess}
         </Text>
       </Flex>

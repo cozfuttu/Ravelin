@@ -8,17 +8,22 @@ const Card = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 12px;
+  border-radius: 12px;
   padding: 32px;
   text-align: center;
-  background-color: #000000bb;
-  border: 3px solid #165b54;
-  border-radius: 8px;
-  max-width: 400px;
+  background: rgba(45, 58, 74, 0.15);
+  max-width: 300px;
+  box-shadow: 0 6px 10px -4px #646464;
+
+  @media (max-width: 1080px) {
+    max-width: 300px;
+    max-height: 900px;
+  }
 `;
 
 const ProfileCard = () => {
   const { userData } = useHunter();
-  const { totalTry, totalSuccess, maxNftLevel } = userData;
+  const { totalTry, totalSuccess } = userData;
 
   const fail = totalTry - totalSuccess;
 
@@ -31,35 +36,27 @@ const ProfileCard = () => {
       />
       <Text>Profile Statistics</Text>
       <Flex justifyContent="space-between">
-        <Text style={{ fontSize: "18px" }} color="#9fffe7">
+        <Text style={{ fontSize: "18px" }} color="#2D3A4A">
           Total Missions:
         </Text>
-        <Text bold style={{ fontSize: "18px" }}>
+        <Text color="#00649B" bold style={{ fontSize: "18px" }}>
           {totalTry}
         </Text>
       </Flex>
       <Flex justifyContent="space-between">
-        <Text style={{ fontSize: "18px" }} color="#9fffe7">
+        <Text style={{ fontSize: "18px" }} color="#2D3A4A">
           Missions Successful:
         </Text>
-        <Text bold style={{ fontSize: "18px" }}>
+        <Text color="#00649B" bold style={{ fontSize: "18px" }}>
           {totalSuccess}
         </Text>
       </Flex>
       <Flex justifyContent="space-between">
-        <Text style={{ fontSize: "18px" }} color="#9fffe7">
+        <Text style={{ fontSize: "18px" }} color="#2D3A4A">
           Missions Failed:
         </Text>
-        <Text bold style={{ fontSize: "18px" }}>
+        <Text color="#00649B" bold style={{ fontSize: "18px" }}>
           {fail}
-        </Text>
-      </Flex>
-      <Flex justifyContent="space-between">
-        <Text style={{ fontSize: "18px" }} color="#9fffe7">
-          Maximum Hunter Level :
-        </Text>
-        <Text bold style={{ fontSize: "18px" }}>
-          {maxNftLevel}
         </Text>
       </Flex>
     </Card>

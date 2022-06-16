@@ -53,13 +53,12 @@ const Modal: React.FC<Props> = ({
   isMobile = false,
   bodyPadding = "24px",
 }) => (
-  <StyledModal style={{ width: isMobile && "90%", height: isMobile && "90%" }}>
+  <StyledModal
+    style={{ maxWidth: isMobile && "90%", maxHeight: isMobile && "90%" }}
+  >
     {title.includes("/images") ? (
       <>
-        <ModalImage
-          src={title}
-          style={{ maxWidth: isMobile ? "100%" : "700px" }}
-        />
+        <ModalImage src={title} style={{ width: "100%" }} />
         {!hideCloseButton && (
           <IconButton
             variant="text"

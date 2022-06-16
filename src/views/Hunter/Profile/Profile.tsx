@@ -32,6 +32,7 @@ const BackgroundImg = styled.img`
   z-index: -1;
   top: 0;
   position: fixed;
+  opacity: 0.2;
 `;
 
 const Profile = () => {
@@ -51,7 +52,7 @@ const Profile = () => {
             mb="16px"
             style={{ textAlign: "center" }}
           >
-            Check your statistics and race with other players!
+            Check your statistics and compete with other players!
           </Text>
         </TextContainer>
         <Cards>

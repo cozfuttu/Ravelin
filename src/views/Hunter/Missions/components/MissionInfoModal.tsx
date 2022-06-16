@@ -4,7 +4,7 @@
 /* eslint react/jsx-no-target-blank: "off" */
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Modal, Text, Flex, Button } from "uikit";
+import { Modal, Text, Flex, Button, useMatchBreakpoints } from "uikit";
 import { useWallet } from "@binance-chain/bsc-use-wallet";
 import { HunterMissionData, HunterUserData } from "state/types";
 import useStartPolygalacticHunterMission from "hooks/useStartPolygalacticHunterMission";
@@ -18,6 +18,11 @@ const Grid = styled.div`
   grid-template-columns: 400px 200px;
   gap: 16px;
   max-width: 688px;
+
+  @media (max-width: 1080px) {
+    grid-template-rows: 200px 200px;
+    grid-template-columns: inherit;
+  }
 `;
 
 const TextContainer = styled.div`
@@ -47,6 +52,9 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
 }) => {
   const { account } = useWallet();
   const [disabled, setDisabled] = useState(true);
+
+  const { isXl } = useMatchBreakpoints();
+  const isMobile = isXl === false;
 
   const {
     tokenId,
@@ -82,7 +90,6 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
   );
 
   useEffect(() => {
-    console.log("ahbdhsa: ", !isLastMissionViewed);
     if (
       !isLastMissionViewed &&
       isLastMissionReadyToReveal &&
@@ -183,8 +190,8 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
                 fontSize: "14px",
               }}
             >
-              DO NOT FORGET THAT YOUR HUNTER MIGHT DIE ON THE MISSION. IF SHE
-              DIES, YOU&apos;LL RETAIN MOST OF YOUR EXPERIENCE.
+              If you fail the mission, you will not receive rewards and lose
+              some experience.
             </Text>
           </GridItem>
           <GridItem>
@@ -207,7 +214,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
               }}
             >
               <a
-                style={{ color: "#DFBC35", textDecoration: "none" }}
+                style={{ color: "#DFBC35" }}
                 href="https://pulsarfarm.gitbook.io/gamma-polypulsar/features/polygalactic-hunter-new-pve"
                 target="_blank"
               >
@@ -217,8 +224,8 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
           </GridItem>
         </TextContainer>
         <Flex
-          flexDirection="column"
-          justifyContent="space-between"
+          flexDirection={isMobile ? "row" : "column"}
+          justifyContent="space-around"
           alignItems="center"
         >
           <img

@@ -31,6 +31,7 @@ const GameInfoButton: React.FC<NftCardActionsProps> = ({
   const { missionData } = userData;
   const { paidTokenAddress } = mission;
   const allowanceMission = missionData[mission.missionId - 1]?.allowanceMission;
+  console.log("njdks:", mission);
 
   const [requestedApproval, setRequestedApproval] = useState(false);
   const [missionResult, setMissionResult] = useState("1");
@@ -91,7 +92,7 @@ const GameInfoButton: React.FC<NftCardActionsProps> = ({
   );
 
   return (
-    <Flex mb="8px" mt="8px" justifyContent="space-between" alignItems="center">
+    <Flex mb="8px" mt="16px" justifyContent="space-between" alignItems="center">
       {!isLastMissionViewed && isLastMissionReadyToReveal ? (
         <Button mr="10px" onClick={handleMissionResult} fullWidth>
           Mission Result

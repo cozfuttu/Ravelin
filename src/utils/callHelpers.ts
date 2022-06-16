@@ -209,3 +209,17 @@ export const revealMission = async (gameContract, account) => {
     .on("error", (error: Error, receipt: Object) => { });
   return aaa;
 };
+
+export const addMission = async (
+  gameContract,
+  _missionId: string, _multiple: string, _needRarity: string, _xp: string, _doNotLoseXp: string, _cost: string, _reward: string, _paidToken: string, _earnedToken: string, _costAddress: string,
+  account
+) => {
+  console.log('cost: ', _cost, 'reward: ', _reward)
+  return await gameContract.methods
+    .addMission(_missionId, _multiple, _needRarity, _xp, _doNotLoseXp, _cost, _reward, _paidToken, _earnedToken, _costAddress)
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};
