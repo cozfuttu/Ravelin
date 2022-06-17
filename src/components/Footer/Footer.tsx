@@ -40,7 +40,7 @@ const Footer = ({ ...props }) => {
     <FooterDiv {...props} >
       <Container>
         <FooterText>
-          Copyright © Ravelin Finance 2022
+          Copyright © Ravcube Finance 2022
         </FooterText>
         <img src="images/logos/milkomedaBanner.png" width={488} alt="Logo" />
         <a href="/audit.pdf" style={{ color: "#9D9D9D", fontWeight: 'bold', fontFamily: 'Inter', zIndex: '99999' }}>AUDIT</a>

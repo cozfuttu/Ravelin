@@ -82,8 +82,8 @@ const Menu = () => {
       <MenuItems>
         <a href="/" style={{ textDecoration: 'none' }}>
           <LogoContainer>
-            <Image src="images/logos/RavelinLogo.svg" style={{ marginLeft: isMobile && '16px' }} />
-            <Text color='#E6E6E6' fontSize='20px' style={{ letterSpacing: '4px', fontSize: isMobile && '14px' }}>RAVELIN FINANCE</Text>
+            <Image src="images/logos/RavcubeLogo.svg" style={{ marginLeft: isMobile && '16px' }} />
+            <Text color='#E6E6E6' fontSize='20px' style={{ letterSpacing: '4px', fontSize: isMobile && '14px' }}>RAVCUBE FINANCE</Text>
           </LogoContainer>
         </a>
         {!isMobile ? <MenuLabels>

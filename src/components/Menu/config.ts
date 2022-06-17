@@ -38,7 +38,7 @@ const config: MenuEntry[] = [
   {
     label: "DOCS",
     color: "#ededed",
-    href: "https://docs.ravelin.finance/",
+    href: "https://docs.ravcube.finance/",
   },
 ];
 
@@ -46,12 +46,12 @@ export const socials = [
   {
     label: "Telegram",
     icon: "TelegramIcon",
-    href: "https://t.me/ravelinfinance",
+    href: "https://t.me/ravcubefinance",
   },
   {
     label: "Twitter",
     icon: "TwitterIcon",
-    href: "https://twitter.com/ravelin_finance",
+    href: "https://twitter.com/ravcube_finance",
   },
   {
     label: "Discord",

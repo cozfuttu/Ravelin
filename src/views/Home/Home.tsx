@@ -132,12 +132,12 @@ const Home = () => {
         <ImageContainer>
           <TextContainer>
             <WelcomeContainer>
-              <Header>WELCOME TO RAVELIN FINANCE</Header>
+              <Header>WELCOME TO RAVCUBE FINANCE</Header>
               <Text color="#000" style={{ marginBottom: isMobile && '8vh' }}>The first algorithmic stablecoin on Milkomeda, pegged to the price of 1 ADA via seigniorage.</Text>
               {!isMobile && <Text color="#000" mt='16px' bold>Stake your RAV-ADA LP in the FARM to earn RSHARE rewards. Then stake your earned RSHARE in the BOARDROOM to earn more RAV!</Text>}
             </WelcomeContainer>
             <TVLandButtonsContainer>
-              {!isMobile && <Text color="#000000"><span><AttentionIcon /></span>Please visit our <a href="https://ravelin-finance.gitbook.io/ravelin-finance/" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', color: '#007ABE', fontWeight: '700' }}>documentation</a> before purchasing RAV or RSHARE!</Text>}
+              {!isMobile && <Text color="#000000"><span><AttentionIcon /></span>Please visit our <a href="https://ravcube-finance.gitbook.io/ravcube-finance/" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', color: '#007ABE', fontWeight: '700' }}>documentation</a> before purchasing RAV or RSHARE!</Text>}
               <Row>
                 <Col>
                   <Text color="#007ABE" fontSize='18px' bold style={{ fontSize: isMobile && '12px' }}>TOTAL VALUE LOCKED:</Text>

@@ -39,7 +39,7 @@ const RavCard: React.FC<CardProps> = ({ masonry }) => {
 
   return (
     <HexCard>
-      <Image src="images/icons/rav.png" />
+      <Image src="images/icons/rav.svg" />
       <Text color='#4E4E4E' fontSize='32px' bold mb="8px">{rewardEarned.toFormat(4)}</Text>
       <Text color='#9D9D9D' fontSize='14px'>≈ ${rewardEarnedUsd.toFormat(4)}</Text>
       <Text color='#9D9D9D' fontSize='14px'>RAV Earned</Text>
