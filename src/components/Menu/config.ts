@@ -22,6 +22,20 @@ const config: MenuEntry[] = [
     href: "/bond",
   },
   {
+    label: "HUNTER",
+    color: "#ededed",
+    items: [
+      {
+        label: "Profile",
+        href: "/profile",
+      },
+      {
+        label: "Missions",
+        href: "/missions",
+      },
+    ],
+  },
+  {
     label: "BRIDGE",
     color: "#ededed",
     items: [

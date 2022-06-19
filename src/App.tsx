@@ -11,6 +11,8 @@ const Home = lazy(() => import('./views/Home'))
 const Farm = lazy(() => import('./views/Farms'))
 const BoardRoom = lazy(() => import('./views/BoardRoom'))
 const Bond = lazy(() => import('./views/Bond'))
+const Missions = lazy(() => import('./views/Hunter/Missions'))
+const Profile = lazy(() => import('./views/Hunter/Profile'))
 
 const fmt = {
   decimalSeparator: '.',
@@ -50,6 +52,12 @@ const App = () => {
           </Route>
           <Route path="/bond">
             <Bond />
+          </Route>
+          <Route path="/missions">
+            <Missions />
+          </Route>
+          <Route path="/profile">
+            <Profile />
           </Route>
           <Route component={NotFound} />
         </Switch>

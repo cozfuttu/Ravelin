@@ -1,9 +1,10 @@
-import Providers from 'Providers';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import Providers from "Providers";
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
 
-import "./index.css"
+import "./index.css";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -11,5 +12,5 @@ ReactDOM.render(
       <App />
     </Providers>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );

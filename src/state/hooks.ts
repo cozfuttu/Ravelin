@@ -13,8 +13,18 @@ import {
   fetchTreasuryUserDataAsync,
   fetchInterstellarsPublicDataAsync,
   fetchInterstellarUserDataAsync,
+  fetchMissionDataAsync,
+  fetchPlayerDataAsync,
 } from "./actions";
-import { State, Farm, Masonry, Treasury, Interstellar } from "./types";
+import {
+  State,
+  Farm,
+  Masonry,
+  Treasury,
+  Interstellar,
+  Hunter,
+  HunterMissionData,
+} from "./types";
 import { QuoteToken } from "../config/constants/types";
 import { useWallet } from "@binance-chain/bsc-use-wallet";
 
@@ -30,11 +40,13 @@ export const useFetchPublicData = () => {
     dispatch(fetchMasonryPublicDataAsync());
     dispatch(fetchTreasuryPublicDataAsync());
     dispatch(fetchInterstellarsPublicDataAsync());
+    dispatch(fetchMissionDataAsync());
     if (account) {
       dispatch(fetchFarmUserDataAsync(account));
       dispatch(fetchMasonDataAsync(account));
       dispatch(fetchTreasuryUserDataAsync(account));
       dispatch(fetchInterstellarUserDataAsync(account));
+      dispatch(fetchPlayerDataAsync(account));
     }
   }, [dispatch, slowRefresh, account]);
 };
@@ -96,9 +108,25 @@ export const useTreasury = (): Treasury => {
   return treasury;
 };
 
+// Interstellar Pools
+
 export const useInterstellars = (): Interstellar[] => {
   const interstellars = useSelector((state: State) => state.interstellar.data);
   return interstellars;
+};
+
+// Hunter Game
+
+export const useHunter = (): Hunter => {
+  const hunter = useSelector((state: State) => state.hunter);
+  return hunter;
+};
+
+export const useHunterMission = (missionId: number): HunterMissionData => {
+  const mission = useSelector((state: State) =>
+    state.hunter.missions.find((mission) => mission.missionId === missionId)
+  );
+  return mission;
 };
 
 // Prices

@@ -6,6 +6,7 @@ import {
   fetchFarmUserDataAsync,
   fetchInterstellarUserDataAsync,
   fetchMasonDataAsync,
+  fetchPlayerDataAsync,
   fetchTreasuryUserDataAsync,
 } from "state/actions";
 import { approve } from "utils/callHelpers";
@@ -15,6 +16,8 @@ import {
   useMasonryContract,
   useTreasuryContract,
   useRavPoolsContract,
+  useHunterContract,
+  useERC20,
 } from "./useContract";
 
 // Approve a Farm
@@ -124,6 +127,43 @@ export const useApproveInterstellar = (
       return false;
     }
   }, [account, dispatch, tokenContract, interstellarContract]);
+
+  return { onApprove: handleApprove };
+};
+
+export const useApproveHunter = (paidTokenAddress: string) => {
+  const dispatch = useDispatch();
+  const { account }: { account: string } = useWallet();
+  const hunterContract = useHunterContract();
+  const ravContract = useERC20(paidTokenAddress);
+
+  const handleApprove = useCallback(async () => {
+    try {
+      const tx = await approve(ravContract, hunterContract, account);
+      dispatch(fetchPlayerDataAsync(account));
+      return tx;
+    } catch (e) {
+      return false;
+    }
+  }, [account, dispatch, ravContract, hunterContract]);
+
+  return { onApprove: handleApprove };
+};
+
+export const useApproveMission = (tokenContract: Contract) => {
+  const dispatch = useDispatch();
+  const { account }: { account: string } = useWallet();
+  const polygalacticContract = useHunterContract();
+
+  const handleApprove = useCallback(async () => {
+    try {
+      const tx = await approve(tokenContract, polygalacticContract, account);
+      dispatch(fetchPlayerDataAsync(account));
+      return tx;
+    } catch (e) {
+      return false;
+    }
+  }, [account, dispatch, tokenContract, polygalacticContract]);
 
   return { onApprove: handleApprove };
 };

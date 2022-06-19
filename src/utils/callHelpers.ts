@@ -171,3 +171,55 @@ export const allocateSeigniorage = async (treasuryContract, account) => {
       return tx.transactionHash;
     });
 };
+
+// HUNTER GAME HELPERS
+
+export const buyHunter = async (polygalacticContract, account, name) => {
+  return polygalacticContract.methods
+    .buyHunter(name)
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};
+
+export const startMission = async (
+  gameContract,
+  hunterId,
+  missionId,
+  account
+) => {
+  const aaa = await gameContract.methods
+    .sendHunterForMission(hunterId, missionId)
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (txhash: string) => {
+      return txhash;
+    })
+    .on("error", (error: Error, receipt: Object) => { });
+  return aaa;
+};
+
+export const revealMission = async (gameContract, account) => {
+  const aaa = await gameContract.methods
+    .missionResult()
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (txhash: string) => {
+      return txhash;
+    })
+    .on("error", (error: Error, receipt: Object) => { });
+  return aaa;
+};
+
+export const addMission = async (
+  gameContract,
+  _missionId: string, _multiple: string, _needRarity: string, _xp: string, _doNotLoseXp: string, _cost: string, _reward: string, _paidToken: string, _earnedToken: string, _costAddress: string,
+  account
+) => {
+  console.log('cost: ', _cost, 'reward: ', _reward)
+  return await gameContract.methods
+    .addMission(_missionId, _multiple, _needRarity, _xp, _doNotLoseXp, _cost, _reward, _paidToken, _earnedToken, _costAddress)
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};

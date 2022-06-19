@@ -48,6 +48,9 @@ export const getMasonryAddress = () => {
 export const getTreasuryAddress = () => {
   return addresses.treasury[chainId];
 };
+export const getHunterAddress = () => {
+  return addresses.hunter[chainId];
+};
 export const getDevAddresses = () => {
   return devAddresses;
 };

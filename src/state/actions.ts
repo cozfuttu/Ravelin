@@ -8,3 +8,4 @@ export {
   fetchInterstellarsPublicDataAsync,
   fetchInterstellarUserDataAsync,
 } from "./interstellars";
+export { fetchPlayerDataAsync, fetchMissionDataAsync } from "./hunter";

@@ -1,9 +1,14 @@
-import BigNumber from 'bignumber.js'
-import { useBurnedBalanceRavNativeLP, useBurnedBalanceRshareNativeLP, useTotalSupplyRavNativeLP, useTotalSupplyRshareNativeLP } from 'hooks/useTokenBalance'
-import React from 'react'
-import { usePriceBnbBusd, usePriceRavNativeLP, usePriceRshareNativeLP } from 'state/hooks'
-import styled from 'styled-components'
-import LPCard from './LPCard'
+import BigNumber from "bignumber.js";
+import {
+  useBurnedBalanceRavNativeLP,
+  useBurnedBalanceRshareNativeLP,
+  useTotalSupplyRavNativeLP,
+  useTotalSupplyRshareNativeLP,
+} from "hooks/useTokenBalance";
+import React from "react";
+import { usePriceRavNativeLP, usePriceRshareNativeLP } from "state/hooks";
+import styled from "styled-components";
+import LPCard from "./LPCard";
 
 const Cards = styled.div`
   display: flex;
@@ -21,32 +26,44 @@ const Cards = styled.div`
     padding-bottom: 100px;
     margin-left: 0;
   }
-`
+`;
 
 const LPCards = () => {
-  const totalSupplyRavNativeLP = useTotalSupplyRavNativeLP()
-  const totalSupplyRshareNativeLP = useTotalSupplyRshareNativeLP()
+  const totalSupplyRavNativeLP = useTotalSupplyRavNativeLP();
+  const totalSupplyRshareNativeLP = useTotalSupplyRshareNativeLP();
 
-  const burnedBalanceRav = useBurnedBalanceRavNativeLP()
-  const burnedBalanceRshare = useBurnedBalanceRshareNativeLP()
+  const burnedBalanceRav = useBurnedBalanceRavNativeLP();
+  const burnedBalanceRshare = useBurnedBalanceRshareNativeLP();
 
-  const ravLPPriceUsd = usePriceRavNativeLP()
-  const rshareLPPriceUsd = usePriceRshareNativeLP()
+  const ravLPPriceUsd = usePriceRavNativeLP();
+  const rshareLPPriceUsd = usePriceRshareNativeLP();
 
-  const adaPrice = usePriceBnbBusd()
+  const circSupplyRavLP = totalSupplyRavNativeLP
+    ? totalSupplyRavNativeLP.minus(burnedBalanceRav)
+    : new BigNumber(0);
+  const circSupplyRshareLP = totalSupplyRshareNativeLP
+    ? totalSupplyRshareNativeLP.minus(burnedBalanceRshare)
+    : new BigNumber(0);
 
-  const circSupplyRavLP = totalSupplyRavNativeLP ? totalSupplyRavNativeLP.minus(burnedBalanceRav) : new BigNumber(0)
-  const circSupplyRshareLP = totalSupplyRshareNativeLP ? totalSupplyRshareNativeLP.minus(burnedBalanceRshare) : new BigNumber(0)
-
-  const marketCapRavLP = circSupplyRavLP.times(ravLPPriceUsd)
-  const marketCapRshareLP = circSupplyRshareLP.times(rshareLPPriceUsd)
+  const marketCapRavLP = circSupplyRavLP.times(ravLPPriceUsd);
+  const marketCapRshareLP = circSupplyRshareLP.times(rshareLPPriceUsd);
 
   return (
     <Cards>
-      <LPCard lpName='RAV-mADA' totalSupply={totalSupplyRavNativeLP} adaPrice={adaPrice} LPPriceUSD={ravLPPriceUsd} marketCap={marketCapRavLP} />
-      <LPCard lpName='RSHARE-mADA' totalSupply={totalSupplyRshareNativeLP} adaPrice={adaPrice} LPPriceUSD={rshareLPPriceUsd} marketCap={marketCapRshareLP} />
+      <LPCard
+        lpName="RAV-mADA"
+        totalSupply={totalSupplyRavNativeLP}
+        LPPriceUSD={ravLPPriceUsd}
+        marketCap={marketCapRavLP}
+      />
+      <LPCard
+        lpName="RSHARE-mADA"
+        totalSupply={totalSupplyRshareNativeLP}
+        LPPriceUSD={rshareLPPriceUsd}
+        marketCap={marketCapRshareLP}
+      />
     </Cards>
-  )
-}
+  );
+};
 
-export default LPCards
+export default LPCards;
