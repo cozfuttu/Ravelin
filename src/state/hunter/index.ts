@@ -47,7 +47,6 @@ export const hunterSlice = createSlice({
   reducers: {
     setGameUserData: (state, action) => {
       const userData = action.payload;
-      console.log("state: ", state);
       return { ...state, userData };
     },
     setMissionData: (state, action) => {
@@ -64,7 +63,6 @@ export const { setGameUserData, setMissionData } = hunterSlice.actions;
 
 export const fetchPlayerDataAsync = (account: string) => async (dispatch) => {
   const userDataObject = await fetchUserData(account);
-  console.log("userdataobject: ", userDataObject);
   dispatch(setGameUserData(userDataObject));
 };
 

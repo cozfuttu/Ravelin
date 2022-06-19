@@ -51,7 +51,9 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
   onDismiss,
 }) => {
   const { account } = useWallet();
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
+  const [pendingTx, setPendingTx] = useState(false)
+  const currentTimeMilis = useCurrentTime()
 
   const { isXl } = useMatchBreakpoints();
   const isMobile = isXl === false;
@@ -60,7 +62,6 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
     tokenId,
     hunterRarity: rarity,
     userHasHunter: hasToken,
-    hunterInMission,
     missionData,
   } = userData;
   const { hunterNextPlayTime: nextPlayTime } = missionData.find(
@@ -75,6 +76,8 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
   } = checkLastMissionStatus(account);
   const mstn = parseInt(missionStartTime);
 
+  const [hunterOnMission, setHunterOnMission] = useState(!isLastMissionViewed)
+
   const { onStart } = useStartPolygalacticHunterMission(
     tokenId,
     requiredRarity
@@ -84,58 +87,70 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
 
   console.log(
     "ishunterready: ",
-    hunterInMission,
+    hunterOnMission,
     isLastMissionViewed,
-    isLastMissionReadyToReveal
+    isLastMissionReadyToReveal,
+    mstn,
   );
 
   useEffect(() => {
     if (
       !isLastMissionViewed &&
       isLastMissionReadyToReveal &&
-      hunterInMission > 0
+      hunterOnMission
     ) {
+      setDisabled(false)
       setButtonText("Mission Result");
-      setDisabled(false);
-    } else if (
+    }
+
+    else if (
       !isLastMissionViewed &&
       !isLastMissionReadyToReveal &&
-      hunterInMission > 0
+      hunterOnMission
     ) {
       setButtonText(
-        `${timeLeftForReveal(Date.now(), mstn)} left to finish the mission.`
+        `${timeLeftForReveal(currentTimeMilis, mstn)} left to finish the mission.`
       );
       setDisabled(true);
-    } else if (isRewardFinished) {
+    }
+
+    else if (isRewardFinished) {
       setButtonText("Rewards are finalized!");
       setDisabled(true);
-    } else if (tokenBalance < price) {
+    }
+
+    else if (tokenBalance < price) {
       setButtonText("You don't have enough tokens!");
       setDisabled(true);
-    } else if (!hasToken) {
+    }
+
+    else if (!hasToken) {
       setButtonText("You don't have a hunter!");
       setDisabled(true);
-    } else if (rarity < requiredRarity) {
+    }
+
+    else if (rarity < requiredRarity) {
       setButtonText(
         "Your Hunter's rarity is not enough to start this mission!"
       );
       setDisabled(true);
-    } else if (!isHunterReadyForNextMission) {
+    }
+
+    else if (!isHunterReadyForNextMission) {
       setButtonText(
-        `You need to wait ${getTimeLeftForNextMission(
-          Date.now(),
-          nextPlayTime
-        )} to start this mission again.`
+        `You need to wait ${getTimeLeftForNextMission(currentTimeMilis, nextPlayTime)} to start this mission again.`
       );
       setDisabled(true);
-    } else {
-      setDisabled(false);
+    }
+
+    else {
+      setDisabled(false)
       setButtonText("Start Mission");
     }
   }, [
     isLastMissionViewed,
     isLastMissionReadyToReveal,
-    hunterInMission,
+    hunterOnMission,
     isRewardFinished,
     tokenBalance,
     price,
@@ -145,14 +160,17 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
     isHunterReadyForNextMission,
     nextPlayTime,
     mstn,
+    currentTimeMilis
   ]);
 
   const [buttonText, setButtonText] = useState("");
 
   const handleButtonClick = async () => {
-    setDisabled(true);
-    if (!isLastMissionViewed && isLastMissionReadyToReveal) await onResult();
-    if (
+    if (!isLastMissionViewed && isLastMissionReadyToReveal) {
+      await onResult()
+      setHunterOnMission(false)
+    }
+    else if (
       rarity >= requiredRarity &&
       tokenBalance >= price &&
       !isRewardFinished &&
@@ -160,6 +178,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
     ) {
       await onStart();
       localStorage.setItem(dataSavingKey, "" + Math.floor(Date.now() / 1000));
+      setHunterOnMission(true)
     } else {
       return null;
     }
@@ -236,7 +255,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
           {
             <Button
               onClick={async () => {
-                setDisabled(true);
+                setPendingTx(true);
                 try {
                   await handleButtonClick();
                 } catch (e) {
@@ -245,10 +264,11 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
                     e
                   );
                 } finally {
-                  setDisabled(false);
+                  setPendingTx(false);
+                  setDisabled(false)
                 }
               }}
-              disabled={disabled}
+              disabled={disabled || pendingTx}
               size="md"
               style={{ maxWidth: "250px" }}
             >
@@ -261,4 +281,4 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
   );
 };
 
-export default React.memo(GameWarningModal);
+export default GameWarningModal;

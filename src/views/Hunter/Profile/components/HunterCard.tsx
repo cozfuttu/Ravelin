@@ -75,10 +75,10 @@ const HunterCard = () => {
           src="images/hunter/characterImages/PolygalacticHunter4.webp"
           alt="Hunter Image"
         />
-        <Text>This hunter is on a hunt for various tokens.</Text>
+        <Text color="#2D3A4A">This hunter is on a hunt for various tokens.</Text>
         <Flex justifyContent="space-between" alignItems="center">
-          <Text>Price: </Text>
-          <Text style={{ display: "flex", alignItems: "center" }}>
+          <Text color="#2D3A4A" bold>Price: </Text>
+          <Text color="#2D3A4A" bold style={{ display: "flex", alignItems: "center" }}>
             {hunterPrice}&nbsp;{" "}
             <img src="/images/icons/rav.png" width={32} alt="RAV" />
           </Text>

@@ -31,11 +31,9 @@ const GameInfoButton: React.FC<NftCardActionsProps> = ({
   const { missionData } = userData;
   const { paidTokenAddress } = mission;
   const allowanceMission = missionData[mission.missionId - 1]?.allowanceMission;
-  console.log("njdks:", mission);
 
   const [requestedApproval, setRequestedApproval] = useState(false);
-  const [missionResult, setMissionResult] = useState("1");
-  const [firstRender, setFirstRender] = useState(true);
+  const [missionResult, setMissionResult] = useState("0");
 
   const tokenContract = useERC20(paidTokenAddress);
 
@@ -44,7 +42,7 @@ const GameInfoButton: React.FC<NftCardActionsProps> = ({
   const { onApprove } = useApproveMission(tokenContract);
   const { onReveal } = useRevealMission();
 
-  const isApproved = new BigNumber(allowanceMission).isGreaterThan(0);
+  const isApproved = new BigNumber(allowanceMission).isGreaterThan(0)
 
   const { dataSavingKey, isLastMissionReadyToReveal, isLastMissionViewed } =
     checkLastMissionStatus(account);
@@ -64,11 +62,11 @@ const GameInfoButton: React.FC<NftCardActionsProps> = ({
     true
   );
 
-  console.log("first render: ", firstRender);
-
   useEffect(() => {
-    if (firstRender) setFirstRender(false);
-    if (!firstRender) showResultModal();
+    if (parseInt(missionResult) > 0) {
+      showResultModal()
+      setMissionResult("0")
+    };
   }, [missionResult]);
 
   const handleMissionResult = async () => {
@@ -76,6 +74,7 @@ const GameInfoButton: React.FC<NftCardActionsProps> = ({
       const result = await onReveal();
       console.log("result is: ", result);
       localStorage.removeItem(dataSavingKey);
+      setMissionResult(result)
     } catch (e) {
       console.log("An error happened while revealing result: ", e);
     }

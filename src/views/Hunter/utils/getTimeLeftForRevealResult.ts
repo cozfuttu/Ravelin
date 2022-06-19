@@ -5,11 +5,11 @@ const getTimeLeftForRevealResult = (
   started: number
 ) => {
   const lNow = DateTime.fromMillis(currentTimeMilis).setZone("utc");
-  const lTarget = DateTime.fromMillis(started * 1000).setZone("utc");
-  const timeDiff = lNow.diff(lTarget).shiftTo("seconds");
-  const remainingTime = timeDiff.seconds;
+  const lTarget = DateTime.fromMillis(started * 1000 + 15000).setZone("utc");
+  const timeDiff = lTarget.diff(lNow).shiftTo("minutes", "seconds");
+  const remainingTime = timeDiff.toFormat("mm:ss");
 
-  return remainingTime;
+  return timeDiff.seconds >= 0 ? remainingTime : "00:00";
 };
 
 export default getTimeLeftForRevealResult;

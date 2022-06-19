@@ -13,7 +13,6 @@ const useRevealMission = () => {
 
   const handleRevealMission = useCallback(async () => {
     const tx = await revealMission(gameContract, account);
-    console.log('revealed mission: ', tx)
     dispatch(fetchPlayerDataAsync(account));
     return tx?.events?.MissionCompleted?.returnValues?.result;
   }, [account, dispatch, gameContract]);

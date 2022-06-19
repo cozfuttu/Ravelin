@@ -9,14 +9,14 @@ const getMissionDetails = (
     requiredRarity === 1
       ? "Raid the station of smugglers"
       : requiredRarity === 2
-        ? "Sabotage the enemy spaceship"
-        : requiredRarity === 3
-          ? "Lead the negotiations"
-          : requiredRarity === 4
-            ? "Defend the locals against the bug invasion"
-            : "???";
+      ? "Sabotage the enemy spaceship"
+      : requiredRarity === 3
+      ? "Lead the negotiations"
+      : requiredRarity === 4
+      ? "Defend the locals against the bug invasion"
+      : "???";
 
-  const imageUri = `images/hunter/missionImages/PolygalacticMission${requiredRarity}.webp`
+  const imageUri = `images/hunter/missionImages/PolygalacticMission${requiredRarity}.webp`;
 
   const playableWith = Object.keys(tokenAddresses).find(
     (key) => tokenAddresses[key] === paidTokenAddress
@@ -24,16 +24,7 @@ const getMissionDetails = (
   const gain = Object.keys(tokenAddresses).find(
     (key) => tokenAddresses[key] === earnedTokenAddress
   );
-  console.log(
-    "paidTokenAddress: ",
-    paidTokenAddress,
-    "earnedTokenAddres",
-    earnedTokenAddress,
-    "playableWith: ",
-    playableWith,
-    "gain: ",
-    gain
-  );
+
   const lpAddressOfPaidToken = lpAddresses[playableWith.toLowerCase() + "Mada"];
   const lpAddressOfEarnedToken = lpAddresses[gain.toLowerCase() + "Mada"];
 

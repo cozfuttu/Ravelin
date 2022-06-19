@@ -19,17 +19,20 @@ const fetchUserData = async (account: string) => {
     {
       address: polygalacticAddress,
       name: "missionAmount",
-    }
+    },
   ];
 
-  const [hunterPaidToken, missionAmount] = await multicall(polygalacticABI, initialCall);
+  const [hunterPaidToken, missionAmount] = await multicall(
+    polygalacticABI,
+    initialCall
+  );
 
   const missionAmountNumber = new BigNumber(missionAmount[0]._hex).toNumber();
 
-  const missionIds = []
-  let i = 1
+  const missionIds = [];
+  let i = 1;
   for (i; i <= missionAmountNumber; i++) {
-    missionIds.push(i)
+    missionIds.push(i);
   }
 
   const hunterAllowanceCall = [
@@ -83,6 +86,8 @@ const fetchUserData = async (account: string) => {
     polygalacticABI,
     calls
   );
+
+  console.log("hunterInMissionContract: ", hunterInMission[0].toNumber());
 
   const {
     name,
