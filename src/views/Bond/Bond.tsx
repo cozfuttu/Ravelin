@@ -22,10 +22,7 @@ const ImageContainer = styled.div`
 `
 
 const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 
   @media (max-width: 1080px) {
     margin-top: 13vh;
@@ -50,7 +47,7 @@ const Bond = () => {
   const isMobile = isXl === false
   return (
     <>
-      <WidePage style={{ paddingBottom: '1vh', minHeight: '0' }}>
+      <WidePage style={{ paddingBottom: '1vh', paddingTop: '1vh', minHeight: '0' }}>
         {!isMobile && <ImageContainer>
           <BlueBack />
           <BlackBack />

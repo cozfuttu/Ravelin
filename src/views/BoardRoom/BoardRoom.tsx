@@ -106,7 +106,7 @@ const BoardRoom = () => {
           <BlueBack />
           <BlackBack />
         </ImageContainer>}
-        <Text color='#003E78' fontSize='32px' bold mt={isMobile && '8vh'} mb="1vh">BOARDROOM</Text>
+        <Text color='#003E78' fontSize='32px' bold mt={isMobile && '10vh'} mb="1vh" style={{ textAlign: isMobile ? 'center' : 'inherit' }}>BOARDROOM</Text>
         <InfoCards>
           <NextEpochCard nextEpochPoint={parseInt(masonry?.nextEpochPoint)} />
           <CurrentEpochCard epoch={masonry?.epoch} />

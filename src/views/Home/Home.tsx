@@ -35,7 +35,7 @@ const WelcomeContainer = styled.div`
   flex-direction: column;
   align-self: center;
   width: 50%;
-  margin-top: 3vh;
+  margin-top: 4vh;
   margin-left: -9vw;
 
   @media (max-width: 1080px) {
@@ -168,6 +168,9 @@ const Home = () => {
           <BlackBack />
         </ImageContainer>
         {!isMobile && <HomeGraphic />}
+        <div style={{ position: 'absolute', left: '2%', top: '10%' }}>
+          <img src="images/other/rebranded.png" />
+        </div>
       </WidePage>
       {!isMobile && <Footer />}
     </>

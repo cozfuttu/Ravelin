@@ -46,12 +46,12 @@ export const socials = [
   {
     label: "Telegram",
     icon: "TelegramIcon",
-    href: "https://t.me/ravcubefinance",
+    href: "https://t.me/ravelinfinance",
   },
   {
     label: "Twitter",
     icon: "TwitterIcon",
-    href: "https://twitter.com/ravcube_finance",
+    href: "https://twitter.com/RavcubeFinance",
   },
   {
     label: "Discord",

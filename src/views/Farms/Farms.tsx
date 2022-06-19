@@ -125,7 +125,7 @@ const Farms = () => {
           <BlueBack />
           <BlackBack />
         </ImageContainer>)}
-        <Text color='#003E78' fontSize='32px' bold style={{ marginTop: isMobile && '8vh' }}>FARM</Text>
+        <Text color='#003E78' fontSize='32px' bold style={{ marginTop: isMobile && '10vh', textAlign: isMobile ? 'center' : 'inherit' }}>FARM</Text>
         {
           devAddress.includes(account) &&
           <>
@@ -134,11 +134,11 @@ const Farms = () => {
             <Button size="md" onClick={onReward}>HARVEST</Button>
           </>
         }
-        <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn RSHARE by staking LP</Text>
+        <Text color='#4E4E4E' fontSize='28px' bold mt='32px' style={{ textAlign: isMobile ? 'center' : 'inherit' }}>Earn RSHARE by staking LP</Text>
         <LPCards farmsToDisplayWithApy={rshareFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} />
-        <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Earn tokens by staking RAV</Text>
+        <Text color='#4E4E4E' fontSize='28px' bold mt='32px' style={{ textAlign: isMobile ? 'center' : 'inherit' }}>Earn tokens by staking RAV</Text>
         <InterstellarCards interstellarsToDisplayWithApy={interstellarsWithoutPartners} isMobile={isMobile} />
-        <Text color='#4E4E4E' fontSize='28px' bold mt='32px'>Partner Pools</Text>
+        <Text color='#4E4E4E' fontSize='28px' bold mt='32px' style={{ textAlign: isMobile ? 'center' : 'inherit' }}>Partner Pools</Text>
         {/* <Genesis farmsToDisplayWithApy={ravFarms} rsharePrice={rsharePrice} nativePrice={nativePrice} account={account} ethereum={ethereum} isMobile={isMobile} /> */}
         <PartnerPools interstellarsToDisplayWithApy={interstellarsWithPartners} isMobile={isMobile} />
       </WidePage>
