@@ -169,7 +169,7 @@ const Home = () => {
         </ImageContainer>
         {!isMobile && <HomeGraphic />}
         <div style={{ position: 'absolute', left: '2%', top: '10%' }}>
-          <img src="images/other/rebranded.png" />
+          <img src="images/other/rebranded.png" alt="rebranded" />
         </div>
       </WidePage>
       {!isMobile && <Footer />}

@@ -3,13 +3,12 @@ import BigNumber from "bignumber.js";
 import erc20ABI from "config/abi/erc20.json";
 import polygalacticABI from "config/abi/polygalactic.json";
 import multicall from "utils/multicall";
-import { getRavAddress, getHunterAddress } from "utils/addressHelpers";
+import { getHunterAddress } from "utils/addressHelpers";
 
 const DEFAULT_LEVEL_XP = 150;
 
 const fetchUserData = async (account: string) => {
   const polygalacticAddress = getHunterAddress();
-  const ravAddress = getRavAddress();
 
   const initialCall = [
     {

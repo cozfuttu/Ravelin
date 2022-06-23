@@ -37,6 +37,7 @@ const initialUserState: HunterUserData = {
 const initialState: Hunter = {
   hunterPrice: 0,
   hunterPaidToken: "",
+  pause: true,
   userData: initialUserState,
   missions: [],
 };
@@ -50,8 +51,8 @@ export const hunterSlice = createSlice({
       return { ...state, userData };
     },
     setMissionData: (state, action) => {
-      const { data, hunterPrice, hunterPaidToken } = action.payload;
-      return { ...state, missions: data, hunterPrice, hunterPaidToken };
+      const { data, hunterPrice, hunterPaidToken, pause } = action.payload;
+      return { ...state, missions: data, hunterPrice, hunterPaidToken, pause };
     },
   },
 });

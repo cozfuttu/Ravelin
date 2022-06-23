@@ -1,7 +1,7 @@
 /* eslint react/jsx-boolean-value: "off" */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-nested-ternary */
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { Button, Flex, useModal } from "uikit";
 import { useTokenBalanceWithoutDecimals } from "hooks/useTokenBalance";
 import { HunterMissionData } from "state/types";
@@ -13,6 +13,7 @@ import AnimatedResultModal from "./AnimatedResultModal";
 import checkLastMissionStatus from "views/Hunter/utils/checkLastMissionStatus";
 import useRevealMission from "hooks/useRevealMission";
 import BigNumber from "bignumber.js";
+import getRewardResult from '../utils/getRewardResult'
 
 interface NftCardActionsProps {
   mission: HunterMissionData;
@@ -28,8 +29,8 @@ const GameInfoButton: React.FC<NftCardActionsProps> = ({
   canBeThey,
 }) => {
   const { userData } = useHunter();
-  const { missionData } = userData;
-  const { paidTokenAddress } = mission;
+  const { missionData, hunterName } = userData;
+  const { paidTokenAddress, reward, gain } = mission;
   const allowanceMission = missionData[mission.missionId - 1]?.allowanceMission;
 
   const [requestedApproval, setRequestedApproval] = useState(false);
@@ -57,8 +58,10 @@ const GameInfoButton: React.FC<NftCardActionsProps> = ({
     }
   }, [onApprove]);
 
+  const rewardResult = useMemo(() => getRewardResult(reward, missionResult), [reward, missionResult])
+
   const [showResultModal] = useModal(
-    <AnimatedResultModal missionResult={missionResult} />,
+    <AnimatedResultModal missionResult={missionResult} hunterName={hunterName} reward={`${rewardResult}`} rewardTokenSymbol={gain} />,
     true
   );
 

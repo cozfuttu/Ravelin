@@ -20,7 +20,7 @@ interface NftCardActionsProps {
 
 const CardActions: React.FC<NftCardActionsProps> = ({ account }) => {
   const [requestedApproval, setRequestedApproval] = useState(false);
-  const { userData, hunterPrice, hunterPaidToken } = useHunter();
+  const { userData, hunterPrice, hunterPaidToken, pause } = useHunter();
   const { onApprove } = useApproveHunter(hunterPaidToken);
 
   const { allowanceHunter } = userData;
@@ -45,12 +45,13 @@ const CardActions: React.FC<NftCardActionsProps> = ({ account }) => {
     return isApproved ? (
       <Button
         fullWidth
-        disabled={!canUserAffordHunter}
+        disabled={!canUserAffordHunter || pause}
         onClick={onPresentBuyModal}
       >
-        {canUserAffordHunter
+        {!pause ? canUserAffordHunter
           ? "Buy Hunter"
-          : `You need ${hunterPrice} RAV to buy a hunter.`}
+          : `You need ${hunterPrice} RAV to buy a hunter.`
+          : "Paused!"}
       </Button>
     ) : (
       <Button

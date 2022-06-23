@@ -163,7 +163,7 @@ const PRODUCTION_CONTRACTS = {
     97: "",
   },
   hunter: {
-    2001: "0x756B927fFFEA12eC1CdCc383e2eA8b0f49A63bef",
+    2001: "0x13a1F67fe39A600dC39CB3BE2B6B77E8DaC6D902",
     250: "0xF50c6dAAAEC271B56FCddFBC38F0b56cA45E6f0d",
     137: "0xc6fcd85ddd4a301c9babffefc07dadddf7b413a4",
     97: "",

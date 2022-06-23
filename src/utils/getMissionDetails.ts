@@ -25,16 +25,16 @@ const getMissionDetails = (
     (key) => tokenAddresses[key] === earnedTokenAddress
   );
 
-  const lpAddressOfPaidToken = lpAddresses[playableWith.toLowerCase() + "Mada"];
-  const lpAddressOfEarnedToken = lpAddresses[gain.toLowerCase() + "Mada"];
+  /*   const lpAddressOfPaidToken = lpAddresses[playableWith.toLowerCase() + "Mada"];
+  const lpAddressOfEarnedToken = lpAddresses[gain.toLowerCase() + "Mada"]; */
 
   return {
     name,
     imageUri,
     playableWith,
     gain,
-    lpAddressOfPaidToken,
-    lpAddressOfEarnedToken,
+    /*     lpAddressOfPaidToken,
+    lpAddressOfEarnedToken, */
   };
 };
 

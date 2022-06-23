@@ -52,7 +52,7 @@ const config: MenuEntry[] = [
   {
     label: "DOCS",
     color: "#ededed",
-    href: "https://docs.ravcube.finance/",
+    href: "https://docs.ravelin.finance/",
   },
 ];
 

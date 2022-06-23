@@ -22,7 +22,6 @@ const NCard = styled.div`
   @media (max-width: 1080px) {
     max-width: 300px;
     max-height: 900px;
-    margin-left: 5%;
   }
 `;
 
@@ -70,8 +69,8 @@ const MissionCard: React.FC<MissionCardProps> = memo(
       gain,
       cooldown,
       imageUri,
-      name,
       requiredRarity,
+      xp
     } = missionInfo;
     const priceTokenName = playableWith.toUpperCase() || "";
     const rewardTokenName = gain.toUpperCase() || "";
@@ -87,25 +86,18 @@ const MissionCard: React.FC<MissionCardProps> = memo(
       Number(totalReward) >= 1e9
         ? `${reward / 1e9} Bil ${rewardTokenName}`
         : totalReward
-        ? `${Number(totalReward).toLocaleString("en", {
+          ? `${Number(totalReward).toLocaleString("en", {
             maximumFractionDigits: 5,
           })} ${rewardTokenName}`
-        : "-";
-
-    const rewardLeftFormatted =
-      Number(isRewardFinished ? 0 : rewardLeft) >= 1e9
-        ? `${rewardLeft / 1e9} Bil ${rewardTokenName}`
-        : rewardLeft
-        ? `${Number(isRewardFinished ? 0 : rewardLeft).toLocaleString("en", {
-            maximumFractionDigits: 5,
-          })} ${rewardTokenName}`
-        : "-";
+          : "-";
 
     const priceValueFormatted = price
       ? `${Number(price).toLocaleString("en", {
-          maximumFractionDigits: 5,
-        })} ${priceTokenName}`
+        maximumFractionDigits: 5,
+      })} ${priceTokenName}`
       : "-";
+
+    const xpModifier = xp / (requiredRarity * 10)
 
     return (
       <NCard>
@@ -196,18 +188,6 @@ const MissionCard: React.FC<MissionCardProps> = memo(
           </Flex>
           <Flex justifyContent="space-between" style={{ width: "100%" }}>
             <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
-              Rewards Left:
-            </Text>
-            <Text
-              color="#00649B"
-              bold
-              style={{ fontSize: "16px", textAlign: "end" }}
-            >
-              {rewardLeftFormatted}
-            </Text>
-          </Flex>
-          <Flex justifyContent="space-between" style={{ width: "100%" }}>
-            <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
               Cooldown:
             </Text>
             <Text
@@ -224,7 +204,7 @@ const MissionCard: React.FC<MissionCardProps> = memo(
             mb="2vh"
           >
             <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
-              Level Required to Play:
+              Level Requirement:
             </Text>
             <Text
               color="#00649B"
@@ -233,6 +213,14 @@ const MissionCard: React.FC<MissionCardProps> = memo(
             >
               {25 * (requiredRarity - 1) + 1}
             </Text>
+          </Flex>
+          <Flex
+            style={{ width: "100%" }}
+            mb="2vh"
+          >
+            {xpModifier !== 1 && <Text style={{ fontSize: "16px", textAlign: 'center' }} color="#009500" bold>
+              BONUS XP: {xpModifier}x
+            </Text>}
           </Flex>
           {/*           <Flex justifyContent="center" style={{ width: '100%' }} mb='2vh'>
             {buyLink}

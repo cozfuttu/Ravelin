@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Modal, Button, useMatchBreakpoints } from "uikit";
+import { Modal, Button, useMatchBreakpoints, Text } from "uikit";
 import ModalActions from "components/ModalActions";
 import getCombatData, {
   INITIAL_FIGHTER_HEALTH,
@@ -19,6 +19,9 @@ import MissionStatusBar from "./MissionStatusBar";
 
 interface GameInfoModalProps {
   missionResult: string;
+  reward: string;
+  rewardTokenSymbol: string;
+  hunterName: string;
   onCloseModal?: () => void;
   onDismiss?: () => void;
 }
@@ -51,6 +54,9 @@ const INITIAL_TIME_REMAINING =
 
 const GameConclusionModal: React.FC<GameInfoModalProps> = ({
   missionResult,
+  reward,
+  rewardTokenSymbol,
+  hunterName,
   onCloseModal,
   onDismiss,
 }) => {
@@ -59,8 +65,6 @@ const GameConclusionModal: React.FC<GameInfoModalProps> = ({
 
   const { isXl } = useMatchBreakpoints();
   const isMobile = isXl === false;
-
-  console.log("asdsad", isMobile);
 
   useEffect(() => {
     const _combatData = getCombatData(missionResult);
@@ -88,16 +92,20 @@ const GameConclusionModal: React.FC<GameInfoModalProps> = ({
     }
   };
 
+  const combatFinished = combatIndex + 1 === combatState.length
+
   const gifSrc = combatState?.length
     ? `/images/hunter/missionGifs/${combatState[combatIndex].animationName}.webp`
     : "";
+
+  const rewardResult = (missionResult === "2" ? "Mediocre Success:" : missionResult === "3" ? "Success: " : missionResult === "4" ? "Great Success: " : "You lost. RIP ") + `${missionResult !== "1" ? reward + ' ' + rewardTokenSymbol.toUpperCase() : hunterName}`
 
   return (
     <Container>
       <Modal
         title="Mission Result"
         onDismiss={handleCloseModal}
-        bodyPadding="12px 12px"
+        bodyPadding="12px 32px"
       >
         {!isMobile ? (
           <div>
@@ -119,7 +127,7 @@ const GameConclusionModal: React.FC<GameInfoModalProps> = ({
                     ? combatState[combatIndex].newHealths[0]
                     : INITIAL_FIGHTER_HEALTH
                 }
-                hunterName="Hunter"
+                hunterName={hunterName}
                 attackStyle={
                   combatState?.length ? combatState[combatIndex].id : null
                 }
@@ -167,15 +175,16 @@ const GameConclusionModal: React.FC<GameInfoModalProps> = ({
             src={gifSrc}
             alt="h"
             loading="eager"
-            hidden={combatIndex + 1 === combatState.length}
+            hidden={combatFinished}
+            style={{ maxWidth: isMobile && "320px" }}
           />
           <img
-            src={`/images/hunter/missionGifs/${
-              missionResult === "1" ? "HunterEndDead" : "HunterEndAlive"
-            }.webp`}
+            src={`/images/hunter/missionGifs/${missionResult === "1" ? "HunterEndDead" : "HunterEndAlive"
+              }.webp`}
             alt="haa"
             loading="eager"
-            hidden={combatIndex + 1 < combatState.length}
+            hidden={!combatFinished}
+            style={{ maxWidth: isMobile && "320px" }}
           />
         </div>
 
@@ -220,6 +229,7 @@ const GameConclusionModal: React.FC<GameInfoModalProps> = ({
         <ModalActions>
           <Button onClick={handleCloseModal}>Close</Button>
         </ModalActions>
+        {!isMobile && <Text bold color={missionResult === "1" ? "#ff2121" : "#00d200"} style={{ opacity: combatFinished ? "1" : "0", transition: "all 500ms linear", position: "absolute", right: "64px", bottom: "64px" }}>{rewardResult}</Text>}
       </Modal>
     </Container>
   );

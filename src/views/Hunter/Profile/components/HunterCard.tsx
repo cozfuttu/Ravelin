@@ -78,9 +78,11 @@ const HunterCard = () => {
         <Text color="#2D3A4A">This hunter is on a hunt for various tokens.</Text>
         <Flex justifyContent="space-between" alignItems="center">
           <Text color="#2D3A4A" bold>Price: </Text>
-          <Text color="#2D3A4A" bold style={{ display: "flex", alignItems: "center" }}>
+          <Text color="#2D3A4A" bold fontSize="15px" style={{ display: "flex", alignItems: "center" }}>
             {hunterPrice}&nbsp;{" "}
-            <img src="/images/icons/rav.png" width={32} alt="RAV" />
+            <img src="/images/icons/rav.png" width={24} alt="RAV" />
+            <img src="/images/icons/wada.png" width={24} alt="WADA" style={{ marginLeft: '-8px', marginRight: "8px" }} />
+            Occam RAV-mADA LP
           </Text>
         </Flex>
         <CardActions account={account} />

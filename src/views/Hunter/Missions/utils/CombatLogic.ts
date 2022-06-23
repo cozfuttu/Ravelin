@@ -62,6 +62,19 @@ const getRandomCombatData = (
 
     const { id, minValue, maxValue, animationName } =
       getRandomFightTurnData(attackerIndex);
+
+    // If two grenade or bug attack animations come back to back, the video loop gets weird. To fix this, if the last two combat datas were "Hunter Grenade", the loop continues.
+
+    const isLastTwoCombatGrenade =
+      combatDataArray[combatDataArray.length - 1]?.id === "grenade" &&
+      id === "grenade";
+
+    const isLastTwoCombatBugAttack =
+      combatDataArray[combatDataArray.length - 1]?.id === "takeDamage" &&
+      id === "takeDamage";
+
+    if (isLastTwoCombatGrenade || isLastTwoCombatBugAttack) continue;
+
     const valueChange =
       minValue || maxValue
         ? minValue + getRandomNumber(maxValue - minValue + 1)

@@ -168,6 +168,7 @@ export interface Hunter {
   missions: HunterMissionData[];
   hunterPrice: number;
   hunterPaidToken: string;
+  pause: boolean;
 }
 
 // Slices states

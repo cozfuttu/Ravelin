@@ -1,10 +1,7 @@
-import BigNumber from 'bignumber.js'
 import React from 'react'
 import styled from 'styled-components'
 import { Heading, Link, Text } from 'uikit'
-import AttentionIcon from 'views/Home/components/AttentionIcon'
 import InterstellarCard, { InterstellarWithStakedValue } from './InterstellarCard'
-import LPCard, { FarmWithStakedValue } from './LPCard'
 
 const Background = styled.div`
   display: flex;
@@ -48,7 +45,7 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
 
   return (
     <Background>
-      <Heading color="#000" style={{ fontSize: '48px', textDecoration: 'underline', display: 'flex', alignItems: 'center', marginTop: '0', textAlign: 'center' }}><Link href="https://adapools.org/pool/b42ea10739065e30e388d4781a7f5a446c3a31343c87dcf26750f83d"><img src="images/icons/trustpool.webp" width={125} /></Link>TRUST POOL </Heading>
+      <Heading color="#000" style={{ fontSize: '48px', textDecoration: 'underline', display: 'flex', alignItems: 'center', marginTop: '0', textAlign: 'center' }}><Link href="https://adapools.org/pool/b42ea10739065e30e388d4781a7f5a446c3a31343c87dcf26750f83d"><img src="images/icons/trustpool.webp" width={125} alt="TRUST Pool" /></Link>TRUST POOL </Heading>
       <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Powered by Cardano, TRUST is the official pool of TRUST fi. Our future mission is to bring value by providing more liquidity to the Cardano and Milkomeda blockchain.</Text>
       <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ display: 'flex', alignItems: 'center', gap: '32px', textAlign: 'center' }} >The mADA rewards from the pool below are provided by TRUST Pool.</Text>
       <Cards>

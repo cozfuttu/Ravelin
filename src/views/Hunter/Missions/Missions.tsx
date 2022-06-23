@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import WidePage from "components/layout/WidePage";
-import { Button, Spinner, Text, useModal } from "uikit";
+import { Button, Text, useModal } from "uikit";
 import { useHunter } from "state/hooks";
 import MissionCard from "./components/MissionCard";
 import { useWallet } from "@binance-chain/bsc-use-wallet";
 import { isDev } from "config/constants/addresses";
 import MissionAddModal from "./components/MissionAddModal";
 import { Triangle } from "react-loader-spinner";
+import CountDown from "./components/CountDown";
 
 const Cards = styled.div`
   display: flex;
@@ -70,6 +71,7 @@ const Missions = () => {
     <>
       <BackgroundImg src="images/hunter/PGHBG.webp" alt="Hunter Background" />
       <WidePage>
+        <CountDown />
         {isDeveloper && (
           <Button size="sm" onClick={onShowMissionAddModal}>
             Add Mission

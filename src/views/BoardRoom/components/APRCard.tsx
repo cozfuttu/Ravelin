@@ -25,7 +25,7 @@ const APRCard: React.FC<CardProps> = ({ masonry, reserve, twap }) => {
 
   const circSupplyRav = cakeTotalSupply ? cakeTotalSupply.minus(cakeBurnedSupply).div(1e18).toNumber() : 0
   const modifier = rbondTotalSupply?.isGreaterThan(reserve) ? 0.35 : 1
-  const isAbovePeg = new BigNumber(twap).div(1e18).isGreaterThan(1.01)
+  //  const isAbovePeg = new BigNumber(twap).div(1e18).isGreaterThan(1.01)
 
   let expansionRate: number;
   if (circSupplyRav < EXPANSION_BREAKPOINTS[0]) expansionRate = 0.045

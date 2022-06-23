@@ -70,7 +70,7 @@ const PurchaseRBondCard: React.FC<Props> = ({ treasury }) => {
   )
 
   const renderApprovalOrPurchaseButton = () => {
-    return isApproved ? <Button disabled={!isRbondAvailable} size="sm" onClick={onPresentPurchase}>Purchase</Button> : (
+    return isApproved ? <Button disabled size="sm" onClick={onPresentPurchase}>Finalized!</Button> : (
       <Button mt="16px" size='sm' disabled={requestedApproval} onClick={handleApprove}>
         Approve Contract
       </Button>

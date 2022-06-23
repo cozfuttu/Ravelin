@@ -20,7 +20,7 @@ const Grid = styled.div`
   max-width: 688px;
 
   @media (max-width: 1080px) {
-    grid-template-rows: 200px 200px;
+    grid-template-rows: 150px 200px;
     grid-template-columns: inherit;
   }
 `;
@@ -67,7 +67,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
   const { hunterNextPlayTime: nextPlayTime } = missionData.find(
     (missiond) => missiond.missionId === mission.missionId
   );
-  const { requiredRarity, price } = mission;
+  const { requiredRarity, price, playableWith } = mission;
   const {
     dataSavingKey,
     missionStartTime,
@@ -85,14 +85,6 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
 
   const isHunterReadyForNextMission = nextPlayTime * 1000 <= Date.now();
 
-  console.log(
-    "ishunterready: ",
-    hunterOnMission,
-    isLastMissionViewed,
-    isLastMissionReadyToReveal,
-    mstn,
-  );
-
   useEffect(() => {
     if (
       !isLastMissionViewed &&
@@ -100,7 +92,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
       hunterOnMission
     ) {
       setDisabled(false)
-      setButtonText("Mission Result");
+      setButtonText("Launch Mission (no cost)");
     }
 
     else if (
@@ -109,7 +101,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
       hunterOnMission
     ) {
       setButtonText(
-        `${timeLeftForReveal(currentTimeMilis, mstn)} left to finish the mission.`
+        `Arriving Destination ${timeLeftForReveal(currentTimeMilis, mstn)}`
       );
       setDisabled(true);
     }
@@ -120,7 +112,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
     }
 
     else if (tokenBalance < price) {
-      setButtonText("You don't have enough tokens!");
+      setButtonText("Not enough tokens!");
       setDisabled(true);
     }
 
@@ -131,21 +123,21 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
 
     else if (rarity < requiredRarity) {
       setButtonText(
-        "Your Hunter's rarity is not enough to start this mission!"
+        "Hunter level is low."
       );
       setDisabled(true);
     }
 
     else if (!isHunterReadyForNextMission) {
       setButtonText(
-        `You need to wait ${getTimeLeftForNextMission(currentTimeMilis, nextPlayTime)} to start this mission again.`
+        `Cooldown ${getTimeLeftForNextMission(currentTimeMilis, nextPlayTime)}`
       );
       setDisabled(true);
     }
 
     else {
       setDisabled(false)
-      setButtonText("Start Mission");
+      setButtonText(`Equip Hunter (${price} ${playableWith.toUpperCase()})`);
     }
   }, [
     isLastMissionViewed,
@@ -154,6 +146,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
     isRewardFinished,
     tokenBalance,
     price,
+    playableWith,
     hasToken,
     rarity,
     requiredRarity,
@@ -270,7 +263,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
               }}
               disabled={disabled || pendingTx}
               size="md"
-              style={{ maxWidth: "250px" }}
+              style={{ maxWidth: isMobile ? "170px" : "260px" }}
             >
               {buttonText}
             </Button>

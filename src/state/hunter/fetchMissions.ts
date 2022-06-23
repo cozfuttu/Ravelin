@@ -5,7 +5,7 @@ import polygalacticABI from "config/abi/polygalactic.json";
 import erc20ABI from "config/abi/erc20.json";
 // import gameABI from 'config/abi/game.json'
 import multicall from "utils/multicall";
-import { getBusdAddress, getHunterAddress } from "utils/addressHelpers";
+import { getHunterAddress } from "utils/addressHelpers";
 import { tokenAddresses, lpAddresses } from "config/constants/addresses";
 import getMissionDetails from "utils/getMissionDetails";
 
@@ -40,21 +40,27 @@ const fetchMissions = async () => {
     {
       address: polygalacticAddress,
       name: "missionAmount",
-    }
+    },
+    {
+      address: polygalacticAddress,
+      name: "pause",
+    },
   ];
 
-  const [hunterPrice, hunterPaidToken, missionAmount] = await multicall(polygalacticABI, hunterPriceCall);
+  const [hunterPrice, hunterPaidToken, missionAmount, pause] = await multicall(
+    polygalacticABI,
+    hunterPriceCall
+  );
   const missionAmountNumber = new BigNumber(missionAmount[0]._hex).toNumber();
 
-  const missionIds = []
-  let i = 1
+  const missionIds = [];
+  let i = 1;
   for (i; i <= missionAmountNumber; i++) {
-    missionIds.push(i)
+    missionIds.push(i);
   }
 
   const data = await Promise.all(
     missionIds.map(async (missionId) => {
-
       const [missionInfo] = await multicall(polygalacticABI, [
         {
           address: polygalacticAddress,
@@ -81,8 +87,8 @@ const fetchMissions = async () => {
         imageUri,
         playableWith,
         gain,
-        lpAddressOfPaidToken,
-        lpAddressOfEarnedToken,
+        /*         lpAddressOfPaidToken,
+        lpAddressOfEarnedToken, */
       } = getMissionDetails(needRarity.toNumber(), paidToken, earnedToken);
 
       const tokenCalls = [
@@ -110,10 +116,10 @@ const fetchMissions = async () => {
       const priceFormatted = cost / 10 ** paidTokenDecimals;
       const totalRewardFormatted = totalReward / 10 ** earnedTokenDecimals;
 
-      let paidTokenPriceUsdc;
+      /*       let paidTokenPriceUsdc;
       let earnedTokenPriceUsdc;
 
-      if (missionId == 0) {
+      if (missionId === 0) {
         const [
           paidTokenAmount,
           paidTokenUsdcAmount,
@@ -198,7 +204,7 @@ const fetchMissions = async () => {
         paidTokenPriceUsdc * (cost / 10 ** paidTokenDecimals);
 
       const earnedTokenPriceUsdcTimesReward =
-        earnedTokenPriceUsdc * (reward / 10 ** earnedTokenDecimals);
+        earnedTokenPriceUsdc * (reward / 10 ** earnedTokenDecimals); */
 
       const [balanceOfTokenInPolygalacticContract] = await multicall(erc20ABI, [
         {
@@ -210,7 +216,7 @@ const fetchMissions = async () => {
 
       const balanceOfTokenInPolygalacticContractFormatted =
         balanceOfTokenInPolygalacticContract / 10 ** earnedTokenDecimals;
-
+      /* 
       const TRY_AMOUNT = 1000;
       const MEDIOCRE_SUCCESS = 27.6;
       const SUCCESS = 22.02;
@@ -222,7 +228,7 @@ const fetchMissions = async () => {
       const profitPercentage =
         balanceOfTokenInPolygalacticContractFormatted <= rewardFormatted * 24
           ? 0
-          : (rewardTotal / costTotal) * 100 - 100;
+          : (rewardTotal / costTotal) * 100 - 100; */
 
       const [cooldown, canBeThey] = await multicall(polygalacticABI, [
         {
@@ -256,18 +262,23 @@ const fetchMissions = async () => {
         totalTry: totalTry.toNumber(),
         totalSuccess: totalSuccess.toNumber(),
         totalReward: totalRewardFormatted,
-        paidTokenPriceUsdc: paidTokenPriceUsdc.toFixed(3),
-        earnedTokenPriceUsdc: earnedTokenPriceUsdc.toFixed(3),
+        // paidTokenPriceUsdc: paidTokenPriceUsdc.toFixed(3),
+        // earnedTokenPriceUsdc: earnedTokenPriceUsdc.toFixed(3),
         paidTokenDecimals,
         earnedTokenDecimals,
         balanceOfTokenInContract: balanceOfTokenInPolygalacticContractFormatted,
         cooldown: cooldown / 1,
-        profitPercentage,
+        // profitPercentage,
         canBeThey: canBeThey[0],
       };
     })
   );
-  return { data, hunterPrice: hunterPrice / 1e18, hunterPaidToken: hunterPaidToken[0] };
+  return {
+    data,
+    hunterPrice: hunterPrice / 1e18,
+    hunterPaidToken: hunterPaidToken[0],
+    pause: pause[0],
+  };
 };
 
 export default fetchMissions;

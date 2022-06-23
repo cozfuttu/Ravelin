@@ -74,7 +74,7 @@ interface Props {
 const MenuMobile: React.FC<Props> = ({ onClose, isOpen }) => {
   const [items, setItems] = useState(config);
   useEffect(() => {
-    if (isOpen == false) return;
+    if (isOpen === false) return;
     setItems(config);
   }, [isOpen]);
   return (
