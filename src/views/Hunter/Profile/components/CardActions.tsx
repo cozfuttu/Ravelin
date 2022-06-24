@@ -27,6 +27,9 @@ const CardActions: React.FC<NftCardActionsProps> = ({ account }) => {
   const isApproved = new BigNumber(allowanceHunter).isGreaterThan(0);
 
   const cakeBalance = getBalanceNumber(useTokenBalance(hunterPaidToken));
+
+  console.log(hunterPaidToken)
+
   const canUserAffordHunter = cakeBalance >= hunterPrice;
 
   const handleApprove = useCallback(async () => {
@@ -50,7 +53,7 @@ const CardActions: React.FC<NftCardActionsProps> = ({ account }) => {
       >
         {!pause ? canUserAffordHunter
           ? "Buy Hunter"
-          : `You need ${hunterPrice} RAV to buy a hunter.`
+          : `You need ${hunterPrice} RAV-mADA Occam LP to buy a hunter.`
           : "Paused!"}
       </Button>
     ) : (

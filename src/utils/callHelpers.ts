@@ -195,7 +195,7 @@ export const startMission = async (
     .on("transactionHash", (txhash: string) => {
       return txhash;
     })
-    .on("error", (error: Error, receipt: Object) => { });
+    .on("error", (error: Error, receipt: Object) => {});
   return aaa;
 };
 
@@ -206,18 +206,87 @@ export const revealMission = async (gameContract, account) => {
     .on("transactionHash", (txhash: string) => {
       return txhash;
     })
-    .on("error", (error: Error, receipt: Object) => { });
+    .on("error", (error: Error, receipt: Object) => {});
   return aaa;
 };
 
 export const addMission = async (
   gameContract,
-  _missionId: string, _multiple: string, _needRarity: string, _xp: string, _doNotLoseXp: string, _cost: string, _reward: string, _paidToken: string, _earnedToken: string, _costAddress: string,
+  _missionId: string,
+  _multiple: string,
+  _needRarity: string,
+  _xp: string,
+  _doNotLoseXp: string,
+  _cost: string,
+  _reward: string,
+  _paidToken: string,
+  _earnedToken: string,
+  _costAddress: string,
   account
 ) => {
-  console.log('cost: ', _cost, 'reward: ', _reward)
+  console.log("cost: ", _cost, "reward: ", _reward);
   return await gameContract.methods
-    .addMission(_missionId, _multiple, _needRarity, _xp, _doNotLoseXp, _cost, _reward, _paidToken, _earnedToken, _costAddress)
+    .addMission(
+      _missionId,
+      _multiple,
+      _needRarity,
+      _xp,
+      _doNotLoseXp,
+      _cost,
+      _reward,
+      _paidToken,
+      _earnedToken,
+      _costAddress
+    )
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};
+
+export const setMission = async (
+  gameContract,
+  _missionId: string,
+  _multiple: string,
+  _needRarity: string,
+  _xp: string,
+  _doNotLoseXp: string,
+  _cost: string,
+  _reward: string,
+  _paidToken: string,
+  _earnedToken: string,
+  _costAddress: string,
+  account
+) => {
+  return await gameContract.methods
+    .setMission(
+      _missionId,
+      _multiple,
+      _needRarity,
+      _xp,
+      _doNotLoseXp,
+      _cost,
+      _reward,
+      _paidToken,
+      _earnedToken,
+      _costAddress
+    )
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};
+
+export const setTokenAllow = async (
+  gameContract,
+  _token1: string,
+  _token2: string,
+  _cooldown: string,
+  _token1And2: boolean,
+  account
+) => {
+  return await gameContract.methods
+    .setTokenAllow(_token1, _token2, _cooldown, _token1And2)
     .send({ from: account, gasPrice: "100000000000" })
     .on("transactionHash", (tx) => {
       return tx.transactionHash;

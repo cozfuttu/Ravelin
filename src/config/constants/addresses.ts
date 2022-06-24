@@ -3,13 +3,14 @@ const devAddresses = [
   "0x138A31Ff3549adD7f31ecf4026F19C511ED675D5",
 ];
 
-export const isDev = (account: string) => devAddresses.find((address) => account === address) !== undefined
+export const isDev = (account: string) =>
+  devAddresses.find((address) => account === address) !== undefined;
 
 export const tokenAddresses = {
   rav: "0x9B7c74Aa737FE278795fAB2Ad62dEFDbBAedFBCA",
   rshare: "0xD81E377E9cd5093CE752366758207Fc61317fC70",
   rbond: "0xf1F1E08844E9AC3DadcBba349D6D93F1FCaC651f",
-  mADA: "0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9",
+  wADA: "0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9",
   multiUSDC: "0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
   multiUSDT: "0x80a16016cc4a2e6a2caca8a4a498b1699ff0f844",
   multiOCC: "0x461d52769884ca6235B685EF2040F47d30C94EB5",

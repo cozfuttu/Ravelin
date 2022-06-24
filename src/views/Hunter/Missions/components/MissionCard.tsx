@@ -8,6 +8,7 @@ import { HunterMissionData } from "state/types";
 import CardActions from "./CardActions";
 import calculateCooldown from "views/Hunter/utils/calculateCooldown";
 import calculateRewards from "views/Hunter/utils/calculateRewards";
+import { isDev } from "config/constants/addresses";
 
 const NCard = styled.div`
   border-radius: 12px;
@@ -55,7 +56,7 @@ interface MissionCardProps {
   account: string;
 }
 
-const REWARD_LIMIT_MULTIPLIER = 24;
+const REWARD_LIMIT_MULTIPLIER = 8;
 
 const MissionCard: React.FC<MissionCardProps> = memo(
   ({ missionInfo, account }) => {
@@ -70,7 +71,8 @@ const MissionCard: React.FC<MissionCardProps> = memo(
       cooldown,
       imageUri,
       requiredRarity,
-      xp
+      xp,
+      missionId
     } = missionInfo;
     const priceTokenName = playableWith.toUpperCase() || "";
     const rewardTokenName = gain.toUpperCase() || "";
@@ -95,9 +97,19 @@ const MissionCard: React.FC<MissionCardProps> = memo(
       ? `${Number(price).toLocaleString("en", {
         maximumFractionDigits: 5,
       })} ${priceTokenName}`
-      : "-";
+      : "Free!";
+
+    const rewardLeftFormatted =
+      Number(isRewardFinished ? 0 : rewardLeft) >= 1e9
+        ? `${rewardLeft / 1e9} Bil ${rewardTokenName}`
+        : rewardLeft
+          ? `${Number(isRewardFinished ? 0 : rewardLeft).toLocaleString("en", {
+            maximumFractionDigits: 5,
+          })} ${rewardTokenName}`
+          : "-";
 
     const xpModifier = xp / (requiredRarity * 10)
+    const isDeveloper = isDev(account);
 
     return (
       <NCard>
@@ -110,6 +122,24 @@ const MissionCard: React.FC<MissionCardProps> = memo(
         </Heading>
         <Divider />
         <InfoContainer>
+          {isDeveloper &&
+            <Flex justifyContent="space-between">
+              <Text
+                style={{ fontSize: "16px", textAlign: "start" }}
+                color="#2D3A4A"
+                bold
+              >
+                Mission Id:
+              </Text>
+              <Text
+                color="#00649B"
+                bold
+                style={{ fontSize: "16px", textAlign: "end" }}
+              >
+                {missionId}
+              </Text>
+            </Flex>
+          }
           <Flex justifyContent="space-between">
             <Text
               style={{ fontSize: "16px", textAlign: "start" }}
@@ -186,6 +216,20 @@ const MissionCard: React.FC<MissionCardProps> = memo(
               {totalRewardFormatted}
             </Text>
           </Flex>
+          {isDeveloper &&
+            <Flex justifyContent="space-between" style={{ width: "100%" }}>
+              <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
+                Reward Left:
+              </Text>
+              <Text
+                color="#00649B"
+                bold
+                style={{ fontSize: "16px", textAlign: "end" }}
+              >
+                {rewardLeftFormatted}
+              </Text>
+            </Flex>
+          }
           <Flex justifyContent="space-between" style={{ width: "100%" }}>
             <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
               Cooldown:

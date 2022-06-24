@@ -80,7 +80,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
 
   const { onStart } = useStartPolygalacticHunterMission(
     tokenId,
-    requiredRarity
+    mission.missionId
   );
 
   const isHunterReadyForNextMission = nextPlayTime * 1000 <= Date.now();
@@ -169,6 +169,7 @@ const GameWarningModal: React.FC<GameInfoModalProps> = ({
       !isRewardFinished &&
       isHunterReadyForNextMission
     ) {
+      console.log('starting')
       await onStart();
       localStorage.setItem(dataSavingKey, "" + Math.floor(Date.now() / 1000));
       setHunterOnMission(true)

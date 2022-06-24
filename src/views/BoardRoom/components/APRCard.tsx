@@ -25,7 +25,7 @@ const APRCard: React.FC<CardProps> = ({ masonry, reserve, twap }) => {
 
   const circSupplyRav = cakeTotalSupply ? cakeTotalSupply.minus(cakeBurnedSupply).div(1e18).toNumber() : 0
   const modifier = rbondTotalSupply?.isGreaterThan(reserve) ? 0.35 : 1
-  //  const isAbovePeg = new BigNumber(twap).div(1e18).isGreaterThan(1.01)
+  const isAbovePeg = new BigNumber(twap).div(1e18).isGreaterThan(1.01)
 
   let expansionRate: number;
   if (circSupplyRav < EXPANSION_BREAKPOINTS[0]) expansionRate = 0.045
@@ -50,7 +50,7 @@ const APRCard: React.FC<CardProps> = ({ masonry, reserve, twap }) => {
   const dailyApy = apy.div(365)
 
   return (
-    <Card heading='APR' value={`${apy.times(new BigNumber(100)).toFormat(2)}%`} secondaryValue={`${dailyApy.times(100).toFormat(2)}% Daily`} />
+    <Card heading='APR' value={`${apy.times(new BigNumber(100)).toFormat(2)}%`} secondaryValue={isAbovePeg ? `${dailyApy.times(100).toFormat(2)}% Daily` : "Active when TWAP >1.01"} />
   )
 }
 

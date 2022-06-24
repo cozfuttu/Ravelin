@@ -85,7 +85,7 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, isMobile }) => {
 
   const { stakeTokenSymbol, rewardTokenSymbol, stakedTokenAmount, stakeTokenPrice, apy, rewardTokenPrice, startBlock, endBlock } = interstellar
 
-  const farmImage = rewardTokenSymbol.toLowerCase()
+  const farmImage = stakeTokenSymbol.toLowerCase()
 
   const totalValue: BigNumber = useMemo(() => {
     if (!stakedTokenAmount) {
@@ -141,7 +141,7 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, isMobile }) => {
       </Col>
       <Col>
         <Cont>
-          <Image src={`images/icons/${farmImage}.png`} />
+          <Image src={`images/icons/${farmImage}.png`} style={{ width: interstellar.isStakeLP ? '128px' : '80px' }} />
           {interstellar.lpSource && <Tag>{interstellar.lpSource + " LP"}</Tag>}
         </Cont>
         <Button size='sm' style={{ alignSelf: 'flex-end' }} onClick={onPresentinterstellarView}>VIEW</Button>

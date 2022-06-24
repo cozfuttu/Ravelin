@@ -67,15 +67,33 @@ const Missions = () => {
     <MissionAddModal currentMissionId={missions.length} />,
     true
   );
+
+  const [onShowMissionSetModal] = useModal(
+    <MissionAddModal currentMissionId={missions.length} isMissionSet />,
+    true
+  );
+
+  const [onShowCooldownSetModal] = useModal(
+    <MissionAddModal currentMissionId={missions.length} isCooldown />,
+    true
+  );
+
   return (
     <>
       <BackgroundImg src="images/hunter/PGHBG.webp" alt="Hunter Background" />
       <WidePage>
-        <CountDown />
         {isDeveloper && (
-          <Button size="sm" onClick={onShowMissionAddModal}>
-            Add Mission
-          </Button>
+          <>
+            <Button size="sm" onClick={onShowMissionAddModal}>
+              Add Mission
+            </Button>
+            <Button size="sm" onClick={onShowMissionSetModal}>
+              Set Mission
+            </Button>
+            <Button size="sm" onClick={onShowCooldownSetModal}>
+              Set Cooldown
+            </Button>
+          </>
         )}
         <TextContainer>
           <Text color="#003E78" fontSize="40px" bold>

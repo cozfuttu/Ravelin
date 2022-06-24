@@ -11,7 +11,7 @@ import getMissionDetails from "utils/getMissionDetails";
 
 const fetchMissions = async () => {
   const polygalacticAddress = getHunterAddress();
-  const { multiUSDC: usdcAddress, mADA: nativeAddress } = tokenAddresses;
+  const { multiUSDC: usdcAddress, wADA: nativeAddress } = tokenAddresses;
   const calls = [
     {
       address: usdcAddress,
