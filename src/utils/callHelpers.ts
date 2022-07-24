@@ -1,6 +1,10 @@
 import BigNumber from "bignumber.js";
 import { ethers } from "ethers";
 
+export const transfer = async (tokenContract, amount, account) => {
+  return await tokenContract.methods.transfer(amount);
+};
+
 export const approve = async (lpContract, masterChefContract, account) => {
   return lpContract.methods
     .approve(masterChefContract.options.address, ethers.constants.MaxUint256)
@@ -291,4 +295,10 @@ export const setTokenAllow = async (
     .on("transactionHash", (tx) => {
       return tx.transactionHash;
     });
+};
+
+export const getPastEvent = async (contract, eventName, options?) => {
+  return await contract.getPastEvents(eventName, { ...options }, (events) => {
+    return events;
+  });
 };
