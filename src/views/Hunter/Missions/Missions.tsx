@@ -8,7 +8,6 @@ import { useWallet } from "@binance-chain/bsc-use-wallet";
 import { isDev } from "config/constants/addresses";
 import MissionAddModal from "./components/MissionAddModal";
 import { Triangle } from "react-loader-spinner";
-import CountDown from "./components/CountDown";
 
 const Cards = styled.div`
   display: flex;

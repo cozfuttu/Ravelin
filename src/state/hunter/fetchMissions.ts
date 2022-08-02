@@ -6,27 +6,10 @@ import erc20ABI from "config/abi/erc20.json";
 // import gameABI from 'config/abi/game.json'
 import multicall from "utils/multicall";
 import { getHunterAddress } from "utils/addressHelpers";
-import { tokenAddresses, lpAddresses } from "config/constants/addresses";
 import getMissionDetails from "utils/getMissionDetails";
 
 const fetchMissions = async () => {
   const polygalacticAddress = getHunterAddress();
-  const { multiUSDC: usdcAddress, wADA: nativeAddress } = tokenAddresses;
-  const calls = [
-    {
-      address: usdcAddress,
-      name: "balanceOf",
-      params: [lpAddresses.multiusdcMada],
-    },
-    {
-      address: nativeAddress,
-      name: "balanceOf",
-      params: [lpAddresses.multiusdcMada],
-    },
-  ];
-
-  const [usdcAmount, maticAmount] = await multicall(erc20ABI, calls);
-  const maticPrice = (usdcAmount * 1e12) / maticAmount;
 
   const hunterPriceCall = [
     {

@@ -4,7 +4,7 @@ import useTokenBalance from 'hooks/useTokenBalance'
 import { useTransfer } from 'hooks/useTransfer'
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Heading, Link, Text, useModal } from 'uikit'
+import { Button, Link, Text, useModal } from 'uikit'
 import formatAddress from 'utils/formatAddress'
 import DepositModal from 'views/components/DepositModal'
 import InterstellarCard, { InterstellarWithStakedValue } from './InterstellarCard'
@@ -38,11 +38,14 @@ const Transfers = styled.div`
   display: flex;
   flex-direction: column;
   border: 2px solid black;
-  max-height: 300px;
+  max-height: 200px;
   width: 80%;
   padding: 24px;
   text-align: center;
   margin-top: 16px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  gap: 8px;
 `
 
 const Transfer = styled.div`
@@ -63,11 +66,13 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
   const transfersFormatted = transfers.map((transfer) => {
     const { returnValues, blockNumber, blockHash } = transfer
     const depositor = formatAddress(returnValues.from)
-    const amount = parseInt(returnValues.value) / 1e18
+    const amount = (parseInt(returnValues.value) / 1e18).toLocaleString('en', {
+      maximumFractionDigits: 2
+    })
     console.log(transfer)
     return (
       <Transfer key={blockHash}>
-        {depositor} deposited <b style={{ color: 'Highlight' }}>&nbsp;{amount} wADA&nbsp;</b> on block #{blockNumber}
+        {depositor} deposited <b style={{ color: '#158bce' }}>&nbsp;{amount} wADA&nbsp;</b> on block #{blockNumber}
       </Transfer>
     )
   })
@@ -97,7 +102,8 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
       <Text color='#000' fontSize='32px' bold mb="16px" mt={isMobile ? '8px' : '16px'} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Trust Pool Special Campaign</Text>
       <Text color='#000' fontSize='16px' mb="32px" style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Depositing wADA will provide following benefits:</Text>
       <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >-The time of the pool will extend and you can keep farming wADA</Text>
-      <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >- Trust Pool will buyback the same amount of wADA you deposited; thus, the price of RAV will increase</Text>
+      <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >- For each wADA deposit Trust Pool will buyback the same amount RAV; thus, the price of RAV will increase.</Text>
+      <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Every address participating for community deposits is eligible for TRUST token airdrop starting October 15th.</Text>
       <Button onClick={onPresentModal} style={{ backgroundColor: '#d61111' }}>Deposit wADA</Button>
       <Transfers>
         <Text color='#000' fontSize='24px' bold mb="16px" style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Deposits By Community</Text>

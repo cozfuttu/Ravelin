@@ -1,4 +1,4 @@
-import { tokenAddresses, lpAddresses } from "config/constants/addresses";
+import { tokenAddresses } from "config/constants/addresses";
 
 const getMissionDetails = (
   requiredRarity: number,

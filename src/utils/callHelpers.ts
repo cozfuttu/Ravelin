@@ -302,3 +302,12 @@ export const getPastEvent = async (contract, eventName, options?) => {
     return events;
   });
 };
+
+export const adjustInterstellarBlockEnd = async (contract, account) => {
+  return contract.methods
+    .adjustBlockEnd()
+    .send({ from: account, gasPrice: "100000000000" })
+    .on("transactionHash", (tx) => {
+      return tx.transactionHash;
+    });
+};

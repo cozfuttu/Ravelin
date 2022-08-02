@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { fetchMissionDataAsync } from "state/actions";
 import { setTokenAllow } from "utils/callHelpers";
 import { useHunterContract } from "./useContract";
-import BigNumber from "bignumber.js";
 
 export const useSetTokenAllow = () => {
   const dispatch = useDispatch();

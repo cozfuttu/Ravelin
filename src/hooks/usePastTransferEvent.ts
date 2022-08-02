@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getPastEvent } from "utils/callHelpers";
-import { useERC20, useInterstellarContract } from "./useContract";
+import { useERC20 } from "./useContract";
 
 const usePastTranferEvent = (contractAddress: string) => {
   const [result, setResult] = useState([]);

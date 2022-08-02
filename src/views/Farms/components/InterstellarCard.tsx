@@ -1,4 +1,7 @@
+import { useWallet } from '@binance-chain/bsc-use-wallet'
 import BigNumber from 'bignumber.js'
+import { isDev } from 'config/constants/addresses'
+import useAdjustBlockEnd from 'hooks/useAdjustBlockEnd'
 import useCurrentTime from 'hooks/useTimer'
 import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
@@ -83,7 +86,7 @@ interface CardProps {
 
 const InterstellarCard: React.FC<CardProps> = ({ interstellar, isMobile }) => {
 
-  const { stakeTokenSymbol, rewardTokenSymbol, stakedTokenAmount, stakeTokenPrice, apy, rewardTokenPrice, startBlock, endBlock } = interstellar
+  const { stakeTokenSymbol, rewardTokenSymbol, stakedTokenAmount, stakeTokenPrice, apy, rewardTokenPrice, startBlock, endBlock, contractAddress } = interstellar
 
   const farmImage = stakeTokenSymbol.toLowerCase()
 
@@ -128,6 +131,9 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, isMobile }) => {
   const timeDiffStart = lTargetStart.diff(lNow).shiftTo('days', 'hours', 'minutes', 'seconds')
   const isStarted = timeDiffStart.toMillis() < 0
 
+  const { account } = useWallet()
+  const { onAdjust } = useAdjustBlockEnd(contractAddress)
+
   return (
     <Card>
       <Col>
@@ -144,6 +150,9 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, isMobile }) => {
           <Image src={`images/icons/${farmImage}.png`} style={{ width: interstellar.isStakeLP ? '128px' : '80px' }} />
           {interstellar.lpSource && <Tag>{interstellar.lpSource + " LP"}</Tag>}
         </Cont>
+        {
+          isDev(account) && <Button size='sm' style={{ alignSelf: 'flex-end' }} onClick={onAdjust}>Extend</Button>
+        }
         <Button size='sm' style={{ alignSelf: 'flex-end' }} onClick={onPresentinterstellarView}>VIEW</Button>
       </Col>
     </Card>
