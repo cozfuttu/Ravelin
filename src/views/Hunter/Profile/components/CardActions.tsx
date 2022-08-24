@@ -28,8 +28,6 @@ const CardActions: React.FC<NftCardActionsProps> = ({ account }) => {
 
   const cakeBalance = getBalanceNumber(useTokenBalance(hunterPaidToken));
 
-  console.log(hunterPaidToken)
-
   const canUserAffordHunter = cakeBalance >= hunterPrice;
 
   const handleApprove = useCallback(async () => {

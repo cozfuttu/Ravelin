@@ -69,12 +69,13 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
     const amount = (parseInt(returnValues.value) / 1e18).toLocaleString('en', {
       maximumFractionDigits: 2
     })
-    console.log(transfer)
-    return (
-      <Transfer key={blockHash}>
-        {depositor} deposited <b style={{ color: '#158bce' }}>&nbsp;{amount} wADA&nbsp;</b> on block #{blockNumber}
-      </Transfer>
-    )
+    if (returnValues.from !== "0x138A31Ff3549adD7f31ecf4026F19C511ED675D5") {
+      return (
+        <Transfer key={blockHash}>
+          {depositor} deposited <b style={{ color: '#158bce' }}>&nbsp;{amount} wADA&nbsp;</b> on block #{blockNumber}
+        </Transfer>
+      )
+    }
   })
 
   const balance = useTokenBalance(tokenAddresses.wADA)
