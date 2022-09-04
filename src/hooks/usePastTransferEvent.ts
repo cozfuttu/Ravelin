@@ -9,7 +9,12 @@ const usePastTranferEvent = (contractAddress: string) => {
   useEffect(() => {
     const handleFetch = async () => {
       const options = {
-        filter: { to: "0x77aB41738d9dF3d0B42AdD75DC6243db18dcd36C" },
+        filter: {
+          to: [
+            "0x77aB41738d9dF3d0B42AdD75DC6243db18dcd36C",
+            "0xb4690c222D8222fd662aF209FB2298dFFf1c6B04",
+          ],
+        },
         fromBlock: 4500000,
       };
       const result = await getPastEvent(contract, "Transfer", options);

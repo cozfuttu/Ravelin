@@ -216,20 +216,18 @@ const MissionCard: React.FC<MissionCardProps> = memo(
               {totalRewardFormatted}
             </Text>
           </Flex>
-          {isDeveloper &&
-            <Flex justifyContent="space-between" style={{ width: "100%" }}>
-              <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
-                Reward Left:
-              </Text>
-              <Text
-                color="#00649B"
-                bold
-                style={{ fontSize: "16px", textAlign: "end" }}
-              >
-                {rewardLeftFormatted}
-              </Text>
-            </Flex>
-          }
+          <Flex justifyContent="space-between" style={{ width: "100%" }}>
+            <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
+              Reward Left:
+            </Text>
+            <Text
+              color="#00649B"
+              bold
+              style={{ fontSize: "16px", textAlign: "end" }}
+            >
+              {rewardLeftFormatted}
+            </Text>
+          </Flex>
           <Flex justifyContent="space-between" style={{ width: "100%" }}>
             <Text style={{ fontSize: "16px" }} color="#2D3A4A" bold>
               Cooldown:

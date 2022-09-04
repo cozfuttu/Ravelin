@@ -1,5 +1,6 @@
 import BigNumber from "bignumber.js";
 import { ethers } from "ethers";
+import { Contract } from "web3-eth-contract";
 
 export const transfer = async (tokenContract, amount, account) => {
   return await tokenContract.methods.transfer(amount);
@@ -297,7 +298,7 @@ export const setTokenAllow = async (
     });
 };
 
-export const getPastEvent = async (contract, eventName, options?) => {
+export const getPastEvent = async (contract: Contract, eventName, options?) => {
   return await contract.getPastEvents(eventName, { ...options }, (events) => {
     return events;
   });

@@ -69,19 +69,19 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
     const amount = (parseInt(returnValues.value) / 1e18).toLocaleString('en', {
       maximumFractionDigits: 2
     })
-    if (returnValues.from !== "0x138A31Ff3549adD7f31ecf4026F19C511ED675D5") {
-      return (
-        <Transfer key={blockHash}>
-          {depositor} deposited <b style={{ color: '#158bce' }}>&nbsp;{amount} wADA&nbsp;</b> on block #{blockNumber}
-        </Transfer>
-      )
-    }
+    return (
+      <Transfer key={blockHash}>
+        {depositor} deposited <b style={{ color: '#158bce' }}>&nbsp;{amount} wADA&nbsp;</b> on block #{blockNumber}
+      </Transfer>
+    )
   })
 
   const balance = useTokenBalance(tokenAddresses.wADA)
   const { onTransfer } = useTransfer(tokenAddresses.wADA, "0x77aB41738d9dF3d0B42AdD75DC6243db18dcd36C")
+  const { onTransfer: onTransferToLPPool } = useTransfer(tokenAddresses.wADA, "0xb4690c222D8222fd662aF209FB2298dFFf1c6B04")
 
   const [onPresentModal] = useModal(<DepositModal max={balance} decimals={18} onConfirm={onTransfer} tokenName='wADA' />)
+  const [onPresentModal2] = useModal(<DepositModal max={balance} decimals={18} onConfirm={onTransferToLPPool} tokenName='wADA' />)
 
   const FarmCards = interstellarsToDisplayWithApy.map((interstellar) =>
     <InterstellarCard
@@ -105,7 +105,10 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
       <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >-The time of the pool will extend and you can keep farming wADA</Text>
       <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >- For each wADA deposit Trust Pool will buyback the same amount RAV; thus, the price of RAV will increase.</Text>
       <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Every address participating for community deposits is eligible for TRUST token airdrop starting October 15th.</Text>
-      <Button onClick={onPresentModal} style={{ backgroundColor: '#d61111' }}>Deposit wADA</Button>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '16px' }}>
+        <Button onClick={onPresentModal2} style={{ backgroundColor: '#d61111' }}>Deposit wADA to LP Pool</Button>
+        <Button onClick={onPresentModal} style={{ backgroundColor: '#d61111' }}>Deposit wADA to Single Pool</Button>
+      </div>
       <Transfers>
         <Text color='#000' fontSize='24px' bold mb="16px" style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Deposits By Community</Text>
         {transfersFormatted}
