@@ -102,10 +102,16 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
       </Cards>
       <Text color='#000' fontSize='32px' bold mb="16px" mt={isMobile ? '8px' : '16px'} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Trust Pool Special Campaign</Text>
       <Text color='#000' fontSize='16px' mb="32px" style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Depositing wADA will provide following benefits:</Text>
-      <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >-The time of the pool will extend and you can keep farming wADA</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >-The time of the pool will extend and you can keep farming wADA</Text>
       <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >- For each wADA deposit Trust Pool will buyback the same amount RAV; thus, the price of RAV will increase.</Text>
       <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Every address participating for community deposits is eligible for TRUST token airdrop starting October 15th.</Text>
-      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '16px' }}>
+      <Text color='#000' fontSize='16px' mb="32px" bold style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Campaign Milestones:</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Road to 5000 wADA inside the contract = boost 20% more RAV buyback</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Road to 7500 wADA inside the contract = boost 20% more RAV buyback</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Road to 10000 wADA inside the contract = boost 20% more RAV buyback</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Road to 25000 wADA inside the contract = boost 20% more RAV buyback</Text>
+      <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Road to 50000 wADA inside the contract = boost 20% more RAV buyback</Text>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '16px', alignItems: 'center' }}>
         <Button onClick={onPresentModal2} style={{ backgroundColor: '#d61111' }}>Deposit wADA to LP Pool</Button>
         <Button onClick={onPresentModal} style={{ backgroundColor: '#d61111' }}>Deposit wADA to Single Pool</Button>
       </div>
