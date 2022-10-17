@@ -18,7 +18,7 @@ const usePastTranferEvent = (tokenAddress: string, contractAddresses: string[]) 
       setResult(result);
     };
     handleFetch();
-  }, [contract]);
+  }, [contract, contractAddresses]);
 
   return result;
 };
