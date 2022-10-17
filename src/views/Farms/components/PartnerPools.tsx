@@ -43,7 +43,7 @@ const Transfers = styled.div`
   padding: 24px;
   text-align: center;
   margin-top: 16px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   gap: 8px;
 `
@@ -61,27 +61,36 @@ interface CardsProps {
 }
 
 const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isMobile }) => {
-  const transfers = usePastTranferEvent(tokenAddresses.wADA)
+  const transfersWada = usePastTranferEvent(tokenAddresses.wADA, ['0x04bb0e8D204AC7468445b63A5bfAec16b310e7fA'])
+  const transfersTpgx = usePastTranferEvent(tokenAddresses.tpgx, ['0x37e2a5F3f3585F3db70e0fC7d84015C8dca9D18b'])
+  const transfersRav = usePastTranferEvent(tokenAddresses.rav, ['0x8Fc6C4D3B07CAcF14C5eCD193F5513DAFBA6ff53'])
+  const transfers = [...transfersWada, ...transfersTpgx, ...transfersRav].sort((transfer1, transfer2) => transfer1.blockNumber - transfer2.blockNumber)
+  console.log(transfers)
 
   const transfersFormatted = transfers.map((transfer) => {
-    const { returnValues, blockNumber, blockHash } = transfer
+    const { returnValues, blockNumber, blockHash, address } = transfer
     const depositor = formatAddress(returnValues.from)
     const amount = (parseInt(returnValues.value) / 1e18).toLocaleString('en', {
       maximumFractionDigits: 2
     })
+    const tokenName = Object.keys(tokenAddresses).find((tokenSymbol) => tokenAddresses[tokenSymbol] === address).toUpperCase()
     return (
       <Transfer key={blockHash}>
-        {depositor} deposited <b style={{ color: '#158bce' }}>&nbsp;{amount} wADA&nbsp;</b> on block #{blockNumber}
+        {depositor} deposited <b style={{ color: '#158bce' }}>&nbsp;{amount} {tokenName}&nbsp;</b> on block #{blockNumber}
       </Transfer>
     )
   })
 
-  const balance = useTokenBalance(tokenAddresses.wADA)
-  const { onTransfer } = useTransfer(tokenAddresses.wADA, "0x77aB41738d9dF3d0B42AdD75DC6243db18dcd36C")
-  const { onTransfer: onTransferToLPPool } = useTransfer(tokenAddresses.wADA, "0xb4690c222D8222fd662aF209FB2298dFFf1c6B04")
+  const balanceTpgx = useTokenBalance(tokenAddresses.tpgx)
+  const balanceRav = useTokenBalance(tokenAddresses.rav)
+  const balanceWada = useTokenBalance(tokenAddresses.wADA)
+  const { onTransfer: onTransferTpgx } = useTransfer(tokenAddresses.tpgx, "0x37e2a5F3f3585F3db70e0fC7d84015C8dca9D18b")
+  const { onTransfer: onTransferRav } = useTransfer(tokenAddresses.rav, "0x8Fc6C4D3B07CAcF14C5eCD193F5513DAFBA6ff53")
+  const { onTransfer: onTransferWada } = useTransfer(tokenAddresses.wADA, "0x04bb0e8D204AC7468445b63A5bfAec16b310e7fA")
 
-  const [onPresentModal] = useModal(<DepositModal max={balance} decimals={18} onConfirm={onTransfer} tokenName='wADA' />)
-  const [onPresentModal2] = useModal(<DepositModal max={balance} decimals={18} onConfirm={onTransferToLPPool} tokenName='wADA' />)
+  const [onPresentModalTpgx] = useModal(<DepositModal max={balanceTpgx} decimals={18} onConfirm={onTransferTpgx} tokenName='TPGX' />)
+  const [onPresentModalRav] = useModal(<DepositModal max={balanceRav} decimals={18} onConfirm={onTransferRav} tokenName='RAV' />)
+  const [onPresentModalWada] = useModal(<DepositModal max={balanceWada} decimals={18} onConfirm={onTransferWada} tokenName='wADA' />)
 
   const FarmCards = interstellarsToDisplayWithApy.map((interstellar) =>
     <InterstellarCard
@@ -101,19 +110,21 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
         {FarmCards.filter((card) => card.props.interstellar.partnerName === "TRUST Pool")}
       </Cards>
       <Text color='#000' fontSize='32px' bold mb="16px" mt={isMobile ? '8px' : '16px'} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Trust Pool Special Campaign</Text>
-      <Text color='#000' fontSize='16px' mb="32px" style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Depositing wADA will provide following benefits:</Text>
-      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >-The time of the pool will extend and you can keep farming wADA</Text>
-      <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >- For each wADA deposit Trust Pool will buyback the same amount RAV; thus, the price of RAV will increase.</Text>
-      <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Every address participating for community deposits is eligible for TRUST token airdrop starting October 15th.</Text>
+      <Text color='#000' fontSize='16px' mb="32px" style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Community deposits will provide the following benefits:</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >- The time of the pool will extend with each deposit and you can  continue farming.</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >- Every address participating is whitelisted and eligible for airdrops, which are distributed  once per week.</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >- Additional rewards are available for achieving milestones.</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Community deposits to ADA / TPGX  pool will activate RAV buybacks 1:1 ratio.</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Community deposits to RAV /TPGX pool will activate TPGX airdrop to participants 1:1 ratio. </Text>
+      <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Community deposits to TPGX pool will activate RAV buybacks + RSHARE  airdrop to participants 1:1 ratio.</Text>
       <Text color='#000' fontSize='16px' mb="32px" bold style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Campaign Milestones:</Text>
-      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Road to 5000 wADA inside the contract = boost 20% more RAV buyback</Text>
-      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Road to 7500 wADA inside the contract = boost 20% more RAV buyback</Text>
-      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Road to 10000 wADA inside the contract = boost 20% more RAV buyback</Text>
-      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Road to 25000 wADA inside the contract = boost 20% more RAV buyback</Text>
-      <Text color='#000' fontSize='16px' mb="32px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Road to 50000 wADA inside the contract = boost 20% more RAV buyback</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >10.000 TPGX in community deposits = 10% more TPGX rewards on us.</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >20.000 RAV in community deposits = 10% more TPGX rewards on us + 10% more RAV buybacks.</Text>
+      <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >30.000 ADA in community deposits = 20% more TPGX rewards on us + 20% more RAV buybacks.</Text>
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '16px', alignItems: 'center' }}>
-        <Button onClick={onPresentModal2} style={{ backgroundColor: '#d61111' }}>Deposit wADA to LP Pool</Button>
-        <Button onClick={onPresentModal} style={{ backgroundColor: '#d61111' }}>Deposit wADA to Single Pool</Button>
+        <Button onClick={onPresentModalTpgx} style={{ backgroundColor: '#d61111' }}>Deposit TPGX</Button>
+        <Button onClick={onPresentModalRav} style={{ backgroundColor: '#d61111' }}>Deposit RAV</Button>
+        <Button onClick={onPresentModalWada} style={{ backgroundColor: '#d61111' }}>Deposit wADA</Button>
       </div>
       <Transfers>
         <Text color='#000' fontSize='24px' bold mb="16px" style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Deposits By Community</Text>

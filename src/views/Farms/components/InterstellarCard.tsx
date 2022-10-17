@@ -147,7 +147,7 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, isMobile }) => {
       </Col>
       <Col>
         <Cont>
-          <Image src={`images/icons/${farmImage}.png`} style={{ width: interstellar.isStakeLP ? '128px' : '80px' }} />
+          <Image src={`images/icons/${farmImage}.png`} style={{ height: interstellar.isStakeLP ? '60px' : '90px', width: 'auto' }} />
           {interstellar.lpSource && <Tag>{interstellar.lpSource + " LP"}</Tag>}
         </Cont>
         {

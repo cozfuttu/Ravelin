@@ -109,9 +109,19 @@ const FarmModal: React.FC<Props> = ({
     }
   }
 
-  const swapLink = farm?.isTokenOnly || interstellar ? `https://app.occam-x.fi/swap?outputCurrency=${farm ? farm.tokenAddresses[CHAIN_ID] : interstellar.stakeTokenAddress}` : farm?.lpSource === "MilkySwap" ? `https://www.milkyswap.exchange/add/milkADA/${farm.tokenAddresses[CHAIN_ID]}` : `https://app.occam-x.fi/liquidity/add${'/'/*0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9/${farm.lpAddresses[CHAIN_ID] */}`
+  const swapLink = farm
+    ? !farm.isTokenOnly
+      ? farm.lpSource === "MilkySwap"
+        ? `https://www.milkyswap.exchange/add/milkADA/${farm.tokenAddresses[CHAIN_ID]}`
+        : `https://app.occamx.fi/liquidity/add/${farm.quoteTokenAdresses[CHAIN_ID]}/${farm.tokenAddresses[CHAIN_ID]}`
+      : `https://app.occamx.fi/swap/mAda/${farm.tokenAddresses[CHAIN_ID]}`
+    : interstellar
+      ? interstellar.isStakeLP
+        ? `https://app.occamx.fi/liquidity/add/${interstellar.name === "TPGX-mADA/TPGX" ? '0xA325ad468dF2676f195A623899953C192E354AE8/mAda' : interstellar.name === "TPGX-RAV/RAV" ? "0x9B7c74Aa737FE278795fAB2Ad62dEFDbBAedFBCA/0xA325ad468dF2676f195A623899953C192E354AE8" : ""}`
+        : `https://app.occamx.fi/swap/mAda/${interstellar.stakeTokenAddress}`
+      : ""
 
-  const swapText = farm ? farm?.isTokenOnly ? `BUY ${farm?.tokenSymbol}` : `ADD LIQUIDITY ${farm?.lpSymbol}` : `BUY ${interstellar?.stakeTokenSymbol}`
+  const swapText = farm ? farm?.isTokenOnly ? `BUY ${farm?.tokenSymbol}` : `ADD LIQUIDITY ${farm?.lpSymbol}` : interstellar ? interstellar.isStakeLP ? `ADD LIQUIDITY ${interstellar?.stakeTokenSymbol}` : `BUY ${interstellar?.stakeTokenSymbol}` : ''
 
   return (
     <StyledModal>
@@ -122,11 +132,9 @@ const FarmModal: React.FC<Props> = ({
       </ModalHeader>
       <StatisticCards farm={farm} interstellar={interstellar} tvl={tvl} dailyApr={dailyApr} isMobile={isMobile} />
       {farm ? <TokenCards farm={farm} onDismiss={onDismiss} isMobile={isMobile} /> : <TokenCardsInterstellar interstellar={interstellar} onDismiss={onDismiss} isMobile={isMobile} />}
-      {
-        <a href={swapLink} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: isMobile ? '32px' : '16px', textAlign: 'center' }}>
-          <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: isMobile ? '80%' : '100%' }}>{swapText}</Button>
-        </a>
-      }
+      <a href={swapLink} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: isMobile ? '32px' : '16px', textAlign: 'center' }}>
+        <Button size='md' style={{ backgroundColor: '#00fff23c', boxShadow: '0 4px 6px -4px #000', fontSize: '15px', width: isMobile ? '80%' : '100%' }}>{swapText}</Button>
+      </a>
       {!isMobile && <Button size='md' onClick={handleExit} disabled={pending} mt="16px" style={{ background: 'linear-gradient(180deg, rgba(0, 62, 120, 1) 0%, rgba(21, 139, 206, 0.6) 100%)', boxShadow: '0 4px 6px -4px #000' }}>CLAIM {'&'} WITHDRAW</Button>}
       <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog" style={{ position: 'absolute', right: isMobile ? '20px' : '190px', top: !isMobile && '20px' }}>
         <CloseIcon color="primary" style={{ fill: '#fff' }} />
