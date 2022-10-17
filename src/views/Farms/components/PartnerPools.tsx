@@ -109,7 +109,7 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
       <Cards>
         {FarmCards.filter((card) => card.props.interstellar.partnerName === "TRUST Pool")}
       </Cards>
-      <Text color='#000' fontSize='32px' bold mb="16px" mt={isMobile ? '8px' : '16px'} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Trust Pool Special Campaign</Text>
+      <Text color='#000' fontSize='32px' bold mb="16px" mt={isMobile ? '8px' : '16px'} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Trust Pool Community Campaign</Text>
       <Text color='#000' fontSize='16px' mb="32px" style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Community deposits will provide the following benefits:</Text>
       <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >- The time of the pool will extend with each deposit and you can  continue farming.</Text>
       <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >- Every address participating is whitelisted and eligible for airdrops, which are distributed  once per week.</Text>

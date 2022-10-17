@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getPastEvent } from "utils/callHelpers";
 import { useERC20 } from "./useContract";
 
 const usePastTranferEvent = (tokenAddress: string, contractAddresses: string[]) => {
   const [result, setResult] = useState([]);
   const contract = useERC20(tokenAddress);
+  const contractAddressesRef = useRef(contractAddresses)
 
   useEffect(() => {
     const handleFetch = async () => {
       const options = {
         filter: {
-          to: contractAddresses,
+          to: contractAddressesRef.current,
         },
         fromBlock: 6400000,
       };
@@ -18,7 +19,7 @@ const usePastTranferEvent = (tokenAddress: string, contractAddresses: string[]) 
       setResult(result);
     };
     handleFetch();
-  }, [contract, contractAddresses]);
+  }, [contract]);
 
   return result;
 };
