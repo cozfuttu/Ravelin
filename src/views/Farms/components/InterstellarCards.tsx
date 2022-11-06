@@ -22,10 +22,11 @@ interface CardsProps {
 
 const InterstellarCards: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isMobile }) => {
 
-  const ICards = interstellarsToDisplayWithApy.map((interstellar) =>
+  const ICards = interstellarsToDisplayWithApy.map((interstellar, index) =>
     <InterstellarCard
       key={interstellar.contractAddress}
       interstellar={interstellar}
+      index={index}
       isMobile={isMobile}
     />
   )

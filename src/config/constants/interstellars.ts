@@ -65,6 +65,16 @@ const interstellars: InterstellarConfig[] = [
     partnerName: "TRUST Pool",
     partnerWebsite: "",
   },
+  {
+    name: "TPGX/BUSD",
+    contractAddress: "0xbeefcED318866e87c1B549E343C555806979450B",
+    stakeLpAddress: "0x814FfE50952d4D8F0483910Af2B891f03d46BD35",
+    rewardLpAddress: "0xE708fd444CAEf29E2004923cc29Ac4Aef006c9E9",
+    stakeTokenSymbol: "TPGX",
+    rewardTokenSymbol: "BUSD",
+    partnerName: "TRUST Pool",
+    partnerWebsite: "",
+  },
 ];
 
 export default interstellars;

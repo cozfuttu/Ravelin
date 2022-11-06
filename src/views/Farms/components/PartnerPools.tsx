@@ -64,7 +64,8 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
   const transfersWada = usePastTranferEvent(tokenAddresses.wADA, ['0x04bb0e8D204AC7468445b63A5bfAec16b310e7fA'])
   const transfersTpgx = usePastTranferEvent(tokenAddresses.tpgx, ['0x37e2a5F3f3585F3db70e0fC7d84015C8dca9D18b'])
   const transfersRav = usePastTranferEvent(tokenAddresses.rav, ['0x8Fc6C4D3B07CAcF14C5eCD193F5513DAFBA6ff53'])
-  const transfers = [...transfersWada, ...transfersTpgx, ...transfersRav].sort((transfer1, transfer2) => transfer1.blockNumber - transfer2.blockNumber)
+  const transfersBusd = usePastTranferEvent(tokenAddresses.myield, ['0xbeefcED318866e87c1B549E343C555806979450B'])
+  const transfers = [...transfersWada, ...transfersTpgx, ...transfersRav, ...transfersBusd].sort((transfer1, transfer2) => transfer1.blockNumber - transfer2.blockNumber)
   console.log(transfers)
 
   const transfersFormatted = transfers.map((transfer) => {
@@ -84,18 +85,22 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
   const balanceTpgx = useTokenBalance(tokenAddresses.tpgx)
   const balanceRav = useTokenBalance(tokenAddresses.rav)
   const balanceWada = useTokenBalance(tokenAddresses.wADA)
+  const balanceBusd = useTokenBalance(tokenAddresses.busd)
   const { onTransfer: onTransferTpgx } = useTransfer(tokenAddresses.tpgx, "0x37e2a5F3f3585F3db70e0fC7d84015C8dca9D18b")
   const { onTransfer: onTransferRav } = useTransfer(tokenAddresses.rav, "0x8Fc6C4D3B07CAcF14C5eCD193F5513DAFBA6ff53")
   const { onTransfer: onTransferWada } = useTransfer(tokenAddresses.wADA, "0x04bb0e8D204AC7468445b63A5bfAec16b310e7fA")
+  const { onTransfer: onTransferBusd } = useTransfer(tokenAddresses.busd, "0xbeefcED318866e87c1B549E343C555806979450B")
 
   const [onPresentModalTpgx] = useModal(<DepositModal max={balanceTpgx} decimals={18} onConfirm={onTransferTpgx} tokenName='TPGX' />)
   const [onPresentModalRav] = useModal(<DepositModal max={balanceRav} decimals={18} onConfirm={onTransferRav} tokenName='RAV' />)
   const [onPresentModalWada] = useModal(<DepositModal max={balanceWada} decimals={18} onConfirm={onTransferWada} tokenName='wADA' />)
+  const [onPresentModalBusd] = useModal(<DepositModal max={balanceBusd} decimals={18} onConfirm={onTransferBusd} tokenName='BUSD' />)
 
-  const FarmCards = interstellarsToDisplayWithApy.map((interstellar) =>
+  const FarmCards = interstellarsToDisplayWithApy.map((interstellar, index) =>
     <InterstellarCard
       key={interstellar.contractAddress}
       interstellar={interstellar}
+      index={index}
       isMobile={isMobile}
     />
   )
@@ -121,10 +126,11 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
       <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >10.000 TPGX in community deposits = 10% more TPGX rewards on us.</Text>
       <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >20.000 RAV in community deposits = 10% more TPGX rewards on us + 10% more RAV buybacks.</Text>
       <Text color='#000' fontSize='16px' mb="16px" mt={isMobile ? '8px' : "-16px"} style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >30.000 ADA in community deposits = 20% more TPGX rewards on us + 20% more RAV buybacks.</Text>
-      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '16px', alignItems: 'center' }}>
-        <Button onClick={onPresentModalTpgx} style={{ backgroundColor: '#d61111' }}>Deposit TPGX</Button>
-        <Button onClick={onPresentModalRav} style={{ backgroundColor: '#d61111' }}>Deposit RAV</Button>
-        <Button onClick={onPresentModalWada} style={{ backgroundColor: '#d61111' }}>Deposit wADA</Button>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '16px', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <Button onClick={onPresentModalTpgx} style={{ backgroundColor: '#d61111' }}>Deposit TPGX #1</Button>
+        <Button onClick={onPresentModalRav} style={{ backgroundColor: '#d61111' }}>Deposit RAV #2</Button>
+        <Button onClick={onPresentModalWada} style={{ backgroundColor: '#d61111' }}>Deposit wADA #3</Button>
+        <Button onClick={onPresentModalBusd} style={{ backgroundColor: '#d61111' }}>Deposit BUSD #4</Button>
       </div>
       <Transfers>
         <Text color='#000' fontSize='24px' bold mb="16px" style={{ textAlign: 'center', padding: !isMobile && '0 64px' }} >Deposits By Community</Text>

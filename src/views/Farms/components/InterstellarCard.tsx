@@ -81,10 +81,11 @@ export interface InterstellarWithStakedValue extends Interstellar {
 
 interface CardProps {
   interstellar: InterstellarWithStakedValue
+  index: number
   isMobile?: boolean
 }
 
-const InterstellarCard: React.FC<CardProps> = ({ interstellar, isMobile }) => {
+const InterstellarCard: React.FC<CardProps> = ({ interstellar, index, isMobile }) => {
 
   const { stakeTokenSymbol, rewardTokenSymbol, stakedTokenAmount, stakeTokenPrice, apy, rewardTokenPrice, startBlock, endBlock, contractAddress } = interstellar
 
@@ -101,7 +102,7 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, isMobile }) => {
     ? `$${Number(totalValue).toLocaleString('en', { maximumFractionDigits: 0 })}`
     : '-'
 
-  const lpLabel = `EARN ${rewardTokenSymbol}`
+  const lpLabel = `#${index + 1} EARN ${rewardTokenSymbol}`
   const interstellarApyString =
     apy &&
     apy.times(new BigNumber(100)).toNumber().toLocaleString('en', {
