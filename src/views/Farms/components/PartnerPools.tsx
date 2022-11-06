@@ -64,7 +64,7 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
   const transfersWada = usePastTranferEvent(tokenAddresses.wADA, ['0x04bb0e8D204AC7468445b63A5bfAec16b310e7fA'])
   const transfersTpgx = usePastTranferEvent(tokenAddresses.tpgx, ['0x37e2a5F3f3585F3db70e0fC7d84015C8dca9D18b'])
   const transfersRav = usePastTranferEvent(tokenAddresses.rav, ['0x8Fc6C4D3B07CAcF14C5eCD193F5513DAFBA6ff53'])
-  const transfersBusd = usePastTranferEvent(tokenAddresses.myield, ['0xbeefcED318866e87c1B549E343C555806979450B'])
+  const transfersBusd = usePastTranferEvent(tokenAddresses.busd, ['0xbeefcED318866e87c1B549E343C555806979450B'])
   const transfers = [...transfersWada, ...transfersTpgx, ...transfersRav, ...transfersBusd].sort((transfer1, transfer2) => transfer1.blockNumber - transfer2.blockNumber)
   console.log(transfers)
 
