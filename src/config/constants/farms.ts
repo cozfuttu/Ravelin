@@ -160,6 +160,27 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.ADA,
     quoteTokenAdresses: contracts.wbnb,
   },
+  {
+    pid: 5,
+    risk: 5,
+    lpSymbol: "TPGX",
+    isTokenOnly: true,
+    lpAddresses: {
+      97: "",
+      137: getRshareNativeLPAddress(),
+      250: getRshareNativeLPAddress(),
+      2001: "0x814FfE50952d4D8F0483910Af2B891f03d46BD35",
+    },
+    tokenSymbol: "TPGX",
+    tokenAddresses: {
+      97: "",
+      137: getRshareAddress(),
+      250: getRshareAddress(),
+      2001: "0xA325ad468dF2676f195A623899953C192E354AE8",
+    },
+    quoteTokenSymbol: QuoteToken.ADA,
+    quoteTokenAdresses: contracts.wbnb,
+  },
   /*   {
       pid: 6,
       risk: 5,
