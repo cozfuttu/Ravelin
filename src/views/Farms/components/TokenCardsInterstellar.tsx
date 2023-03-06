@@ -85,7 +85,7 @@ const TokenCardsInterstellar: React.FC<Props> = ({ interstellar, onDismiss, isMo
   const tokenStakedUsd = userData?.stakedBalance ? tokenStaked.times(stakeTokenPrice) : new BigNumber(0)
 
   const tokenStakedFormatted = tokenStaked.toFormat(2)
-  const tokenStakedUsdFormatted = tokenStakedUsd.toFormat(2)
+  const tokenStakedUsdFormatted = (tokenStakedUsd).toFormat(2)
 
   const isApproved = new BigNumber(userData?.allowance).isGreaterThan(0)
   const isStaked = new BigNumber(userData?.stakedBalance).isGreaterThan(0)
