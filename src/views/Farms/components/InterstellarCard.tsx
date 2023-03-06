@@ -144,7 +144,7 @@ const InterstellarCard: React.FC<CardProps> = ({ interstellar, index, isMobile }
         <Text color='#9D9D9D' fontSize='14px'>Daily APR: {dailyApr}%</Text>
         <Text color='#9D9D9D' fontSize='14px'>TVL: {totalValueFormated}</Text>
         {!isStarted && <Text color='#9D9D9D' fontSize='14px'>Starts in: {timeDiffStart.toFormat("dd:hh:mm:ss")}</Text>}
-        {timeDiffEnd.days < 99 && isStarted && <Text color={isFinished ? '#af101d' : '#9D9D9D'} fontSize='14px'>{!isFinished && 'Ends in:'} {isFinished ? 'Finished, please withdraw your funds!' : timeDiffEnd.toFormat("dd:hh:mm:ss")}</Text>}
+        {timeDiffEnd.days < 99 && isStarted && <Text color={isFinished ? '#af101d' : '#9D9D9D'} fontSize='14px'>{!isFinished && 'Ends in:'} {isFinished ? interstellar.name === 'TPGX/OCX' ? '' : 'Finished, please withdraw your funds!' : timeDiffEnd.toFormat("dd:hh:mm:ss")}</Text>}
       </Col>
       <Col>
         <Cont>
