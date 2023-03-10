@@ -13,7 +13,7 @@ const usePastTranferEvent = (tokenAddress: string, contractAddresses: string[]) 
         filter: {
           to: contractAddressesRef.current,
         },
-        fromBlock: 6400000,
+        fromBlock: 9272484,
       };
       const result = await getPastEvent(contract, "Transfer", options);
       setResult(result);

@@ -48,7 +48,6 @@ const TokenCard = styled.div`
 
 const Image = styled.img`
   max-width: 80px;
-  border-radius: 50%;
 `
 
 const IconButtonWrapper = styled.div`

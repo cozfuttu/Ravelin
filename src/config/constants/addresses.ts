@@ -32,6 +32,9 @@ export const tokenAddresses = {
   busdt: "0x8930409112B56154d821f395A0Ad1f6e5823Fa00",
 };
 
+/**
+* use multiusdcMada pair if you want to learn mADA price, it has the deepest liquidity.
+*/
 export const lpAddresses = {
   ravMada: "0xd65005ef5964b035B3a2a1E79Ddb4522196532DE",
   rshareMada: "0x73bc306Aa2D393ff5aEb49148b7B2C9a8E5d39c8",
@@ -54,6 +57,8 @@ export const lpAddresses = {
   ceusdcCeusdt: "0xd6410e0b55D5800E10Bf25a6349749A7aaD0F376",
 
   ravRshare: "0xb2a902354579424a0E9f2fcf1f3640DAA8ACD3b2",
+  ravTpgx: "0x263bB4e878ccF169C7ac5af1651a6039bA851d1E",
+  rshareTpgx: "0x53a1cc78bb19eD4aF3590A6aF8482856Aa4eEa12",
 
   tusdtMada: "0x9e45FeD59d4De3b00C0D8BFeB8EC8d7E7c0F115c",
   busdtMada: "0x606fCB906b01f98a16b625F3cb14E636d0E20D44",

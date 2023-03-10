@@ -1,32 +1,13 @@
 import BigNumber from "bignumber.js";
 import erc20 from "config/abi/erc20.json";
+import erc20Lp from "config/abi/erc20LP.json"
 import interstellarAbi from "config/abi/interstellar.json";
 import multicall from "utils/multicall";
-import { getBusdAddress } from "utils/addressHelpers";
 import interstellars from "config/constants/interstellars";
 
 const fetchInterstellars = async () => {
-  const usdcAddress = getBusdAddress();
-  const nativeAddress = "0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9";
-  const nativeUsdcLPAddress = "0xB56964a0617b2b760C8B6D8040e99cda29D5203b";
-  const maticPriceCalls = [
-    {
-      address: usdcAddress,
-      name: "balanceOf",
-      params: [nativeUsdcLPAddress],
-    },
-    {
-      address: nativeAddress,
-      name: "balanceOf",
-      params: [nativeUsdcLPAddress],
-    },
-  ];
-
-  const [usdcAmount, maticAmount] = await multicall(erc20, maticPriceCalls);
-  const maticPrice = (usdcAmount * 1e12) / maticAmount;
   const data = await Promise.all(
     interstellars.map(async (interstellarConfig) => {
-      const isLP = interstellarConfig.isStakeLP;
       const tokenAddressCalls = [
         {
           address: interstellarConfig.contractAddress,
@@ -37,32 +18,35 @@ const fetchInterstellars = async () => {
           name: "rewardToken",
         },
       ];
-      const [stakeTokenAddress, rewardTokenAddress] = await multicall(
+      const [[stakeTokenAddress], [rewardTokenAddress]] = await multicall(
         interstellarAbi,
         tokenAddressCalls
       );
 
+      const isStakeLP = stakeTokenAddress === interstellarConfig.stakeLpAddresses[0];
+      const isRewardLP = rewardTokenAddress === interstellarConfig.rewardLpAddresses[0];
+
       const calls = [
         // Balance of staked token in the interstellar contract
         {
-          address: stakeTokenAddress[0],
+          address: stakeTokenAddress,
           name: "balanceOf",
           params: [interstellarConfig.contractAddress],
         },
         // Balance of rewarded token on interstellar contract
         {
-          address: rewardTokenAddress[0],
+          address: rewardTokenAddress,
           name: "balanceOf",
           params: [interstellarConfig.contractAddress],
         },
         // Staked Token decimals
         {
-          address: stakeTokenAddress[0],
+          address: stakeTokenAddress,
           name: "decimals",
         },
         // Rewarded Token decimals
         {
-          address: rewardTokenAddress[0],
+          address: rewardTokenAddress,
           name: "decimals",
         },
       ];
@@ -70,64 +54,231 @@ const fetchInterstellars = async () => {
       const [
         tokenBalance,
         rewardTokenBalance,
-        stakedTokenDecimals,
-        rewardTokenDecimals,
+        [stakedTokenDecimals],
+        [rewardTokenDecimals],
       ] = await multicall(erc20, calls);
 
       const stakedTokenExactAmount = new BigNumber(tokenBalance).div(
-        new BigNumber(10).pow(stakedTokenDecimals[0])
+        new BigNumber(10).pow(stakedTokenDecimals)
       );
       const rewardTokenExactAmount = new BigNumber(rewardTokenBalance).div(
-        new BigNumber(10).pow(rewardTokenDecimals[0])
+        new BigNumber(10).pow(rewardTokenDecimals)
       );
 
-      const tokenPriceCalls = [
-        {
-          address: nativeAddress,
-          name: "balanceOf",
-          params: [interstellarConfig.stakeLpAddress],
-        },
-        {
-          address: stakeTokenAddress[0],
-          name: "balanceOf",
-          params: [interstellarConfig.stakeLpAddress],
-        },
-        {
-          address: nativeAddress,
-          name: "balanceOf",
-          params: [interstellarConfig.rewardLpAddress],
-        },
-        {
-          address: rewardTokenAddress[0],
-          name: "balanceOf",
-          params: [interstellarConfig.rewardLpAddress],
-        },
-        {
-          address: stakeTokenAddress[0],
-          name: "totalSupply",
-        },
-      ];
+      const stakeTokenPrices = [];
+      const stakeTokenPriceCoefficients = [];
+      const stakeTokenAddressesInLP = [];
+      let stakeTokenReserve = "0"; // amount of main token in the first given LP address.
+      let otherStakeTokenReserve = "0"; // amount of other token in the first given LP address.
+      let firstStakeLpTotalSupply = "0"; // amount of total LP supply in the first given LP address.
+      let reverseFirstIndexStake = false; // reverse the first index of tokenPriceCoefficients array if needed.
 
-      const [
-        stakeLpMaticAmount,
-        stakeLpStakeTokenAmount,
-        rewardLpMaticAmount,
-        rewardLpRewardTokenAmount,
-        stakeTokenTotalSupply,
-      ] = await multicall(erc20, tokenPriceCalls);
-      const stakeLpMaticExactAmount = stakeLpMaticAmount / 1e18;
-      const stakeLpStakeTokenExactAmount =
-        stakeLpStakeTokenAmount / 10 ** stakedTokenDecimals[0];
-      const rewardLpMaticExactAmount = rewardLpMaticAmount / 1e18;
-      const rewardLpRewardTokenExactAmount =
-        rewardLpRewardTokenAmount / 10 ** rewardTokenDecimals[0];
-      const stakeTokenPrice = isLP
-        ? (stakeLpMaticExactAmount * maticPrice * 2) /
-          (stakeTokenTotalSupply / 1e18)
-        : (stakeLpMaticExactAmount / stakeLpStakeTokenExactAmount) * maticPrice;
-      const rewardTokenPrice =
-        (rewardLpMaticExactAmount / rewardLpRewardTokenExactAmount) *
-        maticPrice;
+      const rewardTokenPrices = [];
+      const rewardTokenPriceCoefficients = [];
+      const rewardTokenAddressesInLP = [];
+      let rewardTokenReserve = "0"; // amount of main token in the first given LP address.
+      let otherRewardTokenReserve = "0"; // amount of other token in the first given LP address.
+      let firstRewardLpTotalSupply = "0"; // amount of total LP supply in the first given LP address.
+      let reverseFirstIndexReward = false; // reverse the first index of tokenPriceCoefficients array if needed.
+
+      // finding the prices of tokens in the given LP address (interstellar.stakeLpAddresses)
+      for (const [index, lpAddress] of interstellarConfig.stakeLpAddresses.entries()) {
+        console.log("-------------Iterating index ", index, "-------------");
+        const tokenCalls = [
+          {
+            address: lpAddress,
+            name: "token0",
+          },
+          {
+            address: lpAddress,
+            name: "token1",
+          },
+          {
+            address: lpAddress,
+            name: "getReserves",
+          },
+          {
+            address: lpAddress,
+            name: "totalSupply",
+          },
+        ];
+
+        let [[token0], [token1], [token0Reserves, token1Reserves], [lpTotalSupply]] = await multicall(erc20Lp, tokenCalls);
+
+        const decimalCalls = [
+          {
+            address: token0,
+            name: "decimals",
+          },
+          {
+            address: token1,
+            name: "decimals",
+          },
+          {
+            address: token0,
+            name: "symbol",
+          },
+          {
+            address: token1,
+            name: "symbol",
+          },
+        ];
+
+        const [[token0Decimals], [token1Decimals], [token0Name], [token1Name]] = await multicall(erc20Lp, decimalCalls);
+
+        const token1ReservesExact = new BigNumber(token1Reserves._hex).div(10 ** token1Decimals);
+        const token0ReservesExact = new BigNumber(token0Reserves._hex).div(10 ** token0Decimals);
+
+        // calculating the coefficient
+        var coefficient = "0";
+        if (index === 0) {
+          stakeTokenAddressesInLP.push(token0, token1);
+          stakeTokenReserve = token1ReservesExact.toFixed(8);
+          otherStakeTokenReserve = token0ReservesExact.toFixed(8);
+          firstStakeLpTotalSupply = new BigNumber(lpTotalSupply._hex).div(1e18).toFixed(8);
+          coefficient = token1ReservesExact.div(token0ReservesExact).toFixed(8);
+        } else if (token0 === stakeTokenAddressesInLP[0]) {
+          coefficient = token1ReservesExact.div(token0ReservesExact).toFixed(8);
+          if (index === 1) reverseFirstIndexStake = true;
+        } else if (token0 === stakeTokenAddressesInLP[1]) {
+          coefficient = token1ReservesExact.div(token0ReservesExact).toFixed(8);
+          if (index === 1) stakeTokenReserve = otherStakeTokenReserve;
+        } else if (token1 === stakeTokenAddressesInLP[0]) {
+          coefficient = token0ReservesExact.div(token1ReservesExact).toFixed(8);
+          if (index === 1) reverseFirstIndexStake = true;
+        } else if (token1 === stakeTokenAddressesInLP[1]) {
+          coefficient = token0ReservesExact.div(token1ReservesExact).toFixed(8);
+          if (index === 1) stakeTokenReserve = otherStakeTokenReserve;
+        } else {
+          throw new Error(`Please check the addresses you inserted at the index of: ${index - 1} and ${index}`);
+        }
+
+        const tokenValuesSorted = []
+        if (token0ReservesExact.isGreaterThan(token1ReservesExact))
+          tokenValuesSorted.push(token0Name, token1Name)
+        else tokenValuesSorted.push(token1Name, token0Name)
+        console.log(
+          `\n price ratio of ${+coefficient < 1 ? tokenValuesSorted[0] : tokenValuesSorted[1]}/${+coefficient < 1 ? tokenValuesSorted[1] : tokenValuesSorted[0]
+          } is ${coefficient} \n`
+        );
+
+        stakeTokenAddressesInLP.splice(0, 2, token0, token1);
+
+        stakeTokenPriceCoefficients.push(coefficient);
+      }
+
+      // finding the prices of tokens in the given LP address (interstellar.rewardLpAddresses)
+      for (const [index, lpAddress] of interstellarConfig.rewardLpAddresses.entries()) {
+        console.log("-------------Iterating index ", index, "-------------");
+        const tokenCalls = [
+          {
+            address: lpAddress,
+            name: "token0",
+          },
+          {
+            address: lpAddress,
+            name: "token1",
+          },
+          {
+            address: lpAddress,
+            name: "getReserves",
+          },
+          {
+            address: lpAddress,
+            name: "totalSupply",
+          },
+        ];
+
+        let [[token0], [token1], [token0Reserves, token1Reserves], [lpTotalSupply]] = await multicall(erc20Lp, tokenCalls);
+
+        const decimalCalls = [
+          {
+            address: token0,
+            name: "decimals",
+          },
+          {
+            address: token1,
+            name: "decimals",
+          },
+          {
+            address: token0,
+            name: "symbol",
+          },
+          {
+            address: token1,
+            name: "symbol",
+          },
+        ];
+
+        const [[token0Decimals], [token1Decimals], [token0Name], [token1Name]] = await multicall(erc20Lp, decimalCalls);
+
+        const token1ReservesExact = new BigNumber(token1Reserves._hex).div(10 ** token1Decimals);
+        const token0ReservesExact = new BigNumber(token0Reserves._hex).div(10 ** token0Decimals);
+
+        // calculating the coefficient
+        var coefficient = "0";
+        if (index === 0) {
+          rewardTokenAddressesInLP.push(token0, token1);
+          rewardTokenReserve = token1ReservesExact.toFixed(8);
+          otherRewardTokenReserve = token0ReservesExact.toFixed(8);
+          firstRewardLpTotalSupply = new BigNumber(lpTotalSupply._hex).div(1e18).toFixed(8);
+          coefficient = token1ReservesExact.div(token0ReservesExact).toFixed(8);
+        } else if (token0 === rewardTokenAddressesInLP[0]) {
+          coefficient = token1ReservesExact.div(token0ReservesExact).toFixed(8);
+          if (index === 1) reverseFirstIndexReward = true;
+        } else if (token0 === rewardTokenAddressesInLP[1]) {
+          coefficient = token1ReservesExact.div(token0ReservesExact).toFixed(8);
+          if (index === 1) rewardTokenReserve = otherRewardTokenReserve;
+        } else if (token1 === rewardTokenAddressesInLP[0]) {
+          coefficient = token0ReservesExact.div(token1ReservesExact).toFixed(8);
+          if (index === 1) reverseFirstIndexReward = true;
+        } else if (token1 === rewardTokenAddressesInLP[1]) {
+          coefficient = token0ReservesExact.div(token1ReservesExact).toFixed(8);
+          if (index === 1) rewardTokenReserve = otherRewardTokenReserve;
+        } else {
+          throw new Error(`Please check the addresses you inserted at the index of: ${index - 1} and ${index}`);
+        }
+
+        const tokenValuesSorted = []
+        if (token0ReservesExact.isGreaterThan(token1ReservesExact))
+          tokenValuesSorted.push(token0Name, token1Name)
+        else tokenValuesSorted.push(token1Name, token0Name)
+        console.log(
+          `\n price ratio of ${+coefficient < 1 ? tokenValuesSorted[0] : tokenValuesSorted[1]}/${+coefficient < 1 ? tokenValuesSorted[1] : tokenValuesSorted[0]
+          } is ${coefficient} \n`
+        );
+
+        rewardTokenAddressesInLP.splice(0, 2, token0, token1);
+
+        rewardTokenPriceCoefficients.push(coefficient);
+      }
+
+      if (reverseFirstIndexStake) {
+        stakeTokenPriceCoefficients[0] = 1 / stakeTokenPriceCoefficients[0];
+      }
+      if (reverseFirstIndexReward) {
+        rewardTokenPriceCoefficients[0] = 1 / rewardTokenPriceCoefficients[0];
+      }
+
+      // calculating prices using coefficients
+      let product = 1;
+      for (let i = stakeTokenPriceCoefficients.length - 1; i >= 0; i--) {
+        product *= stakeTokenPriceCoefficients[i];
+        stakeTokenPrices[i] = product;
+      }
+      product = 1;
+      for (let i = rewardTokenPriceCoefficients.length - 1; i >= 0; i--) {
+        product *= rewardTokenPriceCoefficients[i];
+        rewardTokenPrices[i] = product;
+      }
+
+      const totalStakeLpPrice = new BigNumber(stakeTokenReserve).times(stakeTokenPrices[0]).times(2);
+      const singleStakeLpPrice = totalStakeLpPrice.div(firstStakeLpTotalSupply).toFixed(8);
+      const totalRewardLpPrice = new BigNumber(rewardTokenReserve).times(rewardTokenPrices[0]).times(2);
+      const singleRewardLpPrice = totalRewardLpPrice.div(firstRewardLpTotalSupply).toFixed(8);
+
+      console.log(`\nThe price of the stake ${isStakeLP ? 'LP' : 'token'} is: ${isStakeLP ? singleStakeLpPrice : stakeTokenPrices[0]} \n Pool: ${interstellarConfig.name}`);
+      console.log(`\nThe price of the reward ${isRewardLP ? 'LP' : 'token'} is: ${isRewardLP ? singleRewardLpPrice : rewardTokenPrices[0]} \n Pool: ${interstellarConfig.name}`);
 
       let rewardTokenPerBlock;
       let startBlock;
@@ -157,24 +308,17 @@ const fetchInterstellars = async () => {
 
       return {
         ...interstellarConfig,
-        stakeTokenAddress: stakeTokenAddress[0],
-        rewardTokenAddress: rewardTokenAddress[0],
+        stakeTokenAddress,
+        rewardTokenAddress,
+        stakedTokenDecimals,
+        rewardTokenDecimals,
         stakedTokenAmount: stakedTokenExactAmount.toJSON(),
         rewardTokenAmount: rewardTokenExactAmount.toJSON(),
-        // quoteTokenAmount: quoteTokenAmount,
-        //        lpTotalInQuoteToken: lpTotalInQuoteToken.toJSON(),
-        //        stakeTokenPriceVsRewardToken: tokenPriceVsQuote.toJSON(),
-        //        poolWeight: poolWeight?.toNumber(),
-        //        multiplier: allocPoint ? `${allocPoint.div(100).toString()}X` : '-',
-        //        depositFeeBP: info?.depositFeeBP,
         rewardTokenPerBlock: new BigNumber(rewardTokenPerBlock).toNumber(),
         startBlock: new BigNumber(startBlock).toNumber(),
         endBlock: new BigNumber(endBlock).toNumber(),
-        stakedTokenDecimals: stakedTokenDecimals[0],
-        rewardTokenDecimals: rewardTokenDecimals[0],
-        stakeTokenPrice: new BigNumber(stakeTokenPrice).toJSON(),
-        rewardTokenPrice: new BigNumber(rewardTokenPrice).toJSON(),
-        //        harvestInterval,
+        stakeTokenPrice: isStakeLP ? new BigNumber(singleStakeLpPrice).toJSON() : new BigNumber(stakeTokenPrices[0]).toJSON(),
+        rewardTokenPrice: isRewardLP ? new BigNumber(singleRewardLpPrice).toJSON() : new BigNumber(rewardTokenPrices[0]).toJSON(),
       };
     })
   );

@@ -10,6 +10,8 @@ import {
 import contracts from "./contracts";
 import { FarmConfig, QuoteToken } from "./types";
 
+// NOTE: EVERY FARM SHOULD HAVE A UNIQUE RISK VALUE, IT'S BEING USED AS "KEY" VALUE WHILE RENDERING.
+
 const farms: FarmConfig[] = [
   /*   {
     pid: 0,
@@ -162,7 +164,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 5,
-    risk: 5,
+    risk: 6,
     lpSymbol: "TPGX",
     isTokenOnly: true,
     lpAddresses: {
@@ -206,7 +208,7 @@ const farms: FarmConfig[] = [
   /* GENESIS POOLS */
   {
     pid: 0,
-    risk: 6,
+    risk: 7,
     lpSymbol: "wADA",
     isTokenOnly: true,
     isGenesis: true,
@@ -229,7 +231,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 1,
-    risk: 7,
+    risk: 8,
     lpSymbol: "multiUSDC",
     isTokenOnly: true,
     isGenesis: true,
@@ -252,7 +254,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 2,
-    risk: 8,
+    risk: 9,
     lpSymbol: "multiOCC",
     isTokenOnly: true,
     isGenesis: true,
@@ -275,7 +277,7 @@ const farms: FarmConfig[] = [
   },
   {
     pid: 3,
-    risk: 9,
+    risk: 10,
     lpSymbol: "ceUSDC",
     isTokenOnly: true,
     isGenesis: true,

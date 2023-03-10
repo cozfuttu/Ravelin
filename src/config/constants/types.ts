@@ -76,8 +76,8 @@ export interface FarmConfig {
 export interface InterstellarConfig {
   name: string;
   contractAddress: string;
-  stakeLpAddress: string;
-  rewardLpAddress: string;
+  stakeLpAddresses: string[];
+  rewardLpAddresses: string[];
   stakeTokenSymbol: string;
   rewardTokenSymbol: string;
   isStakeLP?: boolean;

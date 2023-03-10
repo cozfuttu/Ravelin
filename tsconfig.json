@@ -1,12 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es2015",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,10 +17,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "strictNullChecks": false,
-    "noImplicitAny": false,
+    "noImplicitAny": false
   },
-  "include": [
-    "src",
-    "src/uikit/declarations.d.ts"
-  ]
+  "include": ["src", "src/uikit/declarations.d.ts"]
 }

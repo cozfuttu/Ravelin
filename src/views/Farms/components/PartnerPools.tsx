@@ -61,16 +61,11 @@ interface CardsProps {
 }
 
 const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isMobile }) => {
-  const transfersWada = usePastTranferEvent(tokenAddresses.wADA, ['0x04bb0e8D204AC7468445b63A5bfAec16b310e7fA'])
-  const transfersTpgx1 = usePastTranferEvent(tokenAddresses.tpgx, ['0xa94f0F7E08403085e25555b3f14a2A3e6b4138d7'])
-  const transfersTpgx2 = usePastTranferEvent(tokenAddresses.tpgx, ['0x8567aE9460A2f03D8C2523DAC85C41e7F479d03c'])
-  const transfersTpgx3 = usePastTranferEvent(tokenAddresses.tpgx, ['0x04b11f68EfBb88c50Abed80903F19897e6f16CAc'])
-  const transfersTpgx4 = usePastTranferEvent(tokenAddresses.tpgx, ['0xF4c34125372e40016aF689e0EE0e3160372E2E7A'])
-  const transfersTpgx5 = usePastTranferEvent(tokenAddresses.tpgx, ['0xa9f534E267D4c9307DCc2f7Bfafd5a58b8ecb8F3'])
+  // const transfersWada = usePastTranferEvent(tokenAddresses.wADA, ['0x04bb0e8D204AC7468445b63A5bfAec16b310e7fA'])
+  const transfersTpgx1 = usePastTranferEvent(tokenAddresses.tpgx, ['0xa94f0F7E08403085e25555b3f14a2A3e6b4138d7', '0x8567aE9460A2f03D8C2523DAC85C41e7F479d03c', '0x04b11f68EfBb88c50Abed80903F19897e6f16CAc', '0xF4c34125372e40016aF689e0EE0e3160372E2E7A', '0xa9f534E267D4c9307DCc2f7Bfafd5a58b8ecb8F3'])
   const transfersRav = usePastTranferEvent(tokenAddresses.rav, ['0x8Fc6C4D3B07CAcF14C5eCD193F5513DAFBA6ff53'])
-  const transfersBusd = usePastTranferEvent(tokenAddresses.busd, ['0x7f3f0f05cbb7DbB0fAd16965044BC3B5116660Af'])
-  const transfers = [...transfersWada, ...transfersTpgx1, ...transfersTpgx2, ...transfersTpgx3, ...transfersTpgx4, ...transfersTpgx5, ...transfersRav, ...transfersBusd].sort((transfer1, transfer2) => transfer1.blockNumber - transfer2.blockNumber)
-  console.log(transfers)
+  // const transfersBusd = usePastTranferEvent(tokenAddresses.busd, ['0x7f3f0f05cbb7DbB0fAd16965044BC3B5116660Af'])
+  const transfers = [/* ...transfersWada,  */ ...transfersTpgx1, ...transfersRav/* , ...transfersBusd */].sort((transfer1, transfer2) => transfer1.blockNumber - transfer2.blockNumber)
 
   const transfersFormatted = transfers.map((transfer) => {
     const { returnValues, blockNumber, blockHash, address } = transfer
@@ -88,8 +83,8 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
 
   const balanceTpgx = useTokenBalance(tokenAddresses.tpgx)
   const balanceRav = useTokenBalance(tokenAddresses.rav)
-  const balanceWada = useTokenBalance(tokenAddresses.wADA)
-  const balanceBusd = useTokenBalance(tokenAddresses.busd)
+  // const balanceWada = useTokenBalance(tokenAddresses.wADA)
+  // const balanceBusd = useTokenBalance(tokenAddresses.busd)
   const { onTransfer: onTransferTpgx1 } = useTransfer(tokenAddresses.tpgx, "0xa94f0F7E08403085e25555b3f14a2A3e6b4138d7")
   const { onTransfer: onTransferTpgx2 } = useTransfer(tokenAddresses.tpgx, "0x8567aE9460A2f03D8C2523DAC85C41e7F479d03c")
   const { onTransfer: onTransferTpgx3 } = useTransfer(tokenAddresses.tpgx, "0x04b11f68EfBb88c50Abed80903F19897e6f16CAc")

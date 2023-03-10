@@ -13,6 +13,7 @@ import BigNumber from 'bignumber.js'
 import { useMatchBreakpoints } from 'uikit'
 import { InterstellarWithStakedValue } from './InterstellarCard'
 import TokenCardsInterstellar from './TokenCardsInterstellar'
+import { tokenAddresses } from 'config/constants/addresses'
 
 const StyledModal = styled.div`
   position: relative;
@@ -117,7 +118,7 @@ const FarmModal: React.FC<Props> = ({
       : `https://app.occamx.fi/swap/mAda/${farm.tokenAddresses[CHAIN_ID]}`
     : interstellar
       ? interstellar.isStakeLP
-        ? `https://app.occamx.fi/liquidity/add/${interstellar.name === "TPGX-mADA/TPGX" ? '0xA325ad468dF2676f195A623899953C192E354AE8/mAda' : interstellar.name === "TPGX-RAV/RAV" ? "0x9B7c74Aa737FE278795fAB2Ad62dEFDbBAedFBCA/0xA325ad468dF2676f195A623899953C192E354AE8" : ""}`
+        ? `https://app.occamx.fi/liquidity/add/${interstellar.stakeTokenSymbol === "TPGX-mADA" ? `${tokenAddresses.tpgx}/mADA` : interstellar.stakeTokenSymbol === "TPGX-RAV" ? `${tokenAddresses.tpgx}/${tokenAddresses.rav}` : interstellar.stakeTokenSymbol === "TPGX-RSHARE" ? `${tokenAddresses.tpgx}/${tokenAddresses.rshare}` : ""}`
         : `https://app.occamx.fi/swap/mAda/${interstellar.stakeTokenAddress}`
       : ""
 
