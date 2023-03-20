@@ -43,7 +43,7 @@ const interstellars: InterstellarConfig[] = [
       partnerWebsite: "",
       lpSource: "Occam",
     }, */
-  {
+  /*{
     name: "TPGX-RAV/RAV",
     contractAddress: "0x8Fc6C4D3B07CAcF14C5eCD193F5513DAFBA6ff53",
     stakeLpAddress: "0x814FfE50952d4D8F0483910Af2B891f03d46BD35",
@@ -54,7 +54,7 @@ const interstellars: InterstellarConfig[] = [
     partnerName: "TRUST Pool",
     partnerWebsite: "",
     lpSource: "Occam",
-  },
+  },*/
   {
     name: "RAV-mADA/TPGX",
     contractAddress: "0xa94f0F7E08403085e25555b3f14a2A3e6b4138d7",
