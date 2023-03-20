@@ -91,8 +91,8 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
   const { onTransfer: onTransferTpgx4 } = useTransfer(tokenAddresses.tpgx, "0xF4c34125372e40016aF689e0EE0e3160372E2E7A")
   const { onTransfer: onTransferTpgx5 } = useTransfer(tokenAddresses.tpgx, "0xa9f534E267D4c9307DCc2f7Bfafd5a58b8ecb8F3")
   const { onTransfer: onTransferRav } = useTransfer(tokenAddresses.rav, "0x8Fc6C4D3B07CAcF14C5eCD193F5513DAFBA6ff53")
-  /*const { onTransfer: onTransferWada } = useTransfer(tokenAddresses.wADA, "0x04bb0e8D204AC7468445b63A5bfAec16b310e7fA")
-  const { onTransfer: onTransferBusd } = useTransfer(tokenAddresses.busd, "0x7f3f0f05cbb7DbB0fAd16965044BC3B5116660Af")*/
+  // const { onTransfer: onTransferWada } = useTransfer(tokenAddresses.wADA, "0x04bb0e8D204AC7468445b63A5bfAec16b310e7fA")
+  // const { onTransfer: onTransferBusd } = useTransfer(tokenAddresses.busd, "0x7f3f0f05cbb7DbB0fAd16965044BC3B5116660Af")
 
   const [onPresentModalTpgx1] = useModal(<DepositModal max={balanceTpgx} decimals={18} onConfirm={onTransferTpgx1} tokenName='TPGX' />)
   const [onPresentModalTpgx2] = useModal(<DepositModal max={balanceTpgx} decimals={18} onConfirm={onTransferTpgx2} tokenName='TPGX' />)
@@ -100,8 +100,8 @@ const PartnerPools: React.FC<CardsProps> = ({ interstellarsToDisplayWithApy, isM
   const [onPresentModalTpgx4] = useModal(<DepositModal max={balanceTpgx} decimals={18} onConfirm={onTransferTpgx4} tokenName='TPGX' />)
   const [onPresentModalTpgx5] = useModal(<DepositModal max={balanceTpgx} decimals={18} onConfirm={onTransferTpgx5} tokenName='TPGX' />)
   const [onPresentModalRav] = useModal(<DepositModal max={balanceRav} decimals={18} onConfirm={onTransferRav} tokenName='RAV' />)
-  /*const [onPresentModalWada] = useModal(<DepositModal max={balanceWada} decimals={18} onConfirm={onTransferWada} tokenName='wADA' />)
-  const [onPresentModalBusd] = useModal(<DepositModal max={balanceBusd} decimals={18} onConfirm={onTransferBusd} tokenName='BUSD' />)*/
+  // const [onPresentModalWada] = useModal(<DepositModal max={balanceWada} decimals={18} onConfirm={onTransferWada} tokenName='wADA' />)
+  // const [onPresentModalBusd] = useModal(<DepositModal max={balanceBusd} decimals={18} onConfirm={onTransferBusd} tokenName='BUSD' />)
 
   const FarmCards = interstellarsToDisplayWithApy.map((interstellar, index) => (
     <InterstellarCard
