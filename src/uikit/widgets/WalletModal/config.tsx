@@ -3,6 +3,7 @@ import MathWallet from './icons/MathWallet'
 import TokenPocket from './icons/TokenPocket'
 import TrustWallet from './icons/TrustWallet'
 import WalletConnect from './icons/WalletConnect'
+import FlintWallet from './icons/FlintWallet'
 import { Config } from './types'
 
 const connectors: Config[] = [
@@ -31,6 +32,11 @@ const connectors: Config[] = [
     icon: WalletConnect,
     connectorId: 'walletconnect',
   },
+  {
+    title: 'FlintWallet',
+    icon: FlintWallet,
+    connectorId: 'injected',
+  }
   /*   {
       title: 'Binance Chain Wallet',
       icon: BinanceChain,
