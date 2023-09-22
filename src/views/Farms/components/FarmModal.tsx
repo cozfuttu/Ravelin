@@ -117,7 +117,7 @@ const FarmModal: React.FC<Props> = ({
       : `https://app.occamx.fi/swap/mAda/${farm.tokenAddresses[CHAIN_ID]}`
     : interstellar
       ? interstellar.isStakeLP
-        ? `https://app.occamx.fi/liquidity/add/${interstellar.name === "TPGX-mADA/TPGX" ? '0xA325ad468dF2676f195A623899953C192E354AE8/mAda' : interstellar.name === "TPGX-RAV/RAV" ? "0x9B7c74Aa737FE278795fAB2Ad62dEFDbBAedFBCA/0xA325ad468dF2676f195A623899953C192E354AE8" : ""}`
+        ? `https://app.occamx.fi/pool/add/${interstellar.name === "TPGX-mADA/TPGX" ? '0xA325ad468dF2676f195A623899953C192E354AE8/mAda' : interstellar.name === "RAV-mADA/TPGX" ? "0xd65005ef5964b035B3a2a1E79Ddb4522196532DE" : interstellar.name === "RSHARE-mADA/TPGX" ? "0x73bc306Aa2D393ff5aEb49148b7B2C9a8E5d39c8" : interstellar.name === "TPGX-RAV/TPGX" ? "0x263bB4e878ccF169C7ac5af1651a6039bA851d1E" : interstellar.name === "TPGX-RSHARE/TPGX" ? "0x53a1cc78bb19eD4aF3590A6aF8482856Aa4eEa12" : ""}`
         : `https://app.occamx.fi/swap/mAda/${interstellar.stakeTokenAddress}`
       : ""
 
